@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTV - Tanlov</title>
+    <title>MTV - Toshkent Tumanlari</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
@@ -49,101 +49,77 @@
 <!-- Main Content -->
 <section class="flex-grow flex items-center justify-center py-32 relative bg-gradient-to-br from-blue-50 via-white to-indigo-50">
     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')] bg-cover bg-center opacity-10"></div>
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <h2 class="text-5xl font-extrabold text-gray-900 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in-up">
-            Muassasa Turini Tanlang
+            Toshkent shahri tumanlari
         </h2>
-        <div id="selectionContainer" class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <!-- Maktab Card -->
-            <a href="#" onclick="showDistricts(); return false;" class="block perspective-1000 group">
-                <div class="relative p-10 bg-white rounded-3xl shadow-2xl hover:shadow-[0_20px_50px_rgba(59,130,246,0.3)] transition-all duration-500 transform hover:-translate-x-3">
-                    <div class="absolute inset-0 bg-gradient-to-r from-blue-100 to-indigo-100 opacity-0 group-hover:opacity-20 rounded-3xl transition-opacity duration-500"></div>
-                    <i class="fas fa-school text-7xl text-blue-600 mb-6 transform group-hover:scale-110 transition-transform duration-300"></i>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Maktab</h3>
-                    <p class="text-gray-600 leading-relaxed">Maktablar uchun maxsus xizmatlar va zamonaviy resurslar bilan ta’lim sifatini oshiring.</p>
-                </div>
-            </a>
-            <!-- Bog‘cha Card -->
-            <a href="/kindergarten-region" class="block perspective-1000 group">
-                <div class="relative p-10 bg-white rounded-3xl shadow-2xl hover:shadow-[0_20px_50px_rgba(59,130,246,0.3)] transition-all duration-500 transform hover:translate-x-3">
-                    <div class="absolute inset-0 bg-gradient-to-r from-blue-100 to-indigo-100 opacity-0 group-hover:opacity-20 rounded-3xl transition-opacity duration-500"></div>
-                    <i class="fas fa-child text-7xl text-blue-600 mb-6 transform group-hover:scale-110 transition-transform duration-300"></i>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Bog‘cha</h3>
-                    <p class="text-gray-600 leading-relaxed">Maktabgacha ta’lim muassasalari uchun innovatsion yechimlar va xizmatlar.</p>
-                </div>
-            </a>
+        <div class="flex justify-center mb-12">
+            <div class="relative w-full max-w-lg">
+                <input type="text" id="searchInput" placeholder="Maktab qidirish..." class="w-full px-6 py-4 rounded-full bg-white text-gray-900 border-2 border-blue-200 focus:border-blue-600 focus:outline-none shadow-lg transition-all duration-300">
+                <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+            </div>
         </div>
-        <!-- Districts Section (Hidden by default) -->
-        <div id="districtsContainer" class="hidden mt-12 animate-fade-in-up">
-            <div class="flex justify-center mb-8">
-                <div class="relative w-full max-w-md">
-                    <input type="text" id="searchInput" placeholder="Maktab qidirish..." class="w-full px-6 py-4 rounded-full bg-white text-gray-900 border-2 border-blue-200 focus:border-blue-600 focus:outline-none shadow-lg transition-all duration-300">
-                    <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+        <div id="districtsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <a href="/schools/bektemir" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Bektemir
                 </div>
-            </div>
-            <h3 class="text-3xl font-semibold text-gray-900 mb-8">Toshkent shahri tumanlari</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <a href="/schools/bektemir" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Bektemir
-                    </div>
-                </a>
-                <a href="/schools/chilanzar" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Chilanzar
-                    </div>
-                </a>
-                <a href="/schools/mirobod" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Mirobod
-                    </div>
-                </a>
-                <a href="/schools/mirzo-ulugbek" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Mirzo Ulug‘bek
-                    </div>
-                </a>
-                <a href="/schools/olmazor" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Olmazor
-                    </div>
-                </a>
-                <a href="/schools/sergeli" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Sergeli
-                    </div>
-                </a>
-                <a href="/schools/shayxontohur" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Shayxontohur
-                    </div>
-                </a>
-                <a href="/schools/uchtepa" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Uchtepa
-                    </div>
-                </a>
-                <a href="/schools/yashnobod" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yashnobod
-                    </div>
-                </a>
-                <a href="/schools/yunusobod" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yunusobod
-                    </div>
-                </a>
-                <a href="/schools/yakkasaroy" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yakkasaroy
-                    </div>
-                </a>
-                <a href="/schools/yangihayot" class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yangihayot
-                    </div>
-                </a>
-            </div>
+            </a>
+            <a href="/schools/chilanzar" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Chilanzar
+                </div>
+            </a>
+            <a href="/schools/mirobod" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Mirobod
+                </div>
+            </a>
+            <a href="/schools/mirzo-ulugbek" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Mirzo Ulug‘bek
+                </div>
+            </a>
+            <a href="/schools/olmazor" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Olmazor
+                </div>
+            </a>
+            <a href="/schools/sergeli" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Sergeli
+                </div>
+            </a>
+            <a href="/schools/shayxontohur" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Shayxontohur
+                </div>
+            </a>
+            <a href="/schools/uchtepa" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Uchtepa
+                </div>
+            </a>
+            <a href="/schools/yashnobod" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Yashnobod
+                </div>
+            </a>
+            <a href="/schools/yunusobod" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Yunusobod
+                </div>
+            </a>
+            <a href="/schools/yakkasaroy" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Yakkasaroy
+                </div>
+            </a>
+            <a href="/schools/yangihayot" class="block">
+                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Yangihayot
+                </div>
+            </a>
         </div>
     </div>
 </section>
@@ -227,15 +203,7 @@
         }
     });
 
-    // Show Districts and Hide Cards
-    function showDistricts() {
-        const selectionContainer = document.getElementById('selectionContainer');
-        const districtsContainer = document.getElementById('districtsContainer');
-        selectionContainer.classList.add('hidden');
-        districtsContainer.classList.remove('hidden');
-    }
-
-    // Search Functionality (Placeholder)
+    // Search Functionality
     document.getElementById('searchInput').addEventListener('input', (e) => {
         const searchValue = e.target.value.toLowerCase();
         const buttons = document.querySelectorAll('#districtsContainer a div');
@@ -258,7 +226,6 @@
     }
     .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
     .animate-slide-in { animation: slideIn 0.5s ease-out forwards; }
-    .perspective-1000 { perspective: 1000px; }
 </style>
 </body>
 </html>
