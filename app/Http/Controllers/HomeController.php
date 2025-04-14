@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function home(){
-        return view('home');
+    public function welcome(){
+        return view('welcome');
     }
 
     public function schoolRegion(){
@@ -17,4 +17,9 @@ class HomeController extends Controller
     public function main(){
         return view('main');
     }
+
+   public function kindergartenRegion()
+   {
+       return view('kindergarten-region');
+   }
 }
