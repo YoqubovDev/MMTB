@@ -36,6 +36,7 @@ class CreateAddedTable extends Migration
             $table->float('elektr_istemoli')->nullable();
             $table->float('issiqlik_istemoli')->nullable();
             $table->boolean('quyosh_paneli')->nullable();
+            $table->string('maktab_rasmlari')->nullable();
             $table->boolean('geokollektor')->nullable();
             $table->string('lokatsiya')->nullable();
             $table->timestamps();
