@@ -12,6 +12,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/school-region', [HomeController::class, 'schoolRegion'])->name('school-region');
     Route::get('/kindergarten-region', [HomeController::class, 'kindergartenRegion'])->name('kindergarten-region');
     Route::get('/added', [HomeController::class, 'added'])->name('added');
+    Route::get('/data', [HomeController::class, 'data'])->name('data');
 
     Route::get('/dashboard', function () {
         return view('dashboard');

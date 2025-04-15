@@ -3,13 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTV - Toshkent Tumanlari</title>
+    <title>MTV - Maktab Ma'lumotlari</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .preview-img {
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .preview-img:hover {
+            transform: scale(1.05);
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #f9fafb;
+            border-radius: 8px;
+        }
+        .location-link:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body class="font-inter bg-gray-50 min-h-screen flex flex-col overflow-x-hidden">
+<body class="bg-gray-50 min-h-screen">
 <!-- Navbar -->
 <nav class="bg-transparent text-white fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,7 +53,6 @@
                     Chiqish
                 </a>
             </div>
-            <!-- Hamburger Menu -->
             <div class="md:hidden flex items-center">
                 <button id="menuBtn" class="text-white focus:outline-none">
                     <i class="fas fa-bars text-3xl"></i>
@@ -36,7 +60,6 @@
             </div>
         </div>
     </div>
-    <!-- Mobile Menu -->
     <div id="mobileMenu" class="hidden md:hidden bg-gradient-to-r from-blue-900 to-indigo-900 text-white px-6 py-8 animate-slide-in">
         <a href="index.html" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bosh sahifa</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Yangiliklar</a>
@@ -47,82 +70,75 @@
 </nav>
 
 <!-- Main Content -->
-<section class="flex-grow flex items-center justify-center py-32 relative bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')] bg-cover bg-center opacity-10"></div>
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 class="text-5xl font-extrabold text-gray-900 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in-up">
-            Toshkent shahri tumanlari
+<section class="py-32 bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-5xl font-extrabold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 mb-12">
+            Maktab Ma'lumotlari
         </h2>
-        <div class="flex justify-center mb-12">
-            <div class="relative w-full max-w-lg">
-                <input type="text" id="searchInput" placeholder="Maktab qidirish..." class="w-full px-6 py-4 rounded-full bg-white text-gray-900 border-2 border-blue-200 focus:border-blue-600 focus:outline-none shadow-lg transition-all duration-300">
-                <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
-            </div>
-        </div>
-        <a href="{{route('added')}}">
-            <div id="districtsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Bektemir
-                    </div>
+        <div class="bg-white p-8 rounded-3xl shadow-lg">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Umumiy Ma'lumotlar</h3>
+                    <p class="text-gray-600 mb-2"><strong>Manzil (MFY):</strong> O‘zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Qurilgan yili:</strong> 2010</p>
+                    <p class="text-gray-600 mb-2"><strong>So‘ngi tamirlangan yili:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Sektor raqami:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Yer maydoni:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Xudud o'ralganligi:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Binolar soni:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Binolar qavatligi:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Binolar maydoni:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Istilidigan maydon:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Quvvati:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>O'quvchi soni:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Koffsiyent:</strong> o'zim toldirman</p>
                 </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Chilanzar
-                    </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Infratuzilma</h3>
+                    <p class="text-gray-600 mb-2"><strong>Oshxona yoki bufet quvvati:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Sport zal soni va maydoni:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Faollar zali va quvvati:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Xolati:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Tom xolati % da:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Deraza rom xolati % da:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Istish turi:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Qozonlar soni:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Qozonlar xolati % da:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Apoklar xolati % da:</strong> o'zim toldirman</p>
                 </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Mirobod
-                    </div>
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Energiya Iste'moli</h3>
+                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha gaz iste’moli:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha elektr iste’moli:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha issiqlik iste’moli:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Quyosh paneli:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Geokollektor:</strong> o'zim toldirman</p>
                 </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Mirzo Ulug‘bek
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Olmazor
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Sergeli
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Shayxontohur
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Uchtepa
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yashnobod
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yunusobod
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yakkasaroy
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yangihayot
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4">Lokatsiya va Rasmlar</h3>
+                    <p class="text-gray-600 mb-2">
+                        <strong>Lokatsiya:</strong>
+                        <a href="https://www.google.pl/maps/place/Sharshara/@41.3433856,69.2846592,14z/data=!4m6!3m5!1s0x38ae8c9d748e1e67:0x1f904eaf8881b6eb!8m2!3d41.3415458!4d69.2539558!16s%2Fg%2F1vv2qm93?entry=ttu&g_ep=EgoyMDI1MDQwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="location-link text-gray-600 hover:underline">
+                            Silka bo‘ladi
+                        </a>
+                    </p>
+                    <div class="mt-4">
+                        <label class="block text-gray-700 font-semibold mb-2">Maktab Rasmlari:</label>
+                        <div class="image-grid">
+                            <img class="preview-img w-full h-32 object-cover" src="https://21-school.uz/assets/images/kampuses/samarkand/samarkand-5.webp" alt="Maktab Rasmi 1">
+                            <img class="preview-img w-full h-32 object-cover" src="https://21-school.uz/assets/images/kampuses/samarkand/samarkand-5.webp" alt="Maktab Rasmi 2">
+                            <img class="preview-img w-full h-32 object-cover" src="https://21-school.uz/assets/images/kampuses/samarkand/samarkand-5.webp" alt="Maktab Rasmi 3">
+                            <img class="preview-img w-full h-32 object-cover" src="https://21-school.uz/assets/images/kampuses/samarkand/samarkand-5.webp" alt="Maktab Rasmi 4">
+                            <img class="preview-img w-full h-32 object-cover" src="https://21-school.uz/assets/images/kampuses/samarkand/samarkand-5.webp" alt="Maktab Rasmi 5">
+                        </div>
                     </div>
                 </div>
             </div>
-        </a>
+            <div class="mt-8 flex justify-end">
+                <a href="{{route('added')}}"<?php echo urlencode($_GET['district'] ?? ''); ?>" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                    Orqaga
+                </a>
+            </div>
         </div>
     </div>
 </section>
@@ -204,47 +220,6 @@
             alert('Tizimdan chiqildi.');
             window.location.href = 'login.html';
         }
-    });
-
-    // Search Functionality
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-        const searchValue = e.target.value.toLowerCase();
-        const buttons = document.querySelectorAll('#districtsContainer a div');
-        buttons.forEach(button => {
-            const districtName = button.textContent.toLowerCase();
-            button.parentElement.style.display = districtName.includes(searchValue) ? 'block' : 'none';
-        });
-    });
-</script>
-<script>
-    // ... (other existing code like navbar scroll, hamburger menu, etc.)
-
-    // Dynamic Heading and Search Placeholder Update
-    document.addEventListener('DOMContentLoaded', () => {
-        const heading = document.getElementById('pageHeading');
-        const searchInput = document.getElementById('searchInput');
-        const path = window.location.pathname.toLowerCase();
-
-        if (path.includes('schools') || path.includes('maktab')) {
-            heading.textContent = 'Toshkent shahri maktablari';
-            searchInput.placeholder = 'Maktab qidirish...';
-        } else if (path.includes('kindergartens') || path.includes('bogcha')) {
-            heading.textContent = 'Toshkent shahri bog‘chalari';
-            searchInput.placeholder = 'Bog‘cha qidirish...';
-        } else {
-            heading.textContent = 'Toshkent shahri tumanlari';
-            searchInput.placeholder = 'Qidirish...';
-        }
-    });
-
-    // Search Functionality
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-        const searchValue = e.target.value.toLowerCase();
-        const buttons = document.querySelectorAll('#districtsContainer .block div');
-        buttons.forEach(button => {
-            const districtName = button.textContent.toLowerCase();
-            button.parentElement.style.display = districtName.includes(searchValue) ? 'block' : 'none';
-        });
     });
 </script>
 

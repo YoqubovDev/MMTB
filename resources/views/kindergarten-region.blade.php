@@ -216,6 +216,38 @@
         });
     });
 </script>
+<script>
+    // ... (other existing code like navbar scroll, hamburger menu, etc.)
+
+    // Dynamic Heading and Search Placeholder Update
+    document.addEventListener('DOMContentLoaded', () => {
+        const heading = document.getElementById('pageHeading');
+        const searchInput = document.getElementById('searchInput');
+        const path = window.location.pathname.toLowerCase();
+
+        if (path.includes('schools') || path.includes('maktab')) {
+            heading.textContent = 'Toshkent shahri maktablari';
+            searchInput.placeholder = 'Maktab qidirish...';
+        } else if (path.includes('kindergartens') || path.includes('bogcha')) {
+            heading.textContent = 'Toshkent shahri bog‘chalari';
+            searchInput.placeholder = 'Bog‘cha qidirish...';
+        } else {
+            heading.textContent = 'Toshkent shahri tumanlari';
+            searchInput.placeholder = 'Qidirish...';
+        }
+    });
+
+    // Search Functionality
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        const searchValue = e.target.value.toLowerCase();
+        const buttons = document.querySelectorAll('#districtsContainer .block div');
+        buttons.forEach(button => {
+            const districtName = button.textContent.toLowerCase();
+            button.parentElement.style.display = districtName.includes(searchValue) ? 'block' : 'none';
+        });
+    });
+</script>
+
 
 <!-- Custom Animation Styles -->
 <style>

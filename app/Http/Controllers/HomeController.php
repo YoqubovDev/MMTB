@@ -26,6 +26,10 @@ class HomeController extends Controller
     {
          return view('added');
     }
+    public function data()
+    {
+        return view('data');
+    }
 
 
 }
