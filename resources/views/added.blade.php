@@ -102,34 +102,72 @@
 <div id="addSchoolModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-3xl p-8 max-w-2xl w-full shadow-2xl animate-fade-in-up overflow-y-auto max-h-[80vh]">
         <h3 class="text-2xl font-bold text-gray-900 mb-6">Yangi Maktab Qo‘shish</h3>
-        <form method="POST" action="/added">
-            <input type="hidden" name="district" value="<?php echo htmlspecialchars($_GET['district'] ?? ''); ?>">
+        <form method="POST" action="{{ route('added.store') }}" enctype="multipart/form-data">
+            @csrf
+            <!-- Display validation errors -->
+            @if($errors->any())
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <ul class="list-disc pl-5">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+            
+            <div>
+                <label for="district_id" class="block text-gray-700 font-semibold mb-2">Tuman</label>
+                <select id="district_id" name="district_id" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300">
+                    <option value="">Tumanni tanlang</option>
+                    @if(isset($districts))
+                        {{-- Debug output --}}
+                        <div style="display:none">
+                            Districts count: {{ $districts->count() }}
+                            First district: {{ optional($districts->first())->name }}
+                        </div>
+                        @foreach($districts as $district)
+                            <option value="{{ $district->id }}" {{ old('district_id') == $district->id ? 'selected' : '' }}>{{ $district->name }}</option>
+                        @endforeach
+                    @else
+                        <option value="">No districts available</option>
+                    @endif
+                </select>
+            </div>
             <div class="grid grid-cols-1 gap-4">
                 <div>
                     <label for="mfy" class="block text-gray-700 font-semibold mb-2">Manzil (MFY)</label>
                     <input type="text" id="mfy" name="mfy" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
                 </div>
                 <div>
+                <div>
                     <label for="qurilgan_yili" class="block text-gray-700 font-semibold mb-2">Qurilgan yili</label>
-                    <input type="text" id="qurilgan_yili" name="qurilgan_yili" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
+                    <input type="number" id="qurilgan_yili" name="qurilgan_yili" min="1800" max="{{ date('Y') }}" value="{{ old('qurilgan_yili') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 1995" required>
                 </div>
                 <div>
-                    <label for="songi_tamir_yili" class="block text-gray-700 font-semibold mb-2">So‘ngi tamirlangan yili</label>
-                    <input type="text" id="songi_tamir_yili" name="songi_tamir_yili" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
+                    <label for="songi_tamir_yili" class="block text-gray-700 font-semibold mb-2">So'ngi tamirlangan yili</label>
+                    <input type="number" id="songi_tamir_yili" name="songi_tamir_yili" min="1800" max="{{ date('Y') }}" value="{{ old('songi_tamir_yili') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 2020">
                 </div>
                 <div>
                     <label for="sektor_raqami" class="block text-gray-700 font-semibold mb-2">Sektor raqami</label>
-                    <input type="text" id="sektor_raqami" name="sektor_raqami" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
+                    <input type="number" id="sektor_raqami" name="sektor_raqami" min="0" value="{{ old('sektor_raqami') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 3">
                 </div>
-                <div>
                     <label for="yer_maydoni" class="block text-gray-700 font-semibold mb-2">Yer maydoni</label>
                     <input type="text" id="yer_maydoni" name="yer_maydoni" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
                 </div>
                 <div>
-                    <label for="xudud_oralganligi" class="block text-gray-700 font-semibold mb-2">Xudud o‘ralganligi</label>
-                    <input type="text" id="xudud_oralganligi" name="xudud_oralganligi" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
-                </div>
                 <div>
+                    <label for="xudud_oralganligi" class="block text-gray-700 font-semibold mb-2">Xudud o'ralganligi</label>
+                    <div class="flex items-center space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="xudud_oralganligi" value="1" {{ old('xudud_oralganligi') == '1' ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                            <span class="ml-2 text-gray-700">Ha</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="xudud_oralganligi" value="0" {{ old('xudud_oralganligi') == '0' ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                            <span class="ml-2 text-gray-700">Yo'q</span>
+                        </label>
+                    </div>
+                </div>
                     <label for="binolar_soni" class="block text-gray-700 font-semibold mb-2">Binolar soni</label>
                     <input type="text" id="binolar_soni" name="binolar_soni" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
                 </div>
@@ -175,11 +213,11 @@
                 </div>
                 <div>
                     <label for="tom_xolati_yuzda" class="block text-gray-700 font-semibold mb-2">Tom xolati % da</label>
-                    <input type="text" id="tom_xolati_yuzda" name="tom_xolati_yuzda" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
+                    <input type="number" id="tom_xolati_yuzda" name="tom_xolati_yuzda" min="0" max="100" step="0.01" value="{{ old('tom_xolati_yuzda') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 90">
                 </div>
                 <div>
                     <label for="deraza_rom_xolati_yuzda" class="block text-gray-700 font-semibold mb-2">Deraza rom xolati % da</label>
-                    <input type="text" id="deraza_rom_xolati_yuzda" name="deraza_rom_xolati_yuzda" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
+                    <input type="number" id="deraza_rom_xolati_yuzda" name="deraza_rom_xolati_yuzda" min="0" max="100" step="0.01" value="{{ old('deraza_rom_xolati_yuzda') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 85">
                 </div>
                 <div>
                     <label for="istish_turi" class="block text-gray-700 font-semibold mb-2">Istish turi</label>
@@ -211,16 +249,34 @@
                 </div>
                 <div>
                     <label for="quyosh_paneli" class="block text-gray-700 font-semibold mb-2">Quyosh paneli</label>
-                    <input type="text" id="quyosh_paneli" name="quyosh_paneli" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
+                    <div class="flex items-center space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="quyosh_paneli" value="1" {{ old('quyosh_paneli') == '1' ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                            <span class="ml-2 text-gray-700">Bor</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="quyosh_paneli" value="0" {{ old('quyosh_paneli') == '0' ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                            <span class="ml-2 text-gray-700">Yo'q</span>
+                        </label>
+                    </div>
                 </div>
                 <div>
                     <label for="geokollektor" class="block text-gray-700 font-semibold mb-2">Geokollektor</label>
-                    <input type="text" id="geokollektor" name="geokollektor" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
+                    <div class="flex items-center space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="geokollektor" value="1" {{ old('geokollektor') == '1' ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                            <span class="ml-2 text-gray-700">Bor</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="geokollektor" value="0" {{ old('geokollektor') == '0' ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                            <span class="ml-2 text-gray-700">Yo'q</span>
+                        </label>
+                    </div>
                 </div>
                 <div>
-                    <label for="Maktab rassmlari" class="block text-gray-700 font-semibold mb-2">Maktab rasmlari</label>
-                    <input type="file" id="maktab_rasmlari" name="maktab_rasmlari" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman">
-                </div>
+                    <label for="maktab_rasmlari" class="block text-gray-700 font-semibold mb-2">Maktab rasmlari</label>
+                    <input type="file" id="maktab_rasmlari" name="maktab_rasmlari" accept="image/jpeg,image/png,image/jpg,image/gif" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300">
+                    <p class="text-gray-500 text-sm mt-1">
                 <div>
                     <label for="lokatsiya" class="block text-gray-700 font-semibold mb-2">Lokatsiya</label>
                     <input type="text" id="lokatsiya" name="lokatsiya" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Silka bo‘ladi">
