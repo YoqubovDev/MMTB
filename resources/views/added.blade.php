@@ -68,31 +68,41 @@
         </div>
         <!-- Schools List -->
         <div id="schoolsList" class="space-y-6">
+            @forelse($addeds as $added)
             <div class="flex flex-col sm:flex-row items-center p-6 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 w-full">
                 <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mr-0 sm:mr-6 mb-4 sm:mb-0">
                     <i class="fas fa-school text-white text-2xl"></i>
                 </div>
                 <div class="flex-1 text-center sm:text-left">
-                    <h4 class="text-xl font-semibold text-gray-900 mb-2">112-maktab</h4>
-                    <p class="text-gray-600">MFY: O‘zim toldirman</p>
-                    <p class="text-gray-600">Qurilgan yili: 2010</p>
+                    <h4 class="text-xl font-semibold text-gray-900 mb-2">{{ $added->id }}-maktab</h4>
+                    <p class="text-gray-600">MFY: {{ $added->mfy ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600">Qurilgan yili: {{ $added->qurilgan_yili ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600">Tuman: {{ $added->district->name ?? 'Ma\'lumot yo\'q' }}</p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
-                    <a href="data.php?district=<?php echo urlencode($_GET['district'] ?? ''); ?>" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 text-center">
-                        <i class="fas fa-eye"></i> Ko‘rish
+                    <a href="{{ route('data', $added->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 text-center">
+                        <i class="fas fa-eye"></i> Ko'rish
                     </a>
-                    <button onclick="document.getElementById('editSchoolModal-1').classList.remove('hidden')" class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition-all duration-300">
+                    <a href="{{ route('added.edit', $added->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition-all duration-300 text-center">
                         <i class="fas fa-edit"></i> Tahrirlash
-                    </button>
-                    <form method="POST" action="delete_school.php" onsubmit="return confirm('Rostdan o‘chirmoqchimisiz?');">
-                        <input type="hidden" name="school_id" value="1">
-                        <input type="hidden" name="district" value="<?php echo htmlspecialchars($_GET['district'] ?? ''); ?>">
+                    </a>
+                    <form method="POST" action="{{ route('added.destroy', $added->id) }}" onsubmit="return confirm('Rostdan o\'chirmoqchimisiz?');">
+                        @csrf
+                        @method('DELETE')
                         <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-all duration-300">
-                            <i class="fas fa-trash"></i> O‘chirish
+                            <i class="fas fa-trash"></i> O'chirish
                         </button>
                     </form>
                 </div>
             </div>
+            @empty
+            <div class="flex flex-col items-center p-6 bg-white rounded-3xl shadow-lg w-full">
+                <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-school text-gray-400 text-2xl"></i>
+                </div>
+                <p class="text-gray-500 text-lg">Maktablar topilmadi</p>
+            </div>
+            @endforelse
         </div>
     </div>
 </section>
