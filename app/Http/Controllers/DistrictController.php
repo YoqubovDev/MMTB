@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 
 class DistrictController extends Controller
 {
@@ -21,11 +22,10 @@ class DistrictController extends Controller
             // Cache districts and statistics for 1 hour
             $districts = Cache::remember('districts.all', 3600, function () {
                 return District::where('status', true)
-                    ->with(['schools' => function ($query) {
-                        $query->where('status', true);
-                    }, 'kindergartens' => function ($query) {
-                        $query->where('status', true);
-                    }])
+                    ->with([
+                        'schools' => fn ($query) => $query->where('status', true),
+                        'kindergartens' => fn ($query) => $query->where('status', true)
+                    ])
                     ->get();
             });
 
@@ -43,19 +43,17 @@ class DistrictController extends Controller
                 'districts' => $districts,
                 'totalSchools' => $statistics['totalSchools'],
                 'totalKindergartens' => $statistics['totalKindergartens'],
-                'totalCapacity' => $statistics['schoolsCapacity'] + $statistics['kindergartensCapacity']
+                'totalCapacity' => $statistics['schoolsCapacity'] + $statistics['kindergartensCapacity'],
             ]);
         } catch (\Exception $e) {
-            // Log the error
             \Log::error('Error loading districts: ' . $e->getMessage());
 
-            // Return view with error message
             return view('districts.index', [
                 'districts' => collect(),
                 'totalSchools' => 0,
                 'totalKindergartens' => 0,
                 'totalCapacity' => 0,
-                'error' => 'Ma\'lumotlarni yuklashda xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.'
+                'error' => __('errors.loading_failed'),
             ]);
         }
     }
@@ -66,35 +64,37 @@ class DistrictController extends Controller
     public function show(District $district): View
     {
         try {
-            // Verify district is active
             if (!$district->status) {
                 throw new ModelNotFoundException('District not found or inactive');
             }
 
-            // Cache individual district data for 1 hour
             $districtData = Cache::remember("districts.{$district->id}", 3600, function () use ($district) {
                 return $district->load([
-                    'schools' => function ($query) {
-                        $query->where('status', true);
-                    },
-                    'kindergartens' => function ($query) {
-                        $query->where('status', true);
-                    }
+                    'schools' => fn ($query) => $query->where('status', true),
+                    'kindergartens' => fn ($query) => $query->where('status', true),
                 ]);
             });
-
             return view('districts.show', ['district' => $districtData]);
         } catch (ModelNotFoundException $e) {
-            abort(404, 'Tuman topilmadi');
+            \Log::warning('District not found: ' . $district->id);
+            abort(404, __('errors.district_not_found'));
         } catch (\Exception $e) {
-            // Log the error
             \Log::error('Error loading district details: ' . $e->getMessage());
-
-            // Redirect to index with error message
             return redirect()->route('districts.index')
-                ->with('error', 'Tuman ma\'lumotlarini yuklashda xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.');
+                ->with('error', __('errors.district_loading_failed'));
         }
     }
+
+    /**
+     * Display the school region view with all districts.
+     */
+    public function schoolRegion(): View
+    {
+        $districts = District::where('status', true)->get();
+
+        return view('school-region', compact('districts'));
+    }
+
 
     /**
      * Clear the cache for a specific district.
@@ -106,4 +106,3 @@ class DistrictController extends Controller
         Cache::forget('districts.statistics');
     }
 }
-

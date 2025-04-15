@@ -47,10 +47,13 @@
 </nav>
 
 <!-- Main Content -->
+<!-- @props(['districts']) bu qator olib tashlandi -->
+
+<!-- HTML boshlanishi -->
 <section class="flex-grow flex items-center justify-center py-32 relative bg-gradient-to-br from-blue-50 via-white to-indigo-50">
     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')] bg-cover bg-center opacity-10"></div>
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 class="text-5xl font-extrabold text-gray-900 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in-up">
+        <h2 id="pageHeading" class="text-5xl font-extrabold text-gray-900 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in-up">
             Toshkent shahri tumanlari
         </h2>
         <div class="flex justify-center mb-12">
@@ -59,73 +62,20 @@
                 <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
             </div>
         </div>
-        <a href="{{route('added')}}">
-            <div id="districtsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Bektemir
+        <div id="districtsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            @foreach($districts as $district)
+                <a href="{{ route('added', ['district' => $district->id]) }}">
+                    <div class="block">
+                        <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                            {{ $district->name }}
+                        </div>
                     </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Chilanzar
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Mirobod
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Mirzo Ulug‘bek
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Olmazor
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Sergeli
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Shayxontohur
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Uchtepa
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yashnobod
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yunusobod
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yakkasaroy
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yangihayot
-                    </div>
-                </div>
-            </div>
-        </a>
+                </a>
+            @endforeach
         </div>
     </div>
 </section>
+
 
 <!-- Footer -->
 <footer class="bg-gradient-to-br from-blue-900 to-indigo-950 text-white py-20">
