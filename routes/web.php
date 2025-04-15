@@ -11,9 +11,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/main', [HomeController::class, 'main'])->name('main');
     Route::get('/school-region', [HomeController::class, 'schoolRegion'])->name('school-region');
     Route::get('/kindergarten-region', [HomeController::class, 'kindergartenRegion'])->name('kindergarten-region');
-    Route::get('/added', [HomeController::class, 'added'])->name('added');
     Route::get('/data', [HomeController::class, 'data'])->name('data');
-
+    
+    // Added resource routes with custom index route
+    Route::get('/added', [HomeController::class, 'added'])->name('added');
+    Route::resource('added', \App\Http\Controllers\AddedController::class)->except(['index']);
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

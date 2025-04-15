@@ -3,11 +3,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateYourTableNameTable extends Migration
+class CreateAddedTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('your_table_name', function (Blueprint $table) {
+        Schema::create('added', function (Blueprint $table) {
             $table->id();
             $table->string('mfy')->nullable();
             $table->year('qurilgan_yili')->nullable();
@@ -36,6 +36,7 @@ class CreateYourTableNameTable extends Migration
             $table->float('elektr_istemoli')->nullable();
             $table->float('issiqlik_istemoli')->nullable();
             $table->boolean('quyosh_paneli')->nullable();
+            $table->string('maktab_rasmlari')->nullable();
             $table->boolean('geokollektor')->nullable();
             $table->string('lokatsiya')->nullable();
             $table->timestamps();
@@ -44,7 +45,7 @@ class CreateYourTableNameTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('your_table_name');
+        Schema::dropIfExists('added');
     }
 }
 

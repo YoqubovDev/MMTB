@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\District;
+use App\Models\Added;
 
 class HomeController extends Controller
 {
@@ -24,7 +26,16 @@ class HomeController extends Controller
    }
     public function added()
     {
-         return view('added');
+        $districts = District::where('status', true)->get();
+        $addeds = Added::with('district')->get();
+        
+        // Add detailed debug logging
+        \Log::info('Added method called');
+        \Log::info('Districts count: ' . $districts->count());
+        \Log::info('First district: ' . ($districts->first() ? $districts->first()->name : 'none'));
+        \Log::info('View data keys: ' . implode(', ', array_keys(compact('districts', 'addeds'))));
+        
+        return view('added', compact('districts', 'addeds'));
     }
     public function data()
     {
