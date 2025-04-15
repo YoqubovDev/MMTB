@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\District;
-use App\Models\School;
+use App\Models\Added;
 use App\Models\Kindergarten;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -28,17 +28,17 @@ class DistrictController extends Controller
                     }])
                     ->get();
             });
-            
+
             // Cache statistics separately
             $statistics = Cache::remember('districts.statistics', 3600, function () {
                 return [
-                    'totalSchools' => School::where('status', true)->count(),
+                    'totalSchools' => Added::where('status', true)->count(),
                     'totalKindergartens' => Kindergarten::where('status', true)->count(),
-                    'schoolsCapacity' => School::where('status', true)->sum('capacity'),
+                    'schoolsCapacity' => Added::where('status', true)->sum('capacity'),
                     'kindergartensCapacity' => Kindergarten::where('status', true)->sum('capacity'),
                 ];
             });
-            
+
             return view('districts.index', [
                 'districts' => $districts,
                 'totalSchools' => $statistics['totalSchools'],
@@ -48,7 +48,7 @@ class DistrictController extends Controller
         } catch (\Exception $e) {
             // Log the error
             \Log::error('Error loading districts: ' . $e->getMessage());
-            
+
             // Return view with error message
             return view('districts.index', [
                 'districts' => collect(),
@@ -70,26 +70,26 @@ class DistrictController extends Controller
             if (!$district->status) {
                 throw new ModelNotFoundException('District not found or inactive');
             }
-            
+
             // Cache individual district data for 1 hour
             $districtData = Cache::remember("districts.{$district->id}", 3600, function () use ($district) {
                 return $district->load([
                     'schools' => function ($query) {
                         $query->where('status', true);
-                    }, 
+                    },
                     'kindergartens' => function ($query) {
                         $query->where('status', true);
                     }
                 ]);
             });
-            
+
             return view('districts.show', ['district' => $districtData]);
         } catch (ModelNotFoundException $e) {
             abort(404, 'Tuman topilmadi');
         } catch (\Exception $e) {
             // Log the error
             \Log::error('Error loading district details: ' . $e->getMessage());
-            
+
             // Redirect to index with error message
             return redirect()->route('districts.index')
                 ->with('error', 'Tuman ma\'lumotlarini yuklashda xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.');

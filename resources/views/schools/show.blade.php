@@ -72,7 +72,7 @@
                 </a>
             </div>
         </div>
-        
+
         <!-- Success message -->
         @if (session('success'))
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded shadow-md">
@@ -83,7 +83,7 @@
             </div>
         @endif
 
-        <!-- School details card -->
+        <!-- Added details card -->
         <div class="bg-white rounded-2xl shadow-md overflow-hidden mb-8">
             <div class="border-b border-gray-200">
                 <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50">

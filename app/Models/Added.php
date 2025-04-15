@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class School extends Model
+class Added extends Model
 {
     use HasFactory;
 
@@ -16,14 +16,37 @@ class School extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'address',
-        'district_id',
-        'contact_number',
-        'email',
-        'principal_name',
-        'capacity',
-        'status',
+        'mfy',
+        'qurilgan_yili',
+        'songi_tamir_yili',
+        'sektor_raqami',
+        'yer_maydoni',
+        'xudud_oralganligi',
+        'binolar_soni',
+        'binolar_qavatligi',
+        'binolar_maydoni',
+        'istilidigan_maydon',
+        'quvvati',
+        'oquvchi_soni',
+        'koffsiyent',
+        'oshxona_yoki_bufet_quvvati',
+        'sport_zal_soni_va_maydoni',
+        'faollar_zali_va_quvvati',
+        'xolati',
+        'tom_xolati_yuzda',
+        'deraza_rom_xolati_yuzda',
+        'istish_turi',
+        'qozonlar_soni',
+        'qozonlar_xolati_yuzda',
+        'apoklar_xolati_yuzda',
+        'gaz_istemoli',
+        'elektr_istemoli',
+        'issiqlik_istemoli',
+        'quyosh_paneli',
+        'geokollektor',
+        'lokatsiya'
+
+
     ];
 
     /**

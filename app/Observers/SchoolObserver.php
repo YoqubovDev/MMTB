@@ -2,26 +2,26 @@
 
 namespace App\Observers;
 
-use App\Models\School;
+use App\Models\Added;
 use Illuminate\Support\Facades\Cache;
 
 class SchoolObserver
 {
     /**
-     * Handle the School "created" event.
+     * Handle the Added "created" event.
      */
-    public function created(School $school)
+    public function created(Added $school)
     {
         $this->clearDistrictCache($school->district_id);
     }
 
     /**
-     * Handle the School "updated" event.
+     * Handle the Added "updated" event.
      */
-    public function updated(School $school)
+    public function updated(Added $school)
     {
         $this->clearDistrictCache($school->district_id);
-        
+
         // If district_id changed, clear cache for old district too
         if ($school->wasChanged('district_id')) {
             $this->clearDistrictCache($school->getOriginal('district_id'));
@@ -29,25 +29,25 @@ class SchoolObserver
     }
 
     /**
-     * Handle the School "deleted" event.
+     * Handle the Added "deleted" event.
      */
-    public function deleted(School $school)
+    public function deleted(Added $school)
     {
         $this->clearDistrictCache($school->district_id);
     }
 
     /**
-     * Handle the School "restored" event.
+     * Handle the Added "restored" event.
      */
-    public function restored(School $school)
+    public function restored(Added $school)
     {
         $this->clearDistrictCache($school->district_id);
     }
 
     /**
-     * Handle the School "force deleted" event.
+     * Handle the Added "force deleted" event.
      */
-    public function forceDeleted(School $school)
+    public function forceDeleted(Added $school)
     {
         $this->clearDistrictCache($school->district_id);
     }

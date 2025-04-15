@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\District;
-use App\Models\School;
+use App\Models\Added;
 use Illuminate\Database\Seeder;
 
 class SchoolSeeder extends Seeder
@@ -19,11 +19,11 @@ class SchoolSeeder extends Seeder
         foreach ($districts as $district) {
             // Create 2-3 schools per district
             $schoolCount = rand(2, 3);
-            
+
             for ($i = 1; $i <= $schoolCount; $i++) {
                 $schoolNumber = rand(1, 299);
-                
-                School::create([
+
+                Added::create([
                     'name' => "{$district->name} {$schoolNumber}-maktab",
                     'address' => "{$district->name}, {$this->getRandomStreet()} ko'chasi, {$this->getRandomBuildingNumber()}-uy",
                     'district_id' => $district->id,
@@ -44,11 +44,11 @@ class SchoolSeeder extends Seeder
                 'Sport',
                 'Informatika'
             ];
-            
+
             $specializedType = $specializedTypes[array_rand($specializedTypes)];
             $specializedSchoolNumber = rand(300, 350);
-            
-            School::create([
+
+            Added::create([
                 'name' => "{$district->name} {$specializedType} ixtisoslashtirilgan maktabi",
                 'address' => "{$district->name}, {$this->getRandomStreet()} ko'chasi, {$this->getRandomBuildingNumber()}-uy",
                 'district_id' => $district->id,
@@ -68,7 +68,7 @@ class SchoolSeeder extends Seeder
     {
         $prefixes = ['+99871', '+99872', '+99873', '+99874', '+99876', '+99877', '+99878'];
         $prefix = $prefixes[array_rand($prefixes)];
-        
+
         return $prefix . ' ' . rand(100, 999) . ' ' . rand(10, 99) . ' ' . rand(10, 99);
     }
 
@@ -78,25 +78,25 @@ class SchoolSeeder extends Seeder
     private function getRandomPrincipalName(): string
     {
         $firstNames = [
-            'Jahongir', 'Rustam', 'Ravshan', 'Akbar', 'Alisher', 
+            'Jahongir', 'Rustam', 'Ravshan', 'Akbar', 'Alisher',
             'Dilshod', 'Botir', 'Ismoil', 'Murod', 'Sanjar',
             'Aziza', 'Nodira', 'Malika', 'Dilnoza', 'Sabina'
         ];
-        
+
         $lastNames = [
             'Ahmedov', 'Karimov', 'Rahimov', 'Nuriddinov', 'Saidov',
             'Toshmatov', 'Qodirov', 'Yusupov', 'Umarov', 'Nizomov',
             'Ahmedova', 'Karimova', 'Rahimova', 'Nuriddinova', 'Saidova'
         ];
-        
+
         $firstName = $firstNames[array_rand($firstNames)];
         $lastName = $lastNames[array_rand($lastNames)];
-        
+
         // Match gender of first name and last name
         if (in_array($firstName, ['Aziza', 'Nodira', 'Malika', 'Dilnoza', 'Sabina'])) {
             $lastName = str_replace('ov', 'ova', $lastName);
         }
-        
+
         return $firstName . ' ' . $lastName;
     }
 
@@ -121,7 +121,7 @@ class SchoolSeeder extends Seeder
             'Bunyodkor', 'Furqat', 'Shota Rustaveli', 'Olmazor', 'Hamid Olimjon',
             'Shaxrisabz', 'O\'zbekiston', 'Beruniy', 'Istiqbol'
         ];
-        
+
         return $streets[array_rand($streets)];
     }
 
