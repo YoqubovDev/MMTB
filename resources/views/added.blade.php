@@ -103,6 +103,7 @@
     <div class="bg-white rounded-3xl p-8 max-w-2xl w-full shadow-2xl animate-fade-in-up overflow-y-auto max-h-[80vh]">
         <h3 class="text-2xl font-bold text-gray-900 mb-6">Yangi Maktab Qo‘shish</h3>
         <form method="POST" action="/added">
+            @csrf
             <input type="hidden" name="district" value="<?php echo htmlspecialchars($_GET['district'] ?? ''); ?>">
             <div class="grid grid-cols-1 gap-4">
                 <div>

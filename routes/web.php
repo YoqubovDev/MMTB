@@ -13,6 +13,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/school-region', [HomeController::class, 'schoolRegion'])->name('school-region');
     Route::get('/kindergarten-region', [HomeController::class, 'kindergartenRegion'])->name('kindergarten-region');
     Route::get('/added', [HomeController::class, 'added'])->name('added');
+    Route::post('/added', [\App\Http\Controllers\AddedController::class, 'store']);
     Route::get('/data', [HomeController::class, 'data'])->name('data');
     Route::post('/store', [AddedController::class, 'store'])->name('store');
 

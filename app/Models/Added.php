@@ -15,6 +15,7 @@ class Added extends Model
      *
      * @var array<int, string>
      */
+    protected $table = 'added';
     protected $fillable = [
         'mfy',
         'qurilgan_yili',
@@ -63,15 +64,37 @@ class Added extends Model
     public static function validationRules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'district_id' => 'required|exists:districts,id',
-            'contact_number' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
-            'principal_name' => 'required|string|max:255',
-            'capacity' => 'required|integer|min:1',
-            'status' => 'required|boolean',
+            'mfy' => 'required|string|max:255',
+            'qurilgan_yili' => 'required|integer|min:1800|max:' . date('Y'),
+            'songi_tamir_yili' => 'nullable|integer|min:1800|max:' . date('Y'),
+            'sektor_raqami' => 'nullable|string|max:50',
+            'yer_maydoni' => 'nullable|numeric',
+            'xudud_oralganligi' => 'nullable|string|max:255',
+            'binolar_soni' => 'nullable|integer|min:0',
+            'binolar_qavatligi' => 'nullable|integer|min:0',
+            'binolar_maydoni' => 'nullable|numeric',
+            'istilidigan_maydon' => 'nullable|numeric',
+            'quvvati' => 'nullable|integer|min:0',
+            'oquvchi_soni' => 'nullable|integer|min:0',
+            'koffsiyent' => 'nullable|numeric',
+            'oshxona_yoki_bufet_quvvati' => 'nullable|string|max:255',
+            'sport_zal_soni_va_maydoni' => 'nullable|string|max:255',
+            'faollar_zali_va_quvvati' => 'nullable|string|max:255',
+            'xolati' => 'nullable|string|max:255',
+            'tom_xolati_yuzda' => 'nullable|numeric|min:0|max:100',
+            'deraza_rom_xolati_yuzda' => 'nullable|numeric|min:0|max:100',
+            'istish_turi' => 'nullable|string|max:255',
+            'qozonlar_soni' => 'nullable|integer|min:0',
+            'qozonlar_xolati_yuzda' => 'nullable|numeric|min:0|max:100',
+            'apoklar_xolati_yuzda' => 'nullable|numeric|min:0|max:100',
+            'gaz_istemoli' => 'nullable|numeric',
+            'elektr_istemoli' => 'nullable|numeric',
+            'issiqlik_istemoli' => 'nullable|numeric',
+            'quyosh_paneli' => 'nullable|boolean',
+            'geokollektor' => 'nullable|boolean',
+            'lokatsiya' => 'nullable|string|max:255',
         ];
     }
+
 }
 

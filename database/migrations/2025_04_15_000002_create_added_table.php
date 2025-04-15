@@ -7,7 +7,7 @@ class CreateAddedTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('your_table_name', function (Blueprint $table) {
+        Schema::create('added', function (Blueprint $table) {
             $table->id();
             $table->string('mfy')->nullable();
             $table->year('qurilgan_yili')->nullable();
@@ -44,7 +44,7 @@ class CreateAddedTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('your_table_name');
+        Schema::dropIfExists('added');
     }
 }
 
