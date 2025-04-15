@@ -22,4 +22,10 @@ class HomeController extends Controller
    {
        return view('kindergarten-region');
    }
+
+    public function added()
+    {
+        return view('added');
+
+   }
 }
