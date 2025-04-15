@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddedController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/kindergarten-region', [HomeController::class, 'kindergartenRegion'])->name('kindergarten-region');
     Route::get('/added', [HomeController::class, 'added'])->name('added');
     Route::get('/data', [HomeController::class, 'data'])->name('data');
+    Route::post('/store', [AddedController::class, 'store'])->name('store');
+
 
     Route::get('/dashboard', function () {
         return view('dashboard');
