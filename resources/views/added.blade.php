@@ -98,11 +98,11 @@
     </div>
 </section>
 
-<!-- Modal for Adding School -->
+<!-- Modal for Adding Added -->
 <div id="addSchoolModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-3xl p-8 max-w-2xl w-full shadow-2xl animate-fade-in-up overflow-y-auto max-h-[80vh]">
         <h3 class="text-2xl font-bold text-gray-900 mb-6">Yangi Maktab Qo‘shish</h3>
-        <form method="POST" action="add_school.php">
+        <form method="POST" action="/added">
             <input type="hidden" name="district" value="<?php echo htmlspecialchars($_GET['district'] ?? ''); ?>">
             <div class="grid grid-cols-1 gap-4">
                 <div>
@@ -234,11 +234,9 @@
     </div>
 </div>
 
-<!-- Modal for Editing School (Placeholder for each school) -->
-</div>
-</div>
+<!-- Modal for Editing Added (Placeholder for each school) -->
 
-<!-- Modal for Editing School 1 -->
+<!-- Modal for Editing Added 1 -->
 <div id="editSchoolModal-1" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-3xl p-8 max-w-2xl w-full shadow-2xl animate-fade-in-up overflow-y-auto max-h-[80vh]">
         <h3 class="text-2xl font-bold text-gray-900 mb-6">Maktabni Tahrirlash</h3>
