@@ -59,67 +59,70 @@
                 <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
             </div>
         </div>
-        <div id="districtsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <a href="/schools/bektemir" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Bektemir
+        <a href="{{route('added')}}">
+            <div id="districtsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Bektemir
+                    </div>
                 </div>
-            </a>
-            <a href="/schools/chilanzar" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Chilanzar
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Chilanzar
+                    </div>
                 </div>
-            </a>
-            <a href="/schools/mirobod" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Mirobod
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Mirobod
+                    </div>
                 </div>
-            </a>
-            <a href="/schools/mirzo-ulugbek" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Mirzo Ulug‘bek
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Mirzo Ulug‘bek
+                    </div>
                 </div>
-            </a>
-            <a href="/schools/olmazor" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Olmazor
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Olmazor
+                    </div>
                 </div>
-            </a>
-            <a href="/schools/sergeli" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Sergeli
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Sergeli
+                    </div>
                 </div>
-            </a>
-            <a href="/schools/shayxontohur" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Shayxontohur
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Shayxontohur
+                    </div>
                 </div>
-            </a>
-            <a href="/schools/uchtepa" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Uchtepa
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Uchtepa
+                    </div>
                 </div>
-            </a>
-            <a href="/schools/yashnobod" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Yashnobod
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Yashnobod
+                    </div>
                 </div>
-            </a>
-            <a href="/schools/yunusobod" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Yunusobod
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Yunusobod
+                    </div>
                 </div>
-            </a>
-            <a href="/schools/yakkasaroy" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Yakkasaroy
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Yakkasaroy
+                    </div>
                 </div>
-            </a>
-            <a href="/schools/yangihayot" class="block">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Yangihayot
+                <div class="block">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Yangihayot
+                    </div>
                 </div>
-            </a>
+            </div>
+        </a>
         </div>
     </div>
 </section>
