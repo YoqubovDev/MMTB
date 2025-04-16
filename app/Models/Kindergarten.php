@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 class Kindergarten extends Model
 {
@@ -51,6 +52,19 @@ class Kindergarten extends Model
             'age_range' => 'required|string|max:50',
             'status' => 'required|boolean',
         ];
+    }
+    public function kindergartenRegion()
+    {
+        $districts = DB::table('districts')
+            ->leftJoin('kindergartens', 'districts.id', '=', 'kindergartens.district_id')
+            ->select('districts.*')
+            ->groupBy('districts.id')
+            ->get();
+
+        $debugMessage = 'Kindergarten region data loaded successfully';
+        $executionTime = round(microtime(true) * 1000) - LARAVEL_START;
+
+        return view('districts.kindergartens', compact('districts', 'debugMessage', 'executionTime'));
     }
 }
 
