@@ -18,7 +18,7 @@ class DistrictSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('districts')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-        
+
         $districts = [
             // Tashkent City districts
             [
@@ -81,97 +81,13 @@ class DistrictSeeder extends Seeder
                 'region' => 'Tashkent',
                 'status' => true,
             ],
-            
+
             // Samarkand region districts
-            [
-                'name' => 'Samarkand City',
-                'region' => 'Samarkand',
-                'status' => true,
-            ],
-            [
-                'name' => 'Bulungur',
-                'region' => 'Samarkand',
-                'status' => true,
-            ],
-            [
-                'name' => 'Ishtixon',
-                'region' => 'Samarkand',
-                'status' => true,
-            ],
-            [
-                'name' => 'Jomboy',
-                'region' => 'Samarkand',
-                'status' => true,
-            ],
-            
-            // Bukhara region districts
-            [
-                'name' => 'Bukhara City',
-                'region' => 'Bukhara',
-                'status' => true,
-            ],
-            [
-                'name' => 'Gijduvan',
-                'region' => 'Bukhara',
-                'status' => true,
-            ],
-            [
-                'name' => 'Karakul',
-                'region' => 'Bukhara',
-                'status' => true,
-            ],
-            
-            // Andijan region districts
-            [
-                'name' => 'Andijan City',
-                'region' => 'Andijan',
-                'status' => true,
-            ],
-            [
-                'name' => 'Asaka',
-                'region' => 'Andijan',
-                'status' => true,
-            ],
-            [
-                'name' => 'Baliqchi',
-                'region' => 'Andijan',
-                'status' => true,
-            ],
-            
-            // Fergana region districts
-            [
-                'name' => 'Fergana City',
-                'region' => 'Fergana',
-                'status' => true,
-            ],
-            [
-                'name' => 'Kuva',
-                'region' => 'Fergana',
-                'status' => true,
-            ],
-            [
-                'name' => 'Qo\'qon',
-                'region' => 'Fergana',
-                'status' => true,
-            ],
-            
-            // Namangan region districts
-            [
-                'name' => 'Namangan City',
-                'region' => 'Namangan',
-                'status' => true,
-            ],
-            [
-                'name' => 'Chust',
-                'region' => 'Namangan',
-                'status' => true,
-            ],
-            [
-                'name' => 'Pop',
-                'region' => 'Namangan',
-                'status' => true,
-            ],
-            
+
+
+
+
+
             // Example of an inactive district
             [
                 'name' => 'Test District (Inactive)',
@@ -179,21 +95,21 @@ class DistrictSeeder extends Seeder
                 'status' => false,
             ],
         ];
-        
+
         try {
             // Track seeding progress
             $this->command->info('Starting district seeding...');
             $districtCount = 0;
             $schoolCount = 0;
-            
+
             foreach ($districts as $districtData) {
                 $district = District::create($districtData);
                 $districtCount++;
-                
+
                 // For active districts, create sample schools
                 if ($district->status) {
                     $schoolsPerDistrict = rand(3, 8); // Create between 3-8 schools per district
-                    
+
                     for ($i = 1; $i <= $schoolsPerDistrict; $i++) {
                         Added::create([
                             'district_id' => $district->id,
@@ -213,17 +129,17 @@ class DistrictSeeder extends Seeder
                         $schoolCount++;
                     }
                 }
-                
+
                 // Log progress for larger datasets
                 if ($districtCount % 10 === 0) {
                     $this->command->info("Seeded {$districtCount} districts so far...");
                 }
             }
-            
+
             $this->command->info("Seeding completed successfully:");
             $this->command->info("- {$districtCount} districts created");
             $this->command->info("- {$schoolCount} sample schools created");
-            
+
         } catch (\Exception $e) {
             $this->command->error("Error seeding districts: " . $e->getMessage());
         }

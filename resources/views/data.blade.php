@@ -43,13 +43,13 @@
                 <h1 class="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-600">MTV</h1>
             </div>
             <div class="hidden md:flex space-x-12">
-                <a href="index.html" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Bosh sahifa</a>
+                <a href="{{ route('added') }}" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Bosh sahifa</a>
                 <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Yangiliklar</a>
                 <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Hujjatlar</a>
                 <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Bog‘lanish</a>
             </div>
             <div class="hidden md:flex items-center gap-4">
-                <a href="#" id="logoutBtn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <a href="{{ route('logout') }}" id="logoutBtn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
                     Chiqish
                 </a>
             </div>
@@ -61,11 +61,11 @@
         </div>
     </div>
     <div id="mobileMenu" class="hidden md:hidden bg-gradient-to-r from-blue-900 to-indigo-900 text-white px-6 py-8 animate-slide-in">
-        <a href="index.html" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bosh sahifa</a>
+        <a href="{{ route('added') }}" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bosh sahifa</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Yangiliklar</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Hujjatlar</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bog‘lanish</a>
-        <a href="#" id="mobileLogoutBtn" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Chiqish</a>
+        <a href="{{ route('logout') }}" id="mobileLogoutBtn" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Chiqish</a>
     </div>
 </nav>
 
@@ -79,63 +79,67 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-4">Umumiy Ma'lumotlar</h3>
-                    <p class="text-gray-600 mb-2"><strong>Manzil (MFY):</strong> O‘zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Qurilgan yili:</strong> 2010</p>
-                    <p class="text-gray-600 mb-2"><strong>So‘ngi tamirlangan yili:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Sektor raqami:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Yer maydoni:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Xudud o'ralganligi:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Binolar soni:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Binolar qavatligi:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Binolar maydoni:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Istilidigan maydon:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Quvvati:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>O'quvchi soni:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Koffsiyent:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Manzil (MFY):</strong> {{ $added->mfy ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Qurilgan yili:</strong> {{ $added->qurilgan_yili ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>So‘ngi tamirlangan yili:</strong> {{ $added->songi_tamir_yili ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Sektor raqami:</strong> {{ $added->sektor_raqami ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Yer maydoni:</strong> {{ $added->yer_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Xudud o'ralganligi:</strong> {{ $added->xudud_oralganligi ? 'Ha' : 'Yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Binolar soni:</strong> {{ $added->binolar_soni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Binolar qavatligi:</strong> {{ $added->binolar_qavatligi ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Binolar maydoni:</strong> {{ $added->binolar_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Istilidigan maydon:</strong> {{ $added->istilidigan_maydon ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Quvvati:</strong> {{ $added->quvvati ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>O'quvchi soni:</strong> {{ $added->oquvchi_soni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Koffsiyent:</strong> {{ $added->koffsiyent ?? 'Ma\'lumot yo\'q' }}</p>
                 </div>
                 <div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-4">Infratuzilma</h3>
-                    <p class="text-gray-600 mb-2"><strong>Oshxona yoki bufet quvvati:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Sport zal soni va maydoni:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Faollar zali va quvvati:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Xolati:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Tom xolati % da:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Deraza rom xolati % da:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Istish turi:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Qozonlar soni:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Qozonlar xolati % da:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Apoklar xolati % da:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>Oshxona yoki bufet quvvati:</strong> {{ $added->oshxona_yoki_bufet_quvvati ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Sport zal soni va maydoni:</strong> {{ $added->sport_zal_soni_va_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Faollar zali va quvvati:</strong> {{ $added->faollar_zali_va_quvvati ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Xolati:</strong> {{ $added->xolati ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Tom xolati % da:</strong> {{ $added->tom_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Deraza rom xolati % da:</strong> {{ $added->deraza_rom_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Istish turi:</strong> {{ $added->istish_turi ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Qozonlar soni:</strong> {{ $added->qozonlar_soni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Qozonlar xolati % da:</strong> {{ $added->qozonlar_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Apoklar xolati % da:</strong> {{ $added->apoklar_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
                 </div>
                 <div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-4">Energiya Iste'moli</h3>
-                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha gaz iste’moli:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha elektr iste’moli:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha issiqlik iste’moli:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Quyosh paneli:</strong> o'zim toldirman</p>
-                    <p class="text-gray-600 mb-2"><strong>Geokollektor:</strong> o'zim toldirman</p>
+                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha gaz iste’moli:</strong> {{ $added->gaz_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha elektr iste’moli:</strong> {{ $added->elektr_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha issiqlik iste’moli:</strong> {{ $added->issiqlik_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Quyosh paneli:</strong> {{ $added->quyosh_paneli ? 'Ha' : 'Yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Geokollektor:</strong> {{ $added->geokollektor ? 'Ha' : 'Yo\'q' }}</p>
                 </div>
                 <div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-4">Lokatsiya va Rasmlar</h3>
                     <p class="text-gray-600 mb-2">
                         <strong>Lokatsiya:</strong>
-                        <a href="https://www.google.pl/maps/place/Sharshara/@41.3433856,69.2846592,14z/data=!4m6!3m5!1s0x38ae8c9d748e1e67:0x1f904eaf8881b6eb!8m2!3d41.3415458!4d69.2539558!16s%2Fg%2F1vv2qm93?entry=ttu&g_ep=EgoyMDI1MDQwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="location-link text-gray-600 hover:underline">
-                            Silka bo‘ladi
-                        </a>
+                        @if($added->lokatsiya)
+                            <a href="{{ $added->lokatsiya }}" target="_blank" class="location-link text-gray-600 hover:underline">
+                                Ko‘rish
+                            </a>
+                        @else
+                            Ma'lumot yo'q
+                        @endif
                     </p>
                     <div class="mt-4">
                         <label class="block text-gray-700 font-semibold mb-2">Maktab Rasmlari:</label>
                         <div class="image-grid">
-                            <img class="preview-img w-full h-32 object-cover" src="https://21-school.uz/assets/images/kampuses/samarkand/samarkand-5.webp" alt="Maktab Rasmi 1">
-                            <img class="preview-img w-full h-32 object-cover" src="https://21-school.uz/assets/images/kampuses/samarkand/samarkand-5.webp" alt="Maktab Rasmi 2">
-                            <img class="preview-img w-full h-32 object-cover" src="https://21-school.uz/assets/images/kampuses/samarkand/samarkand-5.webp" alt="Maktab Rasmi 3">
-                            <img class="preview-img w-full h-32 object-cover" src="https://21-school.uz/assets/images/kampuses/samarkand/samarkand-5.webp" alt="Maktab Rasmi 4">
-                            <img class="preview-img w-full h-32 object-cover" src="https://21-school.uz/assets/images/kampuses/samarkand/samarkand-5.webp" alt="Maktab Rasmi 5">
+                            @if($added->maktab_rasmlari)
+                                <img class="preview-img w-full h-32 object-cover" src="{{ Storage::url($added->maktab_rasmlari) }}" alt="Maktab Rasmi">
+                            @else
+                                <p class="text-gray-600">Rasm yo'q</p>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mt-8 flex justify-end">
-                <a href="{{route('added')}}"<?php echo urlencode($_GET['district'] ?? ''); ?>" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                <a href="{{ route('added') }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
                     Orqaga
                 </a>
             </div>
@@ -154,7 +158,7 @@
             <div>
                 <h3 class="text-2xl font-semibold mb-6">Tez havolalar</h3>
                 <ul class="space-y-4">
-                    <li><a href="" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bosh sahifa</a></li>
+                    <li><a href="{{ route('added') }}" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bosh sahifa</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Yangiliklar</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Hujjatlar</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bog‘lanish</a></li>
@@ -208,8 +212,7 @@
     document.getElementById('logoutBtn').addEventListener('click', (e) => {
         e.preventDefault();
         if (confirm('Chiqishni xohlaysizmi?')) {
-            alert('Tizimdan chiqildi.');
-            window.location.href = 'login.html';
+            window.location.href = '{{ route('logout') }}';
         }
     });
 
@@ -217,8 +220,7 @@
     document.getElementById('mobileLogoutBtn').addEventListener('click', (e) => {
         e.preventDefault();
         if (confirm('Chiqishni xohlaysizmi?')) {
-            alert('Tizimdan chiqildi.');
-            window.location.href = 'login.html';
+            window.location.href = '{{ route('logout') }}';
         }
     });
 </script>
