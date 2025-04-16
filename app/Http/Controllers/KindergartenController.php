@@ -2,99 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\District;
-use App\Models\Kindergarten;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use App\Models\District; // Adjust based on your model
+use Illuminate\Support\Facades\DB;
 
-class KindergartenController extends Controller
+class DistrictController extends Controller
 {
-    /**
-     * Display a listing of kindergartens by district.
-     */
-    public function index(Request $request): View
+    public function index()
     {
-        $districtId = $request->input('district_id');
-        
-        $query = Kindergarten::where('status', true);
-        
-        if ($districtId) {
-            $query->where('district_id', $districtId);
-        }
-        
-        $kindergartens = $query->with('district')->get();
-        $districts = District::where('status', true)->get();
-        
-        return view('kindergartens.index', compact('kindergartens', 'districts', 'districtId'));
+        $districts = District::all(); // Fetch all districts
+        return view('districts.index', compact('districts'));
     }
 
-    /**
-     * Show the form for creating a new kindergarten.
-     */
-    public function create(): View
+    public function show($district)
     {
-        $districts = District::where('status', true)->get();
-        
-        return view('kindergartens.create', compact('districts'));
+        $district = District::findOrFail($district); // Fetch district by ID or slug
+        return view('districts.show', compact('district'));
     }
 
-    /**
-     * Store a newly created kindergarten in storage.
-     */
-    public function store(Request $request): RedirectResponse
+    public function schoolRegion()
     {
-        $validated = $request->validate(Kindergarten::validationRules());
-        
-        Kindergarten::create($validated);
-        
-        return redirect()->route('kindergartens.index')
-                         ->with('success', 'Kindergarten created successfully.');
+        // Existing logic for school regions
+        $districts = District::with('schools')->get(); // Example
+        return view('districts.schools', compact('districts'));
     }
 
-    /**
-     * Display the specified kindergarten.
-     */
-    public function show(Kindergarten $kindergarten): View
+    public function kindergartenRegion()
     {
-        $kindergarten->load('district');
-        
-        return view('kindergartens.show', compact('kindergarten'));
-    }
+        // Fetch districts with associated kindergartens
+        $districts = District::with('kindergartens')->get(); // Adjust based on your model relationship
+        $debugMessage = 'Kindergarten region data loaded successfully';
+        $executionTime = round(microtime(true) * 1000) - LARAVEL_START;
 
-    /**
-     * Show the form for editing the specified kindergarten.
-     */
-    public function edit(Kindergarten $kindergarten): View
-    {
-        $districts = District::where('status', true)->get();
-        
-        return view('kindergartens.edit', compact('kindergarten', 'districts'));
-    }
-
-    /**
-     * Update the specified kindergarten in storage.
-     */
-    public function update(Request $request, Kindergarten $kindergarten): RedirectResponse
-    {
-        $validated = $request->validate(Kindergarten::validationRules());
-        
-        $kindergarten->update($validated);
-        
-        return redirect()->route('kindergartens.show', $kindergarten)
-                         ->with('success', 'Kindergarten updated successfully.');
-    }
-
-    /**
-     * Remove the specified kindergarten from storage.
-     */
-    public function destroy(Kindergarten $kindergarten): RedirectResponse
-    {
-        $kindergarten->status = false;
-        $kindergarten->save();
-        
-        return redirect()->route('kindergartens.index')
-                         ->with('success', 'Kindergarten deleted successfully.');
+        return view('districts.kindergartens', compact('districts', 'debugMessage', 'executionTime'));
     }
 }
-

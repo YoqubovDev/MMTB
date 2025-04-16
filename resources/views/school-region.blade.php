@@ -53,50 +53,7 @@
 <section class="flex-grow flex items-center justify-center py-32 relative bg-gradient-to-br from-blue-50 via-white to-indigo-50">
     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')] bg-cover bg-center opacity-10"></div>
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        @if(app()->environment() !== 'production')
-        <div class="bg-gray-100 border-2 border-gray-300 text-gray-800 p-4 mb-6 rounded shadow-sm text-left">
-            <h4 class="font-bold">Debug Information</h4>
-            
-            <div class="mt-3 p-2 bg-blue-50 rounded border border-blue-200">
-                <h5 class="font-semibold text-blue-800">Districts Variable Status:</h5>
-                <ul class="list-disc pl-5 mt-1 space-y-1 text-sm">
-                    <li>Is Set: <span class="font-mono {{ isset($districts) ? 'text-green-600' : 'text-red-600 font-bold' }}">{{ isset($districts) ? 'Yes' : 'NO - VARIABLE IS UNDEFINED' }}</span></li>
-                    @if(isset($districts))
-                        <li>Type: <span class="font-mono">{{ is_object($districts) ? get_class($districts) : gettype($districts) }}</span></li>
-                        <li>Is Collection: <span class="font-mono {{ $districts instanceof \Illuminate\Support\Collection ? 'text-green-600' : 'text-red-600' }}">{{ $districts instanceof \Illuminate\Support\Collection ? 'Yes' : 'No' }}</span></li>
-                        <li>Count: <span class="font-mono">{{ $districts instanceof \Illuminate\Support\Collection ? $districts->count() : 'N/A' }}</span></li>
-                        @if($districts instanceof \Illuminate\Support\Collection && $districts->count() > 0)
-                            <li>First Item: <code class="bg-gray-100 p-1 text-xs">{{ json_encode($districts->first(), JSON_PRETTY_PRINT) }}</code></li>
-                        @endif
-                    @endif
-                </ul>
-            </div>
-            
-            <div class="mt-3 p-2 bg-yellow-50 rounded border border-yellow-200">
-                <h5 class="font-semibold text-yellow-800">Route Information:</h5>
-                <ul class="list-disc pl-5 mt-1 space-y-1 text-sm">
-                    <li>Route 'added' exists: <span class="font-mono {{ Route::has('added') ? 'text-green-600' : 'text-red-600 font-bold' }}">{{ Route::has('added') ? 'Yes' : 'No' }}</span></li>
-                    <li>Route 'school-region' exists: <span class="font-mono {{ Route::has('school-region') ? 'text-green-600' : 'text-red-600 font-bold' }}">{{ Route::has('school-region') ? 'Yes' : 'No' }}</span></li>
-                    <li>Current URL: <span class="font-mono">{{ url()->current() }}</span></li>
-                </ul>
-            </div>
-            
-            @if(isset($debugMessage))
-            <div class="mt-3">
-                <h5 class="font-semibold">Controller Debug Output:</h5>
-                <pre class="text-xs mt-1 bg-gray-50 p-2 rounded overflow-auto max-h-40 whitespace-pre-wrap">{{ $debugMessage }}</pre>
-            </div>
-            @endif
-            
-            @if(isset($executionTime))
-            <div class="mt-3 text-xs text-gray-600">
-                <strong>Execution time:</strong> {{ $executionTime }}ms
-            </div>
-            @endif
-        </div>
-        @endif
-
-        <h2 id="pageHeading" class="text-5xl font-extrabold text-gray-900 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in-up">
+              <h2 id="pageHeading" class="text-5xl font-extrabold text-gray-900 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in-up">
             Toshkent shahri tumanlari
         </h2>
         <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-12">
@@ -116,7 +73,7 @@
                 </button>
             </div>
         </div>
-        
+
         @if(isset($error))
         <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8 rounded shadow-md">
             <p class="font-medium">{{ $error }}</p>
@@ -130,7 +87,7 @@
             <p class="text-sm mt-2">Tumanlar ma'lumotlari topilmadi. Iltimos, administrator bilan bog'laning.</p>
         </div>
         @endif
-        
+
         <div id="districtsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @if(isset($districts) && $districts instanceof \Illuminate\Support\Collection && $districts->count() > 0)
                 @foreach($districts as $district)
@@ -270,36 +227,36 @@
             heading.textContent = 'Toshkent shahri maktablari';
             searchInput.placeholder = 'Maktab qidirish...';
         } else if (path.includes('kindergartens') || path.includes('bogcha')) {
-            heading.textContent = 'Toshkent shahri bog'chalari';
-            searchInput.placeholder = 'Bog'cha qidirish...';
+            heading.textContent = 'Toshkent shahri maktablari';
+            searchInput.placeholder = 'maktab qidirish...';
         } else {
             heading.textContent = 'Toshkent shahri tumanlari';
             searchInput.placeholder = 'Qidirish...';
         }
-        
+
         // Improved Search Functionality
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
                 const searchValue = e.target.value.toLowerCase().trim();
                 const districtItems = document.querySelectorAll('.district-link');
-                
+
                 if (districtItems.length === 0) {
                     console.log('No district items found to search');
                     return;
                 }
-                
+
                 let matchCount = 0;
-                
+
                 districtItems.forEach(item => {
                     const districtName = item.getAttribute('data-district-name')?.toLowerCase() || '';
                     const hasMatch = districtName.includes(searchValue);
-                    
+
                     // Show/hide based on search
                     item.style.display = hasMatch ? 'block' : 'none';
-                    
+
                     if (hasMatch) matchCount++;
                 });
-                
+
                 // Show no results message if needed
                 const noResultsEl = document.getElementById('noSearchResults');
                 if (searchValue && matchCount === 0) {
@@ -323,48 +280,48 @@
                 }
             });
         }
-        
+
         // Export functionality
         // Get all district data
         function getDistrictData() {
             const districtLinks = document.querySelectorAll('.district-link');
             const districts = [];
-            
+
             if (districtLinks.length === 0) {
                 console.warn('No district links found for export');
                 return districts;
             }
-            
+
             districtLinks.forEach(link => {
                 const districtId = link.getAttribute('data-district-id');
                 const districtName = link.getAttribute('data-district-name');
                 const schoolsCountElement = link.querySelector('span');
                 const schoolsCount = schoolsCountElement ? schoolsCountElement.textContent.replace(' maktab', '').trim() : '0';
-                
+
                 districts.push({
                     'ID': districtId,
                     'Tuman nomi': districtName,
                     'Maktablar soni': schoolsCount
                 });
             });
-            
+
             return districts;
         }
-        
+
         // Export to Excel
         document.getElementById('exportExcel').addEventListener('click', () => {
             const districts = getDistrictData();
-            
+
             if (districts.length === 0) {
                 alert('Eksport qilish uchun ma\'lumotlar mavjud emas.');
                 return;
             }
-            
+
             try {
                 const worksheet = XLSX.utils.json_to_sheet(districts);
                 const workbook = XLSX.utils.book_new();
                 XLSX.utils.book_append_sheet(workbook, worksheet, "Tumanlar");
-                
+
                 // Generate Excel file
                 XLSX.writeFile(workbook, "tumanlar_royxati.xlsx");
                 console.log('Excel export completed successfully');
@@ -373,20 +330,20 @@
                 alert('Excel formatida eksport qilishda xatolik yuz berdi.');
             }
         });
-        
+
         // Export to CSV
         document.getElementById('exportCSV').addEventListener('click', () => {
             const districts = getDistrictData();
-            
+
             if (districts.length === 0) {
                 alert('Eksport qilish uchun ma\'lumotlar mavjud emas.');
                 return;
             }
-            
+
             try {
                 const worksheet = XLSX.utils.json_to_sheet(districts);
                 const csv = XLSX.utils.sheet_to_csv(worksheet);
-                
+
                 // Create blob and save
                 const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
                 saveAs(blob, "tumanlar_royxati.csv");
@@ -396,21 +353,21 @@
                 alert('CSV formatida eksport qilishda xatolik yuz berdi.');
             }
         });
-        
+
         // Export to PDF
         document.getElementById('exportPDF').addEventListener('click', () => {
             const districts = getDistrictData();
-            
+
             if (districts.length === 0) {
                 alert('Eksport qilish uchun ma\'lumotlar mavjud emas.');
                 return;
             }
-            
+
             try {
                 // Create a hidden form to submit for server-side PDF generation
                 const form = document.createElement('form');
                 form.method = 'POST';
-                
+
                 // Check if the route exists, otherwise use a fallback
                 @if(Route::has('districts.export.pdf'))
                 form.action = '{{ route("districts.export.pdf") }}';
@@ -418,21 +375,21 @@
                 form.action = '/districts/export/pdf';
                 alert('Ogohlantirish: PDF eksport manzili mavjud emas.');
                 @endif
-                
+
                 // Add CSRF token
                 const csrfToken = document.createElement('input');
                 csrfToken.type = 'hidden';
                 csrfToken.name = '_token';
                 csrfToken.value = '{{ csrf_token() }}';
                 form.appendChild(csrfToken);
-                
+
                 // Add districts data as JSON
                 const districtsData = document.createElement('input');
                 districtsData.type = 'hidden';
                 districtsData.name = 'districts_data';
                 districtsData.value = JSON.stringify(districts);
                 form.appendChild(districtsData);
-                
+
                 // Submit the form
                 document.body.appendChild(form);
                 form.submit();
