@@ -58,7 +58,7 @@
                 Biz bolalarimizga sifatli ta’lim va innovatsion yechimlar taqdim etib, ularning yorqin kelajagini quramiz.
             </p>
             <div class="flex justify-center md:justify-start gap-6">
-                <a href="#" id="exploreBtn" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-10 py-4 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                <a href="{{route('added')}}" id="exploreBtn" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-10 py-4 rounded-full font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
                     Ko‘proq bilib oling
                 </a>
                 <a href="{{route('login')}}" class="bg-transparent border-2 border-blue-600 text-blue-600 px-10 py-4 rounded-full font-semibold text-lg hover:bg-blue-600 hover:text-white hover:shadow-xl transition-all duration-300">

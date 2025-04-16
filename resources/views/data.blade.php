@@ -46,12 +46,18 @@
                 <a href="{{ route('added') }}" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Bosh sahifa</a>
                 <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Yangiliklar</a>
                 <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Hujjatlar</a>
-                <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Bog‘lanish</a>
+                <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Bog'lanish</a>
             </div>
             <div class="hidden md:flex items-center gap-4">
+                @auth
                 <a href="{{ route('logout') }}" id="logoutBtn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
                     Chiqish
                 </a>
+                @else
+                <a href="{{ route('login') }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Kirish
+                </a>
+                @endauth
             </div>
             <div class="md:hidden flex items-center">
                 <button id="menuBtn" class="text-white focus:outline-none">
@@ -65,7 +71,11 @@
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Yangiliklar</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Hujjatlar</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bog‘lanish</a>
+        @auth
         <a href="{{ route('logout') }}" id="mobileLogoutBtn" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Chiqish</a>
+        @else
+        <a href="{{ route('login') }}" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Kirish</a>
+        @endauth
     </div>
 </nav>
 
@@ -209,20 +219,26 @@
     });
 
     // Chiqish tugmasi (Desktop)
-    document.getElementById('logoutBtn').addEventListener('click', (e) => {
-        e.preventDefault();
-        if (confirm('Chiqishni xohlaysizmi?')) {
-            window.location.href = '{{ route('logout') }}';
-        }
-    });
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Chiqishni xohlaysizmi?')) {
+                window.location.href = '{{ route('logout') }}';
+            }
+        });
+    }
 
     // Chiqish tugmasi (Mobile)
-    document.getElementById('mobileLogoutBtn').addEventListener('click', (e) => {
-        e.preventDefault();
-        if (confirm('Chiqishni xohlaysizmi?')) {
-            window.location.href = '{{ route('logout') }}';
-        }
-    });
+    const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+    if (mobileLogoutBtn) {
+        mobileLogoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Chiqishni xohlaysizmi?')) {
+                window.location.href = '{{ route('logout') }}';
+            }
+        });
+    }
 </script>
 
 <!-- Custom Animation Styles -->

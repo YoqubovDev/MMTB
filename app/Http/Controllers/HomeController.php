@@ -44,6 +44,7 @@ class HomeController extends Controller
             'added' => $added,
         ]);
     }
+    
 
 
 }

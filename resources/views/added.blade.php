@@ -23,9 +23,15 @@
                 <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Bog‘lanish</a>
             </div>
             <div class="hidden md:flex items-center gap-4">
+                @auth
                 <a href="#" id="logoutBtn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
                     Chiqish
                 </a>
+                @else
+                <a href="{{ route('login') }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    Kirish
+                </a>
+                @endauth
             </div>
             <div class="md:hidden flex items-center">
                 <button id="menuBtn" class="text-white focus:outline-none">
@@ -39,7 +45,11 @@
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Yangiliklar</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Hujjatlar</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bog‘lanish</a>
+        @auth
         <a href="#" id="mobileLogoutBtn" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Chiqish</a>
+        @else
+        <a href="{{ route('login') }}" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Kirish</a>
+        @endauth
     </div>
 </nav>
 
@@ -51,9 +61,11 @@
             <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in-up">
                 <?php echo htmlspecialchars(ucfirst($_GET['district'] ?? 'Tuman')); ?> Maktablari
             </h2>
-            <button onclick="document.getElementById('addSchoolModal').classList.remove('hidden')" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                <i class="fas fa-plus mr-2"></i> Maktab Qo‘shish
-            </button>
+            @auth
+                <button onclick="document.getElementById('addSchoolModal').classList.remove('hidden')" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                    <i class="fas fa-plus mr-2"></i> Maktab Qo'shish
+                </button>
+            @endauth
         </div>
         <div class="flex justify-center mb-12">
             <div class="relative w-full max-w-md">
@@ -69,44 +81,45 @@
         <!-- Schools List -->
         <div id="schoolsList" class="space-y-6">
             @forelse($addeds as $added)
-            <div class="flex flex-col sm:flex-row items-center p-6 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 w-full">
-                <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mr-0 sm:mr-6 mb-4 sm:mb-0">
-                    <i class="fas fa-school text-white text-2xl"></i>
+                <div class="flex flex-col sm:flex-row items-center p-6 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 w-full">
+                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mr-0 sm:mr-6 mb-4 sm:mb-0">
+                        <i class="fas fa-school text-white text-2xl"></i>
+                    </div>
+                    <div class="flex-1 text-center sm:text-left">
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">{{ $added->id }}-maktab</h4>
+                        <p class="text-gray-600">MFY: {{ $added->mfy ?? 'Ma\'lumot yo\'q' }}</p>
+                        <p class="text-gray-600">Qurilgan yili: {{ $added->qurilgan_yili ?? 'Ma\'lumot yo\'q' }}</p>
+                        <p class="text-gray-600">Tuman: {{ $added->district->name ?? 'Ma\'lumot yo\'q' }}</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
+                        <a href="{{ route('data', $added->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 text-center">
+                            <i class="fas fa-eye"></i> Ko'rish
+                        </a>
+                        @auth
+                            <a href="{{ route('added.edit', $added->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition-all duration-300 text-center">
+                                <i class="fas fa-edit"></i> Tahrirlash
+                            </a>
+                            <form method="POST" action="{{ route('added.destroy', $added->id) }}" onsubmit="return confirm('Rostdan o\'chirmoqchimisiz?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-all duration-300">
+                                    <i class="fas fa-trash"></i> O'chirish
+                                </button>
+                            </form>
+                        @endauth
+                    </div>
                 </div>
-                <div class="flex-1 text-center sm:text-left">
-                    <h4 class="text-xl font-semibold text-gray-900 mb-2">{{ $added->id }}-maktab</h4>
-                    <p class="text-gray-600">MFY: {{ $added->mfy ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600">Qurilgan yili: {{ $added->qurilgan_yili ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600">Tuman: {{ $added->district->name ?? 'Ma\'lumot yo\'q' }}</p>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
-                    <a href="{{ route('data', $added->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 text-center">
-                        <i class="fas fa-eye"></i> Ko'rish
-                    </a>
-                    <a href="{{ route('added.edit', $added->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition-all duration-300 text-center">
-                        <i class="fas fa-edit"></i> Tahrirlash
-                    </a>
-                    <form method="POST" action="{{ route('added.destroy', $added->id) }}" onsubmit="return confirm('Rostdan o\'chirmoqchimisiz?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-all duration-300">
-                            <i class="fas fa-trash"></i> O'chirish
-                        </button>
-                    </form>
-                </div>
-            </div>
             @empty
-            <div class="flex flex-col items-center p-6 bg-white rounded-3xl shadow-lg w-full">
-                <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4">
-                    <i class="fas fa-school text-gray-400 text-2xl"></i>
+                <div class="flex flex-col items-center p-6 bg-white rounded-3xl shadow-lg w-full">
+                    <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-school text-gray-400 text-2xl"></i>
+                    </div>
+                    <p class="text-gray-500 text-lg">Maktablar topilmadi</p>
                 </div>
-                <p class="text-gray-500 text-lg">Maktablar topilmadi</p>
-            </div>
             @endforelse
         </div>
     </div>
 </section>
-
 <!-- Modal for Adding School -->
 <div id="addSchoolModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full mx-4 sm:mx-auto shadow-2xl animate-fade-in-up overflow-y-auto max-h-[80vh]">
