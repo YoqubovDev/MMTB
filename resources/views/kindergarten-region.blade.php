@@ -8,6 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Export libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 </head>
 <body class="font-inter bg-gray-50 min-h-screen flex flex-col overflow-x-hidden">
 <!-- Navbar -->
@@ -50,74 +53,83 @@
 <section class="flex-grow flex items-center justify-center py-32 relative bg-gradient-to-br from-blue-50 via-white to-indigo-50">
     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')] bg-cover bg-center opacity-10"></div>
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 class="text-5xl font-extrabold text-gray-900 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in-up">
+        @if(app()->environment() !== 'production')
+        <div class="bg-gray-100 border-2 border-gray-300 text-gray-800 p-4 mb-6 rounded shadow-sm text-left">
+            <h4 class="font-bold">Debug Information</h4>
+            
+            <div class="mt-3 p-2 bg-blue-50 rounded border border-blue-200">
+                <h5 class="font-semibold text-blue-800">Districts Variable Status:</h5>
+                <ul class="list-disc pl-5 mt-1 space-y-1 text-sm">
+                    <li>Is Set: <span class="font-mono {{ isset($districts) ? 'text-green-600' : 'text-red-600 font-bold' }}">{{ isset($districts) ? 'Yes' : 'NO - VARIABLE IS UNDEFINED' }}</span></li>
+                    @if(isset($districts))
+                        <li>Type: <span class="font-mono">{{ is_object($districts) ? get_class($districts) : gettype($districts) }}</span></li>
+                        <li>Is Collection: <span class="font-mono {{ $districts instanceof \Illuminate\Support\Collection ? 'text-green-600' : 'text-red-600' }}">{{ $districts instanceof \Illuminate\Support\Collection ? 'Yes' : 'No' }}</span></li>
+                        <li>Count: <span class="font-mono">{{ $districts instanceof \Illuminate\Support\Collection ? $districts->count() : 'N/A' }}</span></li>
+                        @if($districts instanceof \Illuminate\Support\Collection && $districts->count() > 0)
+                            <li>First Item: <code class="bg-gray-100 p-1 text-xs">{{ json_encode($districts->first(), JSON_PRETTY_PRINT) }}</code></li>
+                        @endif
+                    @endif
+                </ul>
+            </div>
+            
+            <div class="mt-3 p-2 bg-yellow-50 rounded border border-yellow-200">
+                <h5 class="font-semibold text-yellow-800">Route Information:</h5>
+                <ul class="list-disc pl-5 mt-1 space-y-1 text-sm">
+                    <li>Route 'added' exists: <span class="font-mono {{ Route::has('added') ? 'text-green-600' : 'text-red-600 font-bold' }}">{{ Route::has('added') ? 'Yes' : 'No' }}</span></li>
+                    <li>Route 'kindergarten-region' exists: <span class="font-mono {{ Route::has('kindergarten-region') ? 'text-green-600' : 'text-red-600 font-bold' }}">{{ Route::has('kindergarten-region') ? 'Yes' : 'No' }}</span></li>
+                    <li>Current URL: <span class="font-mono">{{ url()->current() }}</span></li>
+                </ul>
+            </div>
+            
+            @if(isset($debugMessage))
+            <div class="mt-3">
+                <h5 class="font-semibold">Controller Debug Output:</h5>
+                <pre class="text-xs mt-1 bg-gray-50 p-2 rounded overflow-auto max-h-40 whitespace-pre-wrap">{{ $debugMessage }}</pre>
+            </div>
+            @endif
+            
+            @if(isset($executionTime))
+            <div class="mt-3 text-xs text-gray-600">
+                <strong>Execution time:</strong> {{ $executionTime }}ms
+            </div>
+            @endif
+        </div>
+        @endif
+
+        <h2 id="pageHeading" class="text-5xl font-extrabold text-gray-900 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in-up">
             Toshkent shahri tumanlari
         </h2>
-        <div class="flex justify-center mb-12">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-12">
             <div class="relative w-full max-w-lg">
-                <input type="text" id="searchInput" placeholder="Maktab qidirish..." class="w-full px-6 py-4 rounded-full bg-white text-gray-900 border-2 border-blue-200 focus:border-blue-600 focus:outline-none shadow-lg transition-all duration-300">
+                <input type="text" id="searchInput" placeholder="Bog'cha qidirish..." class="w-full px-6 py-4 rounded-full bg-white text-gray-900 border-2 border-blue-200 focus:border-blue-600 focus:outline-none shadow-lg transition-all duration-300">
                 <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
             </div>
+            <div class="flex flex-wrap justify-center gap-2 mt-4 md:mt-0">
+                <button id="exportExcel" class="px-4 py-3 rounded-full bg-gradient-to-r from-green-500 to-green-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center">
+                    <i class="fas fa-file-excel mr-2"></i> Excel
+                </button>
+                <button id="exportCSV" class="px-4 py-3 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center">
+                    <i class="fas fa-file-csv mr-2"></i> CSV
+                </button>
+                <button id="exportPDF" class="px-4 py-3 rounded-full bg-gradient-to-r from-red-500 to-red-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center">
+                    <i class="fas fa-file-pdf mr-2"></i> PDF
+                </button>
+            </div>
         </div>
-        <a href="{{route('added')}}">
-            <div id="districtsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Bektemir
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Chilanzar
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Mirobod
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Mirzo Ulug‘bek
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Olmazor
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Sergeli
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Shayxontohur
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Uchtepa
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yashnobod
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yunusobod
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                        Yakkasaroy
-                    </div>
-                </div>
-                <div class="block">
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+        
+        @if(isset($error))
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8 rounded shadow-md">
+            <p class="font-medium">{{ $error }}</p>
+            <p class="text-sm mt-2">Iltimos, sahifani yangilang yoki keyinroq qayta urinib ko'ring.</p>
+        </div>
+        @endif
+
+        @if(!isset($districts))
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-8 rounded shadow-md">
+            <p class="font-medium">Ma'lumotlarni yuklashda xatolik</p>
+            <p class="text-sm mt-2">Tumanlar ma'lumotlari topilmadi. Iltimos, administrator bilan bog'laning.</p>
+        </div>
+        @endif
                         Yangihayot
                     </div>
                 </div>
