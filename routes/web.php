@@ -15,7 +15,7 @@ Route::get('/kindergarten-region', [DistrictController::class, 'kindergartenRegi
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/main', [HomeController::class, 'main'])->name('main');
-    Route::get('/data', [HomeController::class, 'data'])->name('data');
+    Route::get('/data/{id}', [HomeController::class, 'data'])->name('data');
 
     // Added resource routes with custom index route
     Route::get('/added', [HomeController::class, 'added'])->name('added');
