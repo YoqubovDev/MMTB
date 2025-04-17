@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Added;
 use App\Models\District;
 use App\Models\Kindergarten;
 use Illuminate\Http\Request;
@@ -9,25 +10,16 @@ use Illuminate\Support\Facades\Log;
 
 class KindergartenController extends Controller
 {
-    public function kindergarten(Request $request)
+    public function kindergarten()
     {
         $districts = District::where('status', true)->get();
-        $districtName = $request->query('district');
+        $kindergartens = Kindergarten::with('district')->get();
 
-        $query = Kindergarten::with('district');
-
-        if ($districtName) {
-            $query->whereHas('district', fn($q) => $q->where('name', $districtName));
-        }
-
-        $kindergartens = $query->get();
-
-        Log::info('Kindergarten method called', [
-            'district' => $districtName,
-            'districts_count' => $districts->count(),
-            'kindergartens_count' => $kindergartens->count(),
-            'first_district' => $districts->first() ? $districts->first()->name : 'none',
-        ]);
+        // Add detailed debug logging
+        \Log::info('Added method called');
+        \Log::info('Districts count: ' . $districts->count());
+        \Log::info('First district: ' . ($districts->first() ? $districts->first()->name : 'none'));
+        \Log::info('View data keys: ' . implode(', ', array_keys(compact('districts', 'kindergartens'))));
 
         return view('kindergarten', compact('districts', 'kindergartens'));
     }

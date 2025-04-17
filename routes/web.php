@@ -20,8 +20,8 @@ Route::get('/school', [AddedController::class, 'school'])->name('added');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/main', [HomeController::class, 'main'])->name('main');
-    Route::resource('added', AddedController::class)->except(['index']);
-    Route::resource('kindergarten', KindergartenController::class)->except(['index']);
+    Route::resource('kindergarten', KindergartenController::class)->except('index', 'show');
+    Route::resource('added', AddedController::class);
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 });
 
