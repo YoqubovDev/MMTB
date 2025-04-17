@@ -4,34 +4,49 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateKindergartensTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('kindergartens', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->foreignId('district_id')->constrained()->onDelete('cascade');
-            $table->string('contact_number');
-            $table->string('email');
-            $table->string('director_name');
-            $table->integer('capacity');
-            $table->string('age_range');
-            $table->boolean('status')->default(true);
+            $table->foreignId('district_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('mfy');
+            $table->integer('qurilgan_yili');
+            $table->integer('songi_tamir_yili')->nullable();
+            $table->integer('sektor_raqami')->nullable();
+            $table->decimal('yer_maydoni', 10, 2)->nullable();
+            $table->boolean('xudud_oralganligi')->nullable();
+            $table->integer('binolar_soni')->nullable();
+            $table->integer('binolar_qavatligi')->nullable();
+            $table->decimal('binolar_maydoni', 10, 2)->nullable();
+            $table->decimal('istilidigan_maydon', 10, 2)->nullable();
+            $table->integer('quvvati')->nullable();
+            $table->integer('oquvchi_soni')->nullable();
+            $table->decimal('koffsiyent', 8, 2)->nullable();
+            $table->string('oshxona_yoki_bufet_quvvati')->nullable();
+            $table->string('sport_zal_soni_va_maydoni')->nullable();
+            $table->string('faollar_zali_va_quvvati')->nullable();
+            $table->string('xolati')->nullable();
+            $table->decimal('tom_xolati_yuzda', 5, 2)->nullable();
+            $table->decimal('deraza_rom_xolati_yuzda', 5, 2)->nullable();
+            $table->string('istish_turi')->nullable();
+            $table->integer('qozonlar_soni')->nullable();
+            $table->decimal('qozonlar_xolati_yuzda', 5, 2)->nullable();
+            $table->decimal('apoklar_xolati_yuzda', 5, 2)->nullable();
+            $table->decimal('gaz_istemoli', 10, 2)->nullable();
+            $table->decimal('elektr_istemoli', 10, 2)->nullable();
+            $table->decimal('issiqlik_istemoli', 10, 2)->nullable();
+            $table->boolean('quyosh_paneli')->nullable();
+            $table->boolean('geokollektor')->nullable();
+            $table->string('lokatsiya')->nullable();
+            $table->string('boqcha_rasmlari')->nullable(); // Store file path
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('kindergartens');
     }
-};
-
+}
