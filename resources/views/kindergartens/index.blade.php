@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTV - Bog'chalar</title>
+    <title>MTV - Maktablar</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
@@ -57,19 +57,12 @@
     <div class="max-w-7xl mx-auto">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-3xl font-extrabold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-                Bog'chalar ro'yhati
+                Maktablar ro'yhati
             </h2>
             <a href="{{ route('kindergartens.create') }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                <i class="fas fa-plus mr-2"></i> Yangi bog'cha
+                <i class="fas fa-plus mr-2"></i> Yangi maktab
             </a>
-        </div>
-
-        @if (session('success'))
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded shadow-md">
-                <div class="flex items-center">
-                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                    <p>{{ session('success') }}</p>
-                </div>
+        @include('components.flash-messages')
             </div>
         @endif
 
@@ -78,7 +71,7 @@
                 <h3 class="text-lg font-semibold text-gray-800 mb-4">Qidirish va filtrlash</h3>
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="flex-1">
-                        <input type="text" id="searchInput" placeholder="Bog'cha nomi bo'yicha qidirish..." class="w-full px-4 py-3 rounded-full bg-gray-50 text-gray-900 border-2 border-blue-200 focus:border-blue-600 focus:outline-none shadow-sm transition-all duration-300">
+                        <input type="text" id="searchInput" placeholder="Maktab nomi bo'yicha qidirish..." class="w-full px-4 py-3 rounded-full bg-gray-50 text-gray-900 border-2 border-blue-200 focus:border-blue-600 focus:outline-none shadow-sm transition-all duration-300">
                     </div>
                     <div class="w-full md:w-auto">
                         <select id="districtFilter" class="w-full px-4 py-3 rounded-full bg-gray-50 text-gray-900 border-2 border-blue-200 focus:border-blue-600 focus:outline-none shadow-sm transition-all duration-300">
@@ -99,15 +92,14 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gradient-to-r from-blue-100 to-indigo-100">
                         <tr>
-                            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Bog'cha nomi</th>
+                            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Boqcha nomi</th>
                             <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Tuman</th>
                             <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Direktor</th>
                             <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Sig'imi</th>
-                            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-gray-700">Yosh chegarasi</th>
                             <th scope="col" class="px-6 py-4 text-right text-sm font-semibold text-gray-700">Amallar</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200" id="kindergartensTable">
+                    <tbody class="bg-white divide-y divide-gray-200" id="schoolsTable">
                         @forelse($kindergartens as $kindergarten)
                             <tr class="hover:bg-gray-50 transition-colors duration-200">
                                 <td class="px-6 py-4 whitespace-nowrap text-blue-600 font-medium">
@@ -117,23 +109,20 @@
                                     {{ $kindergarten->district->name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-gray-700">
-                                    {{ $kindergarten->director_name }}
+                                    {{ $kindergarten->principal_name }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-gray-700">
                                     {{ $kindergarten->capacity }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-gray-700">
-                                    {{ $kindergarten->age_range }}
-                                </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <div class="flex justify-end gap-2">
-                                        <a href="{{ route('kindergartens.show', $kindergarten) }}" class="text-blue-600 hover:text-blue-800 transition-colors p-1" title="Ko'rish">
+                                        <a href="{{ route('schools.show', $kindergarten) }}" class="text-blue-600 hover:text-blue-800 transition-colors p-1" title="Ko'rish">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('kindergartens.edit', $kindergarten) }}" class="text-green-600 hover:text-green-800 transition-colors p-1" title="Tahrirlash">
+                                        <a href="{{ route('schools.edit', $kindergarten) }}" class="text-green-600 hover:text-green-800 transition-colors p-1" title="Tahrirlash">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form method="POST" action="{{ route('kindergartens.destroy', $kindergarten) }}" class="inline" onsubmit="return confirm('Bog\'chani o\'chirishni tasdiqlaysizmi?');">
+                                        <form method="POST" action="{{ route('schools.destroy', $kindergarten) }}" class="inline" onsubmit="return confirm('Maktabni o\'chirishni tasdiqlaysizmi?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-800 transition-colors p-1" title="O'chirish">
@@ -145,9 +134,9 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-6 py-10 text-center text-gray-500">
-                                    <i class="fas fa-baby text-4xl mb-3 text-gray-300"></i>
-                                    <p>Bog'chalar topilmadi.</p>
+                                <td colspan="5" class="px-6 py-10 text-center text-gray-500">
+                                    <i class="fas fa-school text-4xl mb-3 text-gray-300"></i>
+                                    <p>Maktablar topilmadi.</p>
                                 </td>
                             </tr>
                         @endforelse
@@ -184,5 +173,6 @@
                 <h3 class="text-2xl font-semibold mb-6">Bizni kuzating</h3>
                 <div class="flex space-x-6">
                     <a href="#" class="text-gray-300 hover:text-blue-300 text-3xl hover:scale-110 transition-transform duration-300"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"
+                    <a href="#" class="text-gray-300 hover:text-blue-300 text-3xl hover:scale-110 transition-transform duration-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-300 hover:text-blue-300 text-3xl hover:scale-110 transition-transform duration-300"><i
 

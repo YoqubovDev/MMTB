@@ -42,7 +42,7 @@
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Yangiliklar</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Hujjatlar</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bog‘lanish</a>
-        <a href="#" id="mobileLogoutBtn" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Chiqish</a>
+        <a href="/login" id="mobileLogoutBtn" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Chiqish</a>
     </div>
 </nav>
 
@@ -142,7 +142,7 @@
         e.preventDefault();
         if (confirm('Chiqishni xohlaysizmi?')) {
             alert('Tizimdan chiqildi.');
-            window.location.href = 'login.html';
+            window.location.href = '/login';
         }
     });
 
@@ -151,7 +151,7 @@
         e.preventDefault();
         if (confirm('Chiqishni xohlaysizmi?')) {
             alert('Tizimdan chiqildi.');
-            window.location.href = 'login.html';
+            window.location.href = '/login';
         }
     });
 </script>

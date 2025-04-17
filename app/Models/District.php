@@ -32,7 +32,7 @@ class District extends Model
     /**
      * Get the kindergartens for the district.
      */
-    public function kindergartens(): HasMany
+    public function kindergartens()
     {
         return $this->hasMany(Kindergarten::class);
     }

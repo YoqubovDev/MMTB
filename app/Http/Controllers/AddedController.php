@@ -23,7 +23,9 @@ class AddedController extends Controller
     public function school()
     {
         $districts = District::where('status', true)->get();
-        $addeds = Added::where('district_id', 2)->with('district')->get();
+        $tuman_id = $_GET['added'];
+        $addeds = Added::where('district_id', $tuman_id)->with('district')->get();
+//        dd($tuman_id);
 
         // Add detailed debug logging
         \Log::info('Added method called');

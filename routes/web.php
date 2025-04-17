@@ -15,14 +15,14 @@ Route::get('/districts/{district}', [DistrictController::class, 'show'])->name('
 Route::get('/school-region', [DistrictController::class, 'schoolRegion'])->name('school-region');
 Route::get('/kindergarten-region', [DistrictController::class, 'kindergartenRegion'])->name('kindergarten-region');
 Route::get('/data/{id}', [HomeController::class, 'data'])->name('data');
+Route::get('/kindergarten', [KindergartenController::class, 'kindergarten'])->name('kindergarten');
+Route::get('/school', [AddedController::class, 'school'])->name('added');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/main', [HomeController::class, 'main'])->name('main');
     Route::resource('added', AddedController::class)->except(['index']);
     Route::resource('kindergarten', KindergartenController::class)->except(['index']);
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 });
-
-Route::get('/school', [AddedController::class, 'school'])->name('added');
-Route::get('/kindergartens', [KindergartenController::class, 'kindergarten'])->name('kindergarten');
 
 require __DIR__.'/auth.php';

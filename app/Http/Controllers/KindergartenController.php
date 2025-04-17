@@ -2,102 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Added;
+use App\Models\District;
 use App\Models\Kindergarten;
 use Illuminate\Http\Request;
-use App\Models\District; // Adjust based on your model
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class KindergartenController extends Controller
 {
-    public function kindergarten()
+    public function kindergarten(Request $request)
     {
         $districts = District::where('status', true)->get();
-        $kindergartens= Kindergarten::where('district_id', 2)->with('district')->get();
+        $districtName = $request->query('district');
 
-        // Add detailed debug logging
-        \Log::info('Kindergarten method called');
-        \Log::info('Districts count: ' . $districts->count());
-        \Log::info('First district: ' . ($districts->first() ? $districts->first()->name : 'none'));
-        \Log::info('View data keys: ' . implode(', ', array_keys(compact('districts', 'kindergartens'))));
+        $query = Kindergarten::with('district');
+
+        if ($districtName) {
+            $query->whereHas('district', fn($q) => $q->where('name', $districtName));
+        }
+
+        $kindergartens = $query->get();
+
+        Log::info('Kindergarten method called', [
+            'district' => $districtName,
+            'districts_count' => $districts->count(),
+            'kindergartens_count' => $kindergartens->count(),
+            'first_district' => $districts->first() ? $districts->first()->name : 'none',
+        ]);
 
         return view('kindergarten', compact('districts', 'kindergartens'));
     }
-    public function index()
+
+    public function search(Request $request)
     {
-        $kindergartens = Kindergarten::with('district')->get();
-        return response()->json($kindergartens);
+        $search = $request->query('search', '');
+        $district = $request->query('district', '');
+
+        $query = Kindergarten::query()
+            ->when($search, fn($q) => $q->where('boqcha_raqami', 'like', "%{$search}%"))
+            ->when($district, fn($q) => $q->whereHas('district', fn($q) => $q->where('name', $district)))
+            ->with('district');
+
+        return response()->json($query->get());
     }
 
-    public function store(Request $request)
+    public function store(\App\Http\Requests\StoreKindergartenRequest $request)
     {
-        $validator = Validator::make($request->all(), Kindergarten::validationRules(), Kindergarten::validationMessages());
+        $data = $request->validated();
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $data = $request->all();
-
-        // Handle file upload
         if ($request->hasFile('boqcha_rasmlari')) {
-            $file = $request->file('boqcha_rasmlari');
-            $path = $file->store('kindergarten_images', 'public');
-            $data['boqcha_rasmlari'] = $path;
+            $data['boqcha_rasmlari'] = $request->file('boqcha_rasmlari')->store('kindergarten_images', 'public');
         }
 
-        $kindergarten = Kindergarten::create($data);
+        Kindergarten::create($data);
 
-        return response()->json($kindergarten, 201);
+        return redirect()->back()->with('success', 'Boqcha muvaffaqiyatli qo‘shildi.');
     }
 
-    public function show($id)
+    public function update(\App\Http\Requests\UpdateKindergartenRequest $request, Kindergarten $kindergarten)
     {
-        $kindergarten = Kindergarten::with('district')->findOrFail($id);
-        return response()->json($kindergarten);
-    }
+        $data = $request->validated();
 
-    public function update(Request $request, $id)
-    {
-        $kindergarten = Kindergarten::findOrFail($id);
-
-        $validator = Validator::make($request->all(), Kindergarten::validationRules(), Kindergarten::validationMessages());
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-
-        $data = $request->all();
-
-        // Handle file upload
         if ($request->hasFile('boqcha_rasmlari')) {
-            // Delete old image if exists
-            if ($kindergarten->boqcha_rasmlari) {
-                Storage::disk('public')->delete($kindergarten->boqcha_rasmlari);
-            }
-            $file = $request->file('boqcha_rasmlari');
-            $path = $file->store('kindergarten_images', 'public');
-            $data['boqcha_rasmlari'] = $path;
+            $data['boqcha_rasmlari'] = $request->file('boqcha_rasmlari')->store('kindergarten_images', 'public');
         }
 
         $kindergarten->update($data);
 
-        return response()->json($kindergarten);
+        return redirect()->back()->with('success', 'Boqcha muvaffaqiyatli yangilandi.');
     }
 
-    public function destroy($id)
+    public function destroy(Kindergarten $kindergarten)
     {
-        $kindergarten = Kindergarten::findOrFail($id);
-
-        // Delete image if exists
-        if ($kindergarten->boqcha_rasmlari) {
-            Storage::disk('public')->delete($kindergarten->boqcha_rasmlari);
-        }
-
         $kindergarten->delete();
-
-        return response()->json(['message' => 'Kindergarten deleted successfully']);
+        return redirect()->back()->with('success', 'Boqcha muvaffaqiyatli o‘chirildi.');
     }
 }
