@@ -9,6 +9,7 @@ class CreateAddedTable extends Migration
     {
         Schema::create('added', function (Blueprint $table) {
             $table->id();
+            $table->integer('maktab_raqami')->nullable();
             $table->string('mfy')->nullable();
             $table->year('qurilgan_yili')->nullable();
             $table->year('songi_tamir_yili')->nullable();

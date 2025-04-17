@@ -14,23 +14,23 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-20 items-center">
             <div class="flex-shrink-0 flex items-center">
-                <h1 class="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-600">MTV</h1>
+                <a href="/" class="text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-600">MTV</a>
             </div>
             <div class="hidden md:flex space-x-12">
-                <a href="index.html" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Bosh sahifa</a>
+                <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Bosh sahifa</a>
                 <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Yangiliklar</a>
                 <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Hujjatlar</a>
                 <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Bog‘lanish</a>
             </div>
             <div class="hidden md:flex items-center gap-4">
                 @auth
-                <a href="#" id="logoutBtn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Chiqish
-                </a>
+                    <a href="#" id="logoutBtn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Chiqish
+                    </a>
                 @else
-                <a href="{{ route('login') }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
-                    Kirish
-                </a>
+                    <a href="{{ route('login') }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                        Kirish
+                    </a>
                 @endauth
             </div>
             <div class="md:hidden flex items-center">
@@ -41,14 +41,14 @@
         </div>
     </div>
     <div id="mobileMenu" class="hidden md:hidden bg-gradient-to-r from-blue-900 to-indigo-900 text-white px-6 py-8 animate-slide-in">
-        <a href="index.html" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bosh sahifa</a>
+        <a href="/" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bosh sahifa</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Yangiliklar</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Hujjatlar</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bog‘lanish</a>
         @auth
-        <a href="#" id="mobileLogoutBtn" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Chiqish</a>
+            <a href="#" id="mobileLogoutBtn" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Chiqish</a>
         @else
-        <a href="{{ route('login') }}" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Kirish</a>
+            <a href="{{ route('login') }}" class="block mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-center hover:shadow-lg transition">Kirish</a>
         @endauth
     </div>
 </nav>
@@ -86,7 +86,7 @@
                         <i class="fas fa-school text-white text-2xl"></i>
                     </div>
                     <div class="flex-1 text-center sm:text-left">
-                        <h4 class="text-xl font-semibold text-gray-900 mb-2">{{ $added->id }}-maktab</h4>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">{{ $added->maktab_raqami }}-maktab</h4>
                         <p class="text-gray-600">MFY: {{ $added->mfy ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600">Qurilgan yili: {{ $added->qurilgan_yili ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600">Tuman: {{ $added->district->name ?? 'Ma\'lumot yo\'q' }}</p>
@@ -96,7 +96,7 @@
                             <i class="fas fa-eye"></i> Ko'rish
                         </a>
                         @auth
-                            <a href="{{ route('added.edit', $added->id) }}" class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition-all duration-300 text-center">
+                            <a href="javascript:void(0)" onclick="document.getElementById('editSchoolModal-{{ $added->id }}').classList.remove('hidden')" class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition-all duration-300 text-center">
                                 <i class="fas fa-edit"></i> Tahrirlash
                             </a>
                             <form method="POST" action="{{ route('added.destroy', $added->id) }}" onsubmit="return confirm('Rostdan o\'chirmoqchimisiz?');">
@@ -114,12 +114,13 @@
                     <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4">
                         <i class="fas fa-school text-gray-400 text-2xl"></i>
                     </div>
-                    <p class="text-gray-500 text-lg">Maktablar topilmadi</p>
+                    <p class="text-gray-600 text-lg">Maktablar topilmadi</p>
                 </div>
             @endforelse
         </div>
     </div>
 </section>
+
 <!-- Modal for Adding School -->
 <div id="addSchoolModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full mx-4 sm:mx-auto shadow-2xl animate-fade-in-up overflow-y-auto max-h-[80vh]">
@@ -137,6 +138,10 @@
                 </div>
             @endif
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="school_number" class="block text-gray-700 font-semibold mb-2">Maktab raqami</label>
+                    <input type="text" id="school_number" name="maktab_raqami" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 112" value="{{ old('school_number') }}" required>
+                </div>
                 <div>
                     <label for="district_id" class="block text-gray-700 font-semibold mb-2">Tuman</label>
                     <select id="district_id" name="district_id" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300">
@@ -245,11 +250,11 @@
                 </div>
                 <div>
                     <label for="qozonlar_xolati_yuzda" class="block text-gray-700 font-semibold mb-2">Qozonlar xolati % da</label>
-                    <input type="number" id="qozonlar_xolati_yuzda" name="qozonlar_xolati_yuzda" min="0" max="100" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 80" value="{{ old('qozonlar_xolati_yuzda') }}">
+                    <input type="number" id="qozonlar_xolati_yuzda" name="qozonlar_xolati_yuzda" min="0" max="100" step="0.01" value="{{ old('qozonlar_xolati_yuzda') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 80">
                 </div>
                 <div>
                     <label for="apoklar_xolati_yuzda" class="block text-gray-700 font-semibold mb-2">Apoklar xolati % da</label>
-                    <input type="number" id="apoklar_xolati_yuzda" name="apoklar_xolati_yuzda" min="0" max="100" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 75" value="{{ old('apoklar_xolati_yuzda') }}">
+                    <input type="number" id="apoklar_xolati_yuzda" name="apoklar_xolati_yuzda" min="0" max="100" step="0.01" value="{{ old('apoklar_xolati_yuzda') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 75">
                 </div>
                 <div>
                     <label for="gaz_istemoli" class="block text-gray-700 font-semibold mb-2">1 yillik o‘rtacha gaz iste’moli</label>
@@ -307,173 +312,178 @@
     </div>
 </div>
 
-<!-- Modal for Editing School 1 -->
-<div id="editSchoolModal-1" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full mx-4 sm:mx-auto shadow-2xl animate-fade-in-up overflow-y-auto max-h-[80vh]">
-        <h3 class="text-2xl font-bold text-gray-900 mb-6">Maktabni Tahrirlash</h3>
-        <form method="POST" action="edit_school.php" enctype="multipart/form-data">
-            <input type="hidden" name="school_id" value="1">
-            <input type="hidden" name="district" value="<?php echo htmlspecialchars($_GET['district'] ?? ''); ?>">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label for="edit_maktab_nomi_1" class="block text-gray-700 font-semibold mb-2">Maktab nomi</label>
-                    <input type="text" id="edit_maktab_nomi_1" name="maktab_nomi" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="112-maktab">
-                </div>
-                <div>
-                    <label for="edit_mfy_1" class="block text-gray-700 font-semibold mb-2">Manzil (MFY)</label>
-                    <input type="text" id="edit_mfy_1" name="mfy" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="O‘zim toldirman">
-                </div>
-                <div>
-                    <label for="edit_qurilgan_yili_1" class="block text-gray-700 font-semibold mb-2">Qurilgan yili</label>
-                    <input type="number" id="edit_qurilgan_yili_1" name="qurilgan_yili" min="1800" max="{{ date('Y') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="2010">
-                </div>
-                <div>
-                    <label for="edit_songi_tamir_yili_1" class="block text-gray-700 font-semibold mb-2">So‘ngi tamirlangan yili</label>
-                    <input type="number" id="edit_songi_tamir_yili_1" name="songi_tamir_yili" min="1800" max="{{ date('Y') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 2020">
-                </div>
-                <div>
-                    <label for="edit_sektor_raqami_1" class="block text-gray-700 font-semibold mb-2">Sektor raqami</label>
-                    <input type="number" id="edit_sektor_raqami_1" name="sektor_raqami" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 3">
-                </div>
-                <div>
-                    <label for="edit_yer_maydoni_1" class="block text-gray-700 font-semibold mb-2">Yer maydoni</label>
-                    <input type="text" id="edit_yer_maydoni_1" name="yer_maydoni" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 5000 m²">
-                </div>
-                <div>
-                    <label for="edit_xudud_oralganligi_1" class="block text-gray-700 font-semibold mb-2">Xudud o‘ralganligi</label>
-                    <div class="flex items-center space-x-4">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="xudud_oralganligi" value="1" class="form-radio h-5 w-5 text-blue-600">
-                            <span class="ml-2 text-gray-700">Ha</span>
-                        </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="xudud_oralganligi" value="0" checked class="form-radio h-5 w-5 text-blue-600">
-                            <span class="ml-2 text-gray-700">Yo‘q</span>
-                        </label>
+<!-- Dynamic Modals for Editing Schools -->
+@forelse($addeds as $added)
+    <div id="editSchoolModal-{{ $added->id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full mx-4 sm:mx-auto shadow-2xl animate-fade-in-up overflow-y-auto max-h-[80vh]">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Maktabni Tahrirlash</h3>
+            <form method="POST" action="{{ route('added.update', $added->id) }}" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="district" value="{{ htmlspecialchars($_GET['district'] ?? '') }}">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="edit_maktab_raqami_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Maktab raqami</label>
+                        <input type="text" id="edit_maktab_raqami_{{ $added->id }}" name="maktab_raqami" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('maktab_raqami', $added->maktab_raqami) }}" required>
+                    </div>
+                    <div>
+                        <label for="edit_mfy_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Manzil (MFY)</label>
+                        <input type="text" id="edit_mfy_{{ $added->id }}" name="mfy" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('mfy', $added->mfy ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_qurilgan_yili_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Qurilgan yili</label>
+                        <input type="number" id="edit_qurilgan_yili_{{ $added->id }}" name="qurilgan_yili" min="1800" max="{{ date('Y') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('qurilgan_yili', $added->qurilgan_yili ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_songi_tamir_yili_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">So‘ngi tamirlangan yili</label>
+                        <input type="number" id="edit_songi_tamir_yili_{{ $added->id }}" name="songi_tamir_yili" min="1800" max="{{ date('Y') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('songi_tamir_yili', $added->songi_tamir_yili ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_sektor_raqami_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Sektor raqami</label>
+                        <input type="number" id="edit_sektor_raqami_{{ $added->id }}" name="sektor_raqami" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('sektor_raqami', $added->sektor_raqami ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_yer_maydoni_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Yer maydoni</label>
+                        <input type="text" id="edit_yer_maydoni_{{ $added->id }}" name="yer_maydoni" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('yer_maydoni', $added->yer_maydoni ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_xudud_oralganligi_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Xudud o‘ralganligi</label>
+                        <div class="flex items-center space-x-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="xudud_oralganligi" value="1" {{ old('xudud_oralganligi', $added->xudud_oralganligi) == 1 ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                                <span class="ml-2 text-gray-700">Ha</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="xudud_oralganligi" value="0" {{ old('xudud_oralganligi', $added->xudud_oralganligi) == 0 ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                                <span class="ml-2 text-gray-700">Yo‘q</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="edit_binolar_soni_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Binolar soni</label>
+                        <input type="number" id="edit_binolar_soni_{{ $added->id }}" name="binolar_soni" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('binolar_soni', $added->binolar_soni ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_binolar_qavatligi_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Binolar qavatligi</label>
+                        <input type="number" id="edit_binolar_qavatligi_{{ $added->id }}" name="binolar_qavatligi" min="1" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('binolar_qavatligi', $added->binolar_qavatligi ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_binolar_maydoni_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Binolar maydoni</label>
+                        <input type="text" id="edit_binolar_maydoni_{{ $added->id }}" name="binolar_maydoni" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('binolar_maydoni', $added->binolar_maydoni ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_istilidigan_maydon_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Istilidigan maydon</label>
+                        <input type="text" id="edit_istilidigan_maydon_{{ $added->id }}" name="istilidigan_maydon" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('istilidigan_maydon', $added->istilidigan_maydon ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_quvvati_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Quvvati</label>
+                        <input type="text" id="edit_quvvati_{{ $added->id }}" name="quvvati" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('quvvati', $added->quvvati ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_oquvchi_soni_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">O‘quvchi soni</label>
+                        <input type="number" id="edit_oquvchi_soni_{{ $added->id }}" name="oquvchi_soni" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('oquvchi_soni', $added->oquvchi_soni ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_koffsiyent_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Koffsiyent</label>
+                        <input type="number" id="edit_koffsiyent_{{ $added->id }}" name="koffsiyent" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('koffsiyent', $added->koffsiyent ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_oshxona_yoki_bufet_quvvati_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Oshxona yoki bufet quvvati</label>
+                        <input type="text" id="edit_oshxona_yoki_bufet_quvvati_{{ $added->id }}" name="oshxona_yoki_bufet_quvvati" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('oshxona_yoki_bufet_quvvati', $added->oshxona_yoki_bufet_quvvati ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_sport_zal_soni_va_maydoni_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Sport zal soni va maydoni</label>
+                        <input type="text" id="edit_sport_zal_soni_va_maydoni_{{ $added->id }}" name="sport_zal_soni_va_maydoni" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('sport_zal_soni_va_maydoni', $added->sport_zal_soni_va_maydoni ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_faollar_zali_va_quvvati_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Faollar zali va quvvati</label>
+                        <input type="text" id="edit_faollar_zali_va_quvvati_{{ $added->id }}" name="faollar_zali_va_quvvati" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('faollar_zali_va_quvvati', $added->faollar_zali_va_quvvati ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_xolati_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Xolati</label>
+                        <input type="text" id="edit_xolati_{{ $added->id }}" name="xolati" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('xolati', $added->xolati ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_tom_xolati_yuzda_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Tom xolati % da</label>
+                        <input type="number" id="edit_tom_xolati_yuzda_{{ $added->id }}" name="tom_xolati_yuzda" min="0" max="100" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('tom_xolati_yuzda', $added->tom_xolati_yuzda ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_deraza_rom_xolati_yuzda_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Deraza rom xolati % da</label>
+                        <input type="number" id="edit_deraza_rom_xolati_yuzda_{{ $added->id }}" name="deraza_rom_xolati_yuzda" min="0" max="100" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('deraza_rom_xolati_yuzda', $added->deraza_rom_xolati_yuzda ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_istish_turi_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Istish turi</label>
+                        <input type="text" id="edit_istish_turi_{{ $added->id }}" name="istish_turi" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('istish_turi', $added->istish_turi ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_qozonlar_soni_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Qozonlar soni</label>
+                        <input type="number" id="edit_qozonlar_soni_{{ $added->id }}" name="qozonlar_soni" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('qozonlar_soni', $added->qozonlar_soni ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_qozonlar_xolati_yuzda_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Qozonlar xolati % da</label>
+                        <input type="number" id="edit_qozonlar_xolati_yuzda_{{ $added->id }}" name="qozonlar_xolati_yuzda" min="0" max="100" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('qozonlar_xolati_yuzda', $added->qozonlar_xolati_yuzda ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_apoklar_xolati_yuzda_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Apoklar xolati % da</label>
+                        <input type="number" id="edit_apoklar_xolati_yuzda_{{ $added->id }}" name="apoklar_xolati_yuzda" min="0" max="100" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('apoklar_xolati_yuzda', $added->apoklar_xolati_yuzda ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_gaz_istemoli_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">1 yillik o‘rtacha gaz iste’moli</label>
+                        <input type="text" id="edit_gaz_istemoli_{{ $added->id }}" name="gaz_istemoli" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('gaz_istemoli', $added->gaz_istemoli ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_elektr_istemoli_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">1 yillik o‘rtacha elektr iste’moli</label>
+                        <input type="text" id="edit_elektr_istemoli_{{ $added->id }}" name="elektr_istemoli" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('elektr_istemoli', $added->elektr_istemoli ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_issiqlik_istemoli_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">1 yillik o‘rtacha issiqlik iste’moli</label>
+                        <input type="text" id="edit_issiqlik_istemoli_{{ $added->id }}" name="issiqlik_istemoli" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('issiqlik_istemoli', $added->issiqlik_istemoli ?? '') }}">
+                    </div>
+                    <div>
+                        <label for="edit_quyosh_paneli_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Quyosh paneli</label>
+                        <div class="flex items-center space-x-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="quyosh_paneli" value="1" {{ old('quyosh_paneli', $added->quyosh_paneli) == 1 ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                                <span class="ml-2 text-gray-700">Bor</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="quyosh_paneli" value="0" {{ old('quyosh_paneli', $added->quyosh_paneli) == 0 ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                                <span class="ml-2 text-gray-700">Yo‘q</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="edit_geokollektor_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Geokollektor</label>
+                        <div class="flex items-center space-x-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="geokollektor" value="1" {{ old('geokollektor', $added->geokollektor) == 1 ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                                <span class="ml-2 text-gray-700">Bor</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="geokollektor" value="0" {{ old('geokollektor', $added->geokollektor) == 0 ? 'checked' : '' }} class="form-radio h-5 w-5 text-blue-600">
+                                <span class="ml-2 text-gray-700">Yo‘q</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="edit_maktab_rasmlari_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Maktab rasmlari</label>
+                        <input type="file" id="edit_maktab_rasmlari_{{ $added->id }}" name="maktab_rasmlari" accept="image/*" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300">
+                    </div>
+                    <div>
+                        <label for="edit_lokatsiya_{{ $added->id }}" class="block text-gray-700 font-semibold mb-2">Lokatsiya</label>
+                        <input type="text" id="edit_lokatsiya_{{ $added->id }}" name="lokatsiya" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('lokatsiya', $added->lokatsiya ?? '') }}">
                     </div>
                 </div>
-                <div>
-                    <label for="edit_binolar_soni_1" class="block text-gray-700 font-semibold mb-2">Binolar soni</label>
-                    <input type="number" id="edit_binolar_soni_1" name="binolar_soni" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 2">
+                <div class="flex justify-end gap-4 mt-6">
+                    <button type="button" onclick="document.getElementById('editSchoolModal-{{ $added->id }}').classList.add('hidden')" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-full font-semibold hover:bg-gray-300 transition-all duration-300">Bekor qilish</button>
+                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300">Saqlash</button>
                 </div>
-                <div>
-                    <label for="edit_binolar_qavatligi_1" class="block text-gray-700 font-semibold mb-2">Binolar qavatligi</label>
-                    <input type="number" id="edit_binolar_qavatligi_1" name="binolar_qavatligi" min="1" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 3">
-                </div>
-                <div>
-                    <label for="edit_binolar_maydoni_1" class="block text-gray-700 font-semibold mb-2">Binolar maydoni</label>
-                    <input type="text" id="edit_binolar_maydoni_1" name="binolar_maydoni" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 3000 m²">
-                </div>
-                <div>
-                    <label for="edit_istilidigan_maydon_1" class="block text-gray-700 font-semibold mb-2">Istilidigan maydon</label>
-                    <input type="text" id="edit_istilidigan_maydon_1" name="istilidigan_maydon" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 2500 m²">
-                </div>
-                <div>
-                    <label for="edit_quvvati_1" class="block text-gray-700 font-semibold mb-2">Quvvati</label>
-                    <input type="text" id="edit_quvvati_1" name="quvvati" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 500 o‘quvchi">
-                </div>
-                <div>
-                    <label for="edit_oquvchi_soni_1" class="block text-gray-700 font-semibold mb-2">O‘quvchi soni</label>
-                    <input type="number" id="edit_oquvchi_soni_1" name="oquvchi_soni" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 450">
-                </div>
-                <div>
-                    <label for="edit_koffsiyent_1" class="block text-gray-700 font-semibold mb-2">Koffsiyent</label>
-                    <input type="number" id="edit_koffsiyent_1" name="koffsiyent" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 0.9">
-                </div>
-                <div>
-                    <label for="edit_oshxona_yoki_bufet_quvvati_1" class="block text-gray-700 font-semibold mb-2">Oshxona yoki bufet quvvati</label>
-                    <input type="text" id="edit_oshxona_yoki_bufet_quvvati_1" name="oshxona_yoki_bufet_quvvati" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 100 kishi">
-                </div>
-                <div>
-                    <label for="edit_sport_zal_soni_va_maydoni_1" class="block text-gray-700 font-semibold mb-2">Sport zal soni va maydoni</label>
-                    <input type="text" id="edit_sport_zal_soni_va_maydoni_1" name="sport_zal_soni_va_maydoni" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 1, 200 m²">
-                </div>
-                <div>
-                    <label for="edit_faollar_zali_va_quvvati_1" class="block text-gray-700 font-semibold mb-2">Faollar zali va quvvati</label>
-                    <input type="text" id="edit_faollar_zali_va_quvvati_1" name="faollar_zali_va_quvvati" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 1, 150 kishi">
-                </div>
-                <div>
-                    <label for="edit_xolati_1" class="block text-gray-700 font-semibold mb-2">Xolati</label>
-                    <input type="text" id="edit_xolati_1" name="xolati" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: Yaxshi">
-                </div>
-                <div>
-                    <label for="edit_tom_xolati_yuzda_1" class="block text-gray-700 font-semibold mb-2">Tom xolati % da</label>
-                    <input type="number" id="edit_tom_xolati_yuzda_1" name="tom_xolati_yuzda" min="0" max="100" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 90">
-                </div>
-                <div>
-                    <label for="edit_deraza_rom_xolati_yuzda_1" class="block text-gray-700 font-semibold mb-2">Deraza rom xolati % da</label>
-                    <input type="number" id="edit_deraza_rom_xolati_yuzda_1" name="deraza_rom_xolati_yuzda" min="0" max="100" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 85">
-                </div>
-                <div>
-                    <label for="edit_istish_turi_1" class="block text-gray-700 font-semibold mb-2">Istish turi</label>
-                    <input type="text" id="edit_istish_turi_1" name="istish_turi" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: Gaz">
-                </div>
-                <div>
-                    <label for="edit_qozonlar_soni_1" class="block text-gray-700 font-semibold mb-2">Qozonlar soni</label>
-                    <input type="number" id="edit_qozonlar_soni_1" name="qozonlar_soni" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 2">
-                </div>
-                <div>
-                    <label for="edit_qozonlar_xolati_yuzda_1" class="block text-gray-700 font-semibold mb-2">Qozonlar xolati % da</label>
-                    <input type="number" id="edit_qozonlar_xolati_yuzda_1" name="qozonlar_xolati_yuzda" min="0" max="100" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 80">
-                </div>
-                <div>
-                    <label for="edit_apoklar_xolati_yuzda_1" class="block text-gray-700 font-semibold mb-2">Apoklar xolati % da</label>
-                    <input type="number" id="edit_apoklar_xolati_yuzda_1" name="apoklar_xolati_yuzda" min="0" max="100" step="0.01" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 75">
-                </div>
-                <div>
-                    <label for="edit_gaz_istemoli_1" class="block text-gray-700 font-semibold mb-2">1 yillik o‘rtacha gaz iste’moli</label>
-                    <input type="text" id="edit_gaz_istemoli_1" name="gaz_istemoli" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 5000 m³">
-                </div>
-                <div>
-                    <label for="edit_elektr_istemoli_1" class="block text-gray-700 font-semibold mb-2">1 yillik o‘rtacha elektr iste’moli</label>
-                    <input type="text" id="edit_elektr_istemoli_1" name="elektr_istemoli" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 10000 kVt">
-                </div>
-                <div>
-                    <label for="edit_issiqlik_istemoli_1" class="block text-gray-700 font-semibold mb-2">1 yillik o‘rtacha issiqlik iste’moli</label>
-                    <input type="text" id="edit_issiqlik_istemoli_1" name="issiqlik_istemoli" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 2000 Gkal">
-                </div>
-                <div>
-                    <label for="edit_quyosh_paneli_1" class="block text-gray-700 font-semibold mb-2">Quyosh paneli</label>
-                    <div class="flex items-center space-x-4">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="quyosh_paneli" value="1" class="form-radio h-5 w-5 text-blue-600">
-                            <span class="ml-2 text-gray-700">Bor</span>
-                        </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="quyosh_paneli" value="0" checked class="form-radio h-5 w-5 text-blue-600">
-                            <span class="ml-2 text-gray-700">Yo‘q</span>
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    <label for="edit_geokollektor_1" class="block text-gray-700 font-semibold mb-2">Geokollektor</label>
-                    <div class="flex items-center space-x-4">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="geokollektor" value="1" class="form-radio h-5 w-5 text-blue-600">
-                            <span class="ml-2 text-gray-700">Bor</span>
-                        </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="geokollektor" value="0" checked class="form-radio h-5 w-5 text-blue-600">
-                            <span class="ml-2 text-gray-700">Yo‘q</span>
-                        </label>
-                    </div>
-                </div>
-                <div>
-                    <label for="edit_maktab_rasmlari_1" class="block text-gray-700 font-semibold mb-2">Maktab rasmlari</label>
-                    <input type="file" id="edit_maktab_rasmlari_1" name="maktab_rasmlari" accept="image/*" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300">
-                </div>
-                <div>
-                    <label for="edit_lokatsiya_1" class="block text-gray-700 font-semibold mb-2">Lokatsiya</label>
-                    <input type="text" id="edit_lokatsiya_1" name="lokatsiya" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: Google Maps silka">
-                </div>
-            </div>
-            <div class="flex justify-end gap-4 mt-6">
-                <button type="button" onclick="document.getElementById('editSchoolModal-1').classList.add('hidden')" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-full font-semibold hover:bg-gray-300 transition-all duration-300">Bekor qilish</button>
-                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300">Saqlash</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+@empty
+    <!-- No schools to edit -->
+@endforelse
 
 <!-- Footer -->
 <footer class="bg-gradient-to-br from-blue-900 to-indigo-950 text-white py-20">
@@ -486,7 +496,7 @@
             <div>
                 <h3 class="text-2xl font-semibold mb-6">Tez havolalar</h3>
                 <ul class="space-y-4">
-                    <li><a href="index.html" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bosh sahifa</a></li>
+                    <li><a href="/" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bosh sahifa</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Yangiliklar</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Hujjatlar</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bog‘lanish</a></li>
