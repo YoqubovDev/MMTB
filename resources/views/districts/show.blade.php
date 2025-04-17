@@ -105,188 +105,55 @@
 </div>
 
 <!-- Main Content Area - Schools & Kindergartens -->
-<section class="py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-7xl mx-auto">
-        <!-- Schools Section -->
-        <div class="mb-16">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-900">
-                    <i class="fas fa-school text-blue-600 mr-2"></i> Maktablar
-                </h2>
-                <a href="{{ route('schools.create') }}" class="mt-2 md:mt-0 px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200 flex items-center">
-                    <i class="fas fa-plus mr-2"></i> Yangi maktab
-                </a>
-            </div>
-            
-            <!-- Search Bar for Schools -->
-            <div class="bg-white rounded-lg shadow-md mb-6 p-4">
-                <div class="relative">
-                    <input 
-                        type="text" 
-                        id="schoolSearchInput" 
-                        placeholder="Maktab nomini kiriting..." 
-                        class="w-full px-10 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    >
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-search text-gray-400"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Schools Table -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <table id="schoolsTable" class="sortable min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gradient-to-r from-blue-50 to-indigo-50">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Maktab nomi</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Direktor</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sig'imi</th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amallar</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200" id="schoolsTableBody">
-                            @forelse($district->schools as $school)
-                                <tr class="table-row-hover transition-colors school-row">
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-blue-600">{{ $school->name }}</div>
-                                        <div class="text-sm text-gray-500">{{ $school->address }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ $school->principal_name }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ number_format($school->capacity) }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <div class="flex justify-end gap-2">
-                                            <a href="{{ route('schools.show', $school) }}" class="text-blue-600 hover:text-blue-800 transition-colors p-1" title="Ko'rish">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a href="{{ route('schools.edit', $school) }}" class="text-green-600 hover:text-green-800 transition-colors p-1" title="Tahrirlash">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form method="POST" action="{{ route('schools.destroy', $school) }}" class="inline" onsubmit="return confirm('Maktabni o\'chirishni tasdiqlaysizmi?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-800 transition-colors p-1" title="O'chirish">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
+            @extends('layouts.app')
+
+            @section('content')
+                <section class="py-12">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        @if (session('error') || isset($error))
+                            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8 rounded shadow-md">
+                                <p class="font-medium">{{ session('error') ?? $error }}</p>
+                                <p class="text-sm mt-2">Iltimos, keyinroq qayta urinib ko‘ring yoki administrator bilan bog‘laning.</p>
+                            </div>
+                        @endif
+
+                        @if ($district)
+                            <h1 class="text-3xl font-bold text-gray-900 mb-6">{{ $district->name }}</h1>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h2 class="text-2xl font-semibold mb-4">Maktablar</h2>
+                                    @forelse ($district->schools as $school)
+                                        <div class="bg-white p-4 rounded-lg shadow mb-4">
+                                            <p class="font-medium">{{ $school->name }}</p>
+                                            <p class="text-sm text-gray-600">Sig‘im: {{ $school->capacity }}</p>
                                         </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="4" class="px-6 py-10 text-center text-gray-500">
-                                        <i class="fas fa-school text-4xl mb-3 text-gray-300"></i>
-                                        <p>Bu tumanda maktablar topilmadi.</p>
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-                <!-- No Results for Schools -->
-                <div id="noSchoolResults" class="hidden py-10 text-center">
-                    <i class="fas fa-search text-gray-300 text-4xl mb-3"></i>
-                    <p class="text-gray-500">Qidiruv bo'yicha maktab topilmadi.</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Kindergartens Section -->
-        <div>
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-900">
-                    <i class="fas fa-baby text-pink-600 mr-2"></i> Bog'chalar
-                </h2>
-                <a href="{{ route('kindergartens.create') }}" class="mt-2 md:mt-0 px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-200 flex items-center">
-                    <i class="fas fa-plus mr-2"></i> Yangi bog'cha
-                </a>
-            </div>
-            
-            <!-- Search Bar for Kindergartens -->
-            <div class="bg-white rounded-lg shadow-md mb-6 p-4">
-                <div class="relative">
-                    <input 
-                        type="text" 
-                        id="kindergartenSearchInput" 
-                        placeholder="Bog'cha nomini kiriting..." 
-                        class="w-full px-10 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                    >
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-search text-gray-400"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Kindergartens Table -->
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table id="kindergartensTable" class="sortable min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gradient-to-r from-pink-50 to-purple-50">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Bog'cha nomi</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Direktor</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Yosh chegarasi</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sig'imi</th>
-                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amallar</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200" id="kindergartensTableBody">
-                            @forelse($district->kindergartens as $kindergarten)
-                                <tr class="table-row-hover transition-colors kindergarten-row">
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-pink-600">{{ $kindergarten->name }}</div>
-                                        <div class="text-sm text-gray-500">{{ $kindergarten->address }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ $kindergarten->director_name }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ $kindergarten->age_range }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="text-sm text-gray-900">{{ number_format($kindergarten->capacity) }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <div class="flex justify-end gap-2">
-                                            <a href="{{ route('kindergartens.show', $kindergarten) }}" class="text-blue-600 hover:text-blue-800 transition-colors p-1" title="Ko'rish">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a href="{{ route('kindergartens.edit', $kindergarten) }}" class="text-green-600 hover:text-green-800 transition-colors p-1" title="Tahrirlash">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form method="POST" action="{{ route('kindergartens.destroy', $kindergarten) }}" class="inline" onsubmit="return confirm('Bog\'chani o\'chirishni tasdiqlaysizmi?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-800 transition-colors p-1" title="O'chirish">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
+                                    @empty
+                                        <p class="text-gray-600">Maktablar topilmadi.</p>
+                                    @endforelse
+                                </div>
+                                <div>
+                                    <h2 class="text-2xl font-semibold mb-4">Bog‘chalar</h2>
+                                    @forelse ($district->kindergartens as $kindergarten)
+                                        <div class="bg-white p-4 rounded-lg shadow mb-4">
+                                            <p class="font-medium">{{ $kindergarten->name }}</p>
+                                            <p class="text-sm text-gray-600">Sig‘im: {{ $kindergarten->capacity }}</p>
                                         </div>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="px-6 py-10 text-center text-gray-500">
-                                        <i class="fas fa-baby text-4xl mb-3 text-gray-300"></i>
-                                        <p>Bu tumanda bog'chalar topilmadi.</p>
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-                </div>
-                <!-- No Results for Kindergartens -->
-                <div id="noKindergartenResults" class="hidden py-10 text-center">
-                    <i class="fas fa-search text-gray-300 text-4xl mb-3"></i>
-                    <p class="text-gray-500">Qidiruv bo'yicha bog'cha topilmadi.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                                    @empty
+                                        <p class="text-gray-600">Bog‘chalar topilmadi.</p>
+                                    @endforelse
+                                </div>
+                            </div>
+                        @else
+                            <div class="text-center py-12">
+                                <h3 class="text-2xl font-bold text-gray-800 mb-2">Tuman topilmadi</h3>
+                                <p class="text-gray-600">Bu tuman mavjud emas yoki faol emas.</p>
+                                <a href="{{ route('districts.index') }}" class="mt-4 inline-block bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600">Bosh sahifaga qaytish</a>
+                            </div>
+                        @endif
+                    </div>
+                </section>
+            @endsection
 
 <!-- Footer -->
 <footer class="bg-gradient-to-br from-blue-900 to-indigo-950 text-white py-10 mt-auto">

@@ -16,16 +16,39 @@ class Kindergarten extends Model
      *
      * @var array<int, string>
      */
+    protected $table = 'kindergartens';
     protected $fillable = [
-        'name',
-        'address',
         'district_id',
-        'contact_number',
-        'email',
-        'director_name',
-        'capacity',
-        'age_range',
-        'status',
+        'mfy',
+        'qurilgan_yili',
+        'songi_tamir_yili',
+        'sektor_raqami',
+        'yer_maydoni',
+        'xudud_oralganligi',
+        'binolar_soni',
+        'binolar_qavatligi',
+        'binolar_maydoni',
+        'istilidigan_maydon',
+        'quvvati',
+        'oquvchi_soni',
+        'koffsiyent',
+        'oshxona_yoki_bufet_quvvati',
+        'sport_zal_soni_va_maydoni',
+        'faollar_zali_va_quvvati',
+        'xolati',
+        'tom_xolati_yuzda',
+        'deraza_rom_xolati_yuzda',
+        'istish_turi',
+        'qozonlar_soni',
+        'qozonlar_xolati_yuzda',
+        'apoklar_xolati_yuzda',
+        'gaz_istemoli',
+        'elektr_istemoli',
+        'issiqlik_istemoli',
+        'quyosh_paneli',
+        'geokollektor',
+        'lokatsiya',
+        'boqcha_rasmlari'
     ];
 
     /**
@@ -42,15 +65,53 @@ class Kindergarten extends Model
     public static function validationRules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'district_id' => 'required|exists:districts,id',
-            'contact_number' => 'required|string|max:20',
-            'email' => 'required|email|max:255',
-            'director_name' => 'required|string|max:255',
-            'capacity' => 'required|integer|min:1',
-            'age_range' => 'required|string|max:50',
-            'status' => 'required|boolean',
+            'district_id' => 'nullable|exists:districts,id',
+            'mfy' => 'required|string|max:255',
+            'qurilgan_yili' => 'required|integer|min:1800|max:' . date('Y'),
+            'songi_tamir_yili' => 'nullable|integer|min:1800|max:' . date('Y'),
+            'sektor_raqami' => 'nullable|integer',
+            'yer_maydoni' => 'nullable|numeric',
+            'xudud_oralganligi' => 'nullable|boolean',
+            'binolar_soni' => 'nullable|integer|min:0',
+            'binolar_qavatligi' => 'nullable|integer|min:0',
+            'binolar_maydoni' => 'nullable|numeric',
+            'istilidigan_maydon' => 'nullable|numeric',
+            'quvvati' => 'nullable|integer|min:0',
+            'oquvchi_soni' => 'nullable|integer|min:0',
+            'koffsiyent' => 'nullable|numeric',
+            'oshxona_yoki_bufet_quvvati' => 'nullable|string|max:255',
+            'sport_zal_soni_va_maydoni' => 'nullable|string|max:255',
+            'faollar_zali_va_quvvati' => 'nullable|string|max:255',
+            'xolati' => 'nullable|string|max:255',
+            'tom_xolati_yuzda' => 'nullable|numeric|min:0|max:100',
+            'deraza_rom_xolati_yuzda' => 'nullable|numeric|min:0|max:100',
+            'istish_turi' => 'nullable|string|max:255',
+            'qozonlar_soni' => 'nullable|integer|min:0',
+            'qozonlar_xolati_yuzda' => 'nullable|numeric|min:0|max:100',
+            'apoklar_xolati_yuzda' => 'nullable|numeric|min:0|max:100',
+            'gaz_istemoli' => 'nullable|numeric',
+            'elektr_istemoli' => 'nullable|numeric',
+            'issiqlik_istemoli' => 'nullable|numeric',
+            'quyosh_paneli' => 'nullable|boolean',
+            'geokollektor' => 'nullable|boolean',
+            'lokatsiya' => 'nullable|string|max:255',
+            'boqcha_rasmlari' => 'nullable|file|image|max:10240|mimes:jpeg,png,jpg,gif',  // 10MB max
+        ];
+    }
+
+    public static function validationMessages(): array
+    {
+        return [
+            'mfy.required' => 'MFY maydoni to\'ldirilishi shart',
+            'qurilgan_yili.required' => 'Qurilgan yili to\'ldirilishi shart',
+            'qurilgan_yili.integer' => 'Qurilgan yili butun son bo\'lishi kerak',
+            'qurilgan_yili.min' => 'Qurilgan yili :min dan kichik bo\'lmasligi kerak',
+            'qurilgan_yili.max' => 'Qurilgan yili :max dan katta bo\'lmasligi kerak',
+            'district_id.exists' => 'Tanlangan tuman mavjud emas',
+            'boqcha_rasmlari.file' => 'Yuklangan fayl haqiqiy fayl bo\'lishi kerak',
+            'boqcha_rasmlari.image' => 'Yuklangan fayl rasm formatida bo\'lishi kerak',
+            'boqcha_rasmlari.max' => 'Rasm hajmi 10MB dan oshmasligi kerak',
+            'boqcha_rasmlari.mimes' => 'Rasm formati: jpeg, png, jpg yoki gif bo\'lishi kerak',
         ];
     }
     public function kindergartenRegion()

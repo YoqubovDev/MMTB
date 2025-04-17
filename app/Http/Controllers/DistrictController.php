@@ -22,7 +22,6 @@ class DistrictController extends Controller
     public function index(): View
     {
         try {
-            // Cache districts and statistics for 1 hour
             $districts = Cache::remember('districts.all', 3600, function () {
                 return District::where('status', true)
                     ->with([
@@ -32,12 +31,11 @@ class DistrictController extends Controller
                     ->get();
             });
 
-            // Cache statistics separately
             $statistics = Cache::remember('districts.statistics', 3600, function () {
                 return [
-                    'totalSchools' => Added::where('status', true)->count(),
+                    'totalSchools' => School::where('status', true)->count(),
                     'totalKindergartens' => Kindergarten::where('status', true)->count(),
-                    'schoolsCapacity' => Added::where('status', true)->sum('capacity'),
+                    'schoolsCapacity' => School::where('status', true)->sum('capacity'),
                     'kindergartensCapacity' => Kindergarten::where('status', true)->sum('capacity'),
                 ];
             });
@@ -64,6 +62,9 @@ class DistrictController extends Controller
     /**
      * Display the specified district with its schools and kindergartens.
      */
+    /**
+     * Display the specified district with its schools and kindergartens.
+     */
     public function show(District $district): View
     {
         try {
@@ -77,14 +78,20 @@ class DistrictController extends Controller
                     'kindergartens' => fn ($query) => $query->where('status', true),
                 ]);
             });
+
             return view('districts.show', ['district' => $districtData]);
         } catch (ModelNotFoundException $e) {
             \Log::warning('District not found: ' . $district->id);
-            abort(404, __('errors.district_not_found'));
+            return view('districts.show', [
+                'district' => null,
+                'error' => __('errors.district_not_found')
+            ])->with('error', __('errors.district_not_found'));
         } catch (\Exception $e) {
             \Log::error('Error loading district details: ' . $e->getMessage());
-            return redirect()->route('districts.index')
-                ->with('error', __('errors.district_loading_failed'));
+            return view('districts.show', [
+                'district' => null,
+                'error' => __('errors.district_loading_failed')
+            ])->with('error', __('errors.district_loading_failed'));
         }
     }
 
@@ -265,172 +272,133 @@ class DistrictController extends Controller
     public function kindergartenRegion(): View
     {
         $startTime = microtime(true);
-        $isDebug = app()->environment() !== 'production';
+        $isDebug = config('app.env') !== 'production';
         $debugData = [];
         $memoryBefore = memory_get_usage();
 
         try {
             if ($isDebug) {
                 DB::enableQueryLog();
-                Log::info('Starting schoolRegion method execution');
-                $debugData[] = "Environment: " . app()->environment();
-                $debugData[] = "PHP Version: " . PHP_VERSION;
-                $debugData[] = "Laravel Version: " . app()->version();
+                Log::channel('debug')->info('Starting kindergartenRegion method', [
+                    'environment' => config('app.env'),
+                    'php_version' => PHP_VERSION,
+                    'laravel_version' => app()->version(),
+                    'routes' => [
+                        'kindergarten' => Route::has('kindergarten'),
+                        'kindergarten-region' => Route::has('kindergarten-region'),
+                    ],
+                ]);
 
-                // Check if key routes are properly registered
-                $debugData[] = "Route 'added' exists: " . (Route::has('added') ? 'Yes' : 'No');
-                $debugData[] = "Route 'school-region' exists: " . (Route::has('school-region') ? 'Yes' : 'No');
-            }
+                // Database diagnostics
+                $debugData['database'] = [
+                    'connection' => DB::connection()->getPdo() ? 'Successful' : 'Failed',
+                    'name' => DB::connection()->getDatabaseName(),
+                    'table_exists' => Schema::hasTable('districts'),
+                ];
 
-            // Database connection check
-            if ($isDebug) {
-                try {
-                    // Check database connection
-                    $isConnected = DB::connection()->getPdo() ? true : false;
-                    $debugData[] = "Database connection: " . ($isConnected ? "Successful" : "Failed");
-                    $debugData[] = "Database name: " . DB::connection()->getDatabaseName();
-
-                    // Check if districts table exists
-                    $tableExists = Schema::hasTable('districts');
-                    $debugData[] = "Districts table exists: " . ($tableExists ? "Yes" : "No");
-
-                    if ($tableExists) {
-                        // Get table columns
-                        $columns = Schema::getColumnListing('districts');
-                        $debugData[] = "Table columns: " . implode(", ", $columns);
-
-                        // Count total records
-                        $totalRecords = DB::table('districts')->count();
-                        $debugData[] = "Total records in districts table: " . $totalRecords;
-
-                        // Count active records
-                        $activeRecords = DB::table('districts')->where('status', true)->count();
-                        $debugData[] = "Active records (status=true): " . $activeRecords;
-
-                        // Sample record if any exists
-                        if ($totalRecords > 0) {
-                            $sampleRecord = DB::table('districts')->first();
-                            $debugData[] = "Sample record: " . json_encode($sampleRecord);
-                        }
-                    }
-                } catch (\Exception $dbEx) {
-                    $debugData[] = "Database check error: " . $dbEx->getMessage();
-                    Log::error("Database check failed: " . $dbEx->getMessage());
+                if ($debugData['database']['table_exists']) {
+                    $debugData['table'] = [
+                        'columns' => Schema::getColumnListing('districts'),
+                        'total_records' => DB::table('districts')->count(),
+                        'active_records' => DB::table('districts')->where('status', true)->count(),
+                        'sample_record' => DB::table('districts')->first() ? json_encode(DB::table('districts')->first()) : 'No records',
+                    ];
                 }
             }
 
-            // Simple districts query with schools count
+            // Query districts with kindergartens count
             $queryStartTime = microtime(true);
             $districts = District::where('status', true)
-                ->withCount('schools')
+                ->withCount('kindergartens')
                 ->orderBy('name')
                 ->get();
             $queryEndTime = microtime(true);
 
             if ($isDebug) {
-                $queries = DB::getQueryLog();
-                $lastQuery = end($queries);
-                $debugData[] = "Query execution time: " . round(($queryEndTime - $queryStartTime) * 1000, 2) . "ms";
-                $debugData[] = "SQL Query: " . ($lastQuery['query'] ?? 'No query logged');
-                $debugData[] = "Query Bindings: " . json_encode($lastQuery['bindings'] ?? []);
-                $debugData[] = "Districts count: " . $districts->count();
+                $queryLog = DB::getQueryLog();
+                $lastQuery = end($queryLog) ?: ['query' => 'No query logged', 'bindings' => []];
+                $debugData['query'] = [
+                    'execution_time' => round(($queryEndTime - $queryStartTime) * 1000, 2) . 'ms',
+                    'sql' => $lastQuery['query'],
+                    'bindings' => json_encode($lastQuery['bindings']),
+                    'districts_count' => $districts->count(),
+                ];
 
                 if ($districts->isNotEmpty()) {
-                    $sample = $districts->first();
-                    $debugData[] = "First district: " . $sample->name;
-                    $debugData[] = "First district schools count: " . $sample->schools_count;
-                    $debugData[] = "First district attributes: " . json_encode($sample->getAttributes());
-                } else {
-                    $debugData[] = "No districts found";
+                    $firstDistrict = $districts->first();
+                    $debugData['district'] = [
+                        'name' => $firstDistrict->name,
+                        'kindergartens_count' => $firstDistrict->kindergartens_count,
+                        'attributes' => json_encode($firstDistrict->getAttributes()),
+                    ];
 
-                    // Check if there are any districts at all (ignoring status)
-                    $allDistrictsCount = District::count();
-                    $debugData[] = "Total districts in table (ignoring status): " . $allDistrictsCount;
-                    if ($allDistrictsCount > 0) {
-                        $debugData[] = "There are districts in the table, but none with status=true";
-                    }
-                }
-
-                // Check for potential route generation issues
-                if ($districts->isNotEmpty()) {
                     try {
-                        $firstDistrict = $districts->first();
-                        $testRoute = route('added', ['added' => $firstDistrict->id]);
-                        $debugData[] = "Route generation successful: $testRoute";
+                        $debugData['route'] = route('kindergarten', ['kindergarten' => $firstDistrict->id]);
                     } catch (\Exception $routeEx) {
-                        $debugData[] = "Route generation error: " . $routeEx->getMessage();
+                        $debugData['route_error'] = $routeEx->getMessage();
                     }
+                } else {
+                    $debugData['no_districts'] = 'No districts found';
+                    $debugData['total_districts'] = District::count();
                 }
 
-                // Memory usage
                 $memoryAfter = memory_get_usage();
-                $debugData[] = "Memory before: " . round($memoryBefore / 1024 / 1024, 2) . "MB";
-                $debugData[] = "Memory after: " . round($memoryAfter / 1024 / 1024, 2) . "MB";
-                $debugData[] = "Memory usage: " . round(($memoryAfter - $memoryBefore) / 1024 / 1024, 2) . "MB";
+                $debugData['memory'] = [
+                    'before' => round($memoryBefore / 1024 / 1024, 2) . 'MB',
+                    'after' => round($memoryAfter / 1024 / 1024, 2) . 'MB',
+                    'usage' => round(($memoryAfter - $memoryBefore) / 1024 / 1024, 2) . 'MB',
+                ];
             }
 
-            // Format debug data for view
-            $debugOutput = $isDebug ? implode("\n", $debugData) : '';
-
-            // Record total execution time
             $endTime = microtime(true);
-            if ($isDebug) {
-                $debugOutput .= "\nTotal execution time: " . round(($endTime - $startTime) * 1000, 2) . "ms";
-                Log::info('schoolRegion method completed in ' . round(($endTime - $startTime) * 1000, 2) . 'ms');
-            }
+            $executionTime = round(($endTime - $startTime) * 1000, 2);
 
-            // Explicitly define the view data array with null checks
             $viewData = [
-                // Ensure districts is always a collection, even if empty
-                'districts' => $districts ?? collect(),
-                'executionTime' => round(($endTime - $startTime) * 1000, 2)
+                'districts' => $districts,
+                'executionTime' => $executionTime,
             ];
 
-            // Only add debug information in non-production environments
-            if ($isDebug && !empty($debugOutput)) {
-                $viewData['debugMessage'] = $debugOutput;
+            if ($isDebug && !empty($debugData)) {
+                $viewData['debugMessage'] = json_encode($debugData, JSON_PRETTY_PRINT);
             }
 
-            // Log the data being passed to the view
             if ($isDebug) {
-                Log::info('Passing to view with keys: ' . implode(', ', array_keys($viewData)));
-                Log::info('Districts count being passed: ' . ($viewData['districts']->count() ?? 0));
+                Log::channel('debug')->info('kindergartenRegion completed', [
+                    'execution_time' => $executionTime . 'ms',
+                    'districts_count' => $districts->count(),
+                    'view_data' => array_keys($viewData),
+                ]);
             }
 
-            // Pass data to view
-            return view('school-region', $viewData);
+            return view('kindergarten-region', $viewData);
         } catch (\Exception $e) {
             $endTime = microtime(true);
+            $executionTime = round(($endTime - $startTime) * 1000, 2);
 
-            if ($isDebug) {
-                Log::error('Error in schoolRegion: ' . $e->getMessage());
-                Log::error('Stack trace: ' . $e->getTraceAsString());
+            Log::channel('error')->error('kindergartenRegion failed', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+                'execution_time' => $executionTime . 'ms',
+            ]);
 
-                // Include debug information with the error
-                $debugData[] = "ERROR: " . $e->getMessage();
-                $debugData[] = "File: " . $e->getFile() . ":" . $e->getLine();
-                $debugData[] = "Memory usage: " . round((memory_get_usage() - $memoryBefore) / 1024 / 1024, 2) . "MB";
-                $debugData[] = "Total execution time: " . round(($endTime - $startTime) * 1000, 2) . "ms";
-
-                $debugOutput = implode("\n", $debugData);
-            } else {
-                // In production, don't include detailed debug info
-                $debugOutput = '';
-            }
-            // Prepare view data with error information
             $viewData = [
-                // Always ensure districts is a collection, even when empty
                 'districts' => collect(),
-                'error' => 'Error: ' . $e->getMessage()
+                'error' => 'An error occurred while loading the page.',
+                'executionTime' => $executionTime,
             ];
 
-            // Add debug information only in non-production environments
-            if ($isDebug && !empty($debugOutput)) {
-                $viewData['debugMessage'] = $debugOutput;
+            if ($isDebug) {
+                $viewData['debugMessage'] = json_encode([
+                    'error' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                    'memory_usage' => round((memory_get_usage() - $memoryBefore) / 1024 / 1024, 2) . 'MB',
+                ], JSON_PRETTY_PRINT);
             }
 
-            // Pass data to view with explicit error handling
-            return view('school-region', $viewData);
+            return view('kindergarten-region', $viewData);
         }
     }
 

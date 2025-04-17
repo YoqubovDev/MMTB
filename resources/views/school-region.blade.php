@@ -68,9 +68,6 @@
                 <button id="exportCSV" class="px-4 py-3 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center">
                     <i class="fas fa-file-csv mr-2"></i> CSV
                 </button>
-                <button id="exportPDF" class="px-4 py-3 rounded-full bg-gradient-to-r from-red-500 to-red-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center">
-                    <i class="fas fa-file-pdf mr-2"></i> PDF
-                </button>
             </div>
         </div>
 

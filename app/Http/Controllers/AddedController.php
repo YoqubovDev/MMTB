@@ -20,11 +20,18 @@ class AddedController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(): View
+    public function school()
     {
-        $addeds = Added::with('district')->get();
         $districts = District::where('status', true)->get();
-        return view('added', compact('addeds', 'districts'));
+        $addeds = Added::where('district_id', 2)->with('district')->get();
+
+        // Add detailed debug logging
+        \Log::info('Added method called');
+        \Log::info('Districts count: ' . $districts->count());
+        \Log::info('First district: ' . ($districts->first() ? $districts->first()->name : 'none'));
+        \Log::info('View data keys: ' . implode(', ', array_keys(compact('districts', 'addeds'))));
+
+        return view('added', compact('districts', 'addeds'));
     }
 
     /**
@@ -56,7 +63,7 @@ class AddedController extends Controller
             $filePath = null;
 
             return DB::transaction(function () use ($request, $data, &$filePath) {
-                // Faylni tekshirish va saqlash
+                // Handle file upload with error handling
                 if ($request->hasFile('maktab_rasmlari')) {
                     $file = $request->file('maktab_rasmlari');
 
