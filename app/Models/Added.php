@@ -19,6 +19,7 @@ class Added extends Model
     protected $fillable = [
         'district_id',
         'mfy',
+        'maktab_raqami',
         'qurilgan_yili',
         'songi_tamir_yili',
         'sektor_raqami',
@@ -66,6 +67,7 @@ class Added extends Model
         return [
             'district_id' => 'nullable|exists:districts,id',
             'mfy' => 'required|string|max:255',
+            'maktab_raqami' => 'nullable|integer',
             'qurilgan_yili' => 'required|integer|min:1800|max:' . date('Y'),
             'songi_tamir_yili' => 'nullable|integer|min:1800|max:' . date('Y'),
             'sektor_raqami' => 'nullable|integer',
@@ -100,13 +102,14 @@ class Added extends Model
 
     /**
      * Get custom validation messages.
-     * 
+     *
      * @return array
      */
     public static function validationMessages(): array
     {
         return [
             'mfy.required' => 'MFY maydoni to\'ldirilishi shart',
+            'maktab_raqami.integer' => 'Maktab raqami butun son bo\'lishi kerak',
             'qurilgan_yili.required' => 'Qurilgan yili to\'ldirilishi shart',
             'qurilgan_yili.integer' => 'Qurilgan yili butun son bo\'lishi kerak',
             'qurilgan_yili.min' => 'Qurilgan yili :min dan kichik bo\'lmasligi kerak',
