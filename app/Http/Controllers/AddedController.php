@@ -56,45 +56,47 @@ class AddedController extends Controller
             $filePath = null;
 
             return DB::transaction(function () use ($request, $data, &$filePath) {
-                // Handle file upload with error handling
+                // Faylni tekshirish va saqlash
                 if ($request->hasFile('maktab_rasmlari')) {
                     $file = $request->file('maktab_rasmlari');
 
-                    // Verify file is valid
-                    if (!$file->isValid()) {
-                        throw new \Exception('Fayl buzilgan yoki noto\'g\'ri yuklangan');
-                    }
+                    // Faylni validatsiya qilish
+                    $request->validate([
+                        'maktab_rasmlari' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                    ]);
 
-                    try {
-                        // Create storage/app/public/schools directory if it doesn't exist
-                        if (!Storage::disk('public')->exists('schools')) {
-                            Storage::disk('public')->makeDirectory('schools');
+                    // Faylni saqlash
+                    if ($file->isValid()) {
+                        try {
+                            // Faylni saqlash uchun katalogni tekshirish va yaratish
+                            if (!Storage::disk('public')->exists('schools')) {
+                                Storage::disk('public')->makeDirectory('schools');
+                            }
+
+                            // Faylni nomini aniqlash va saqlash
+                            $filename = time() . '_' . $file->getClientOriginalName();
+                            $filePath = $file->storeAs('schools', $filename, 'public');
+
+                            // Fayl saqlangandan so'ng, ma'lumotlarni saqlash
+                            $data['maktab_rasmlari'] = $filePath;
+                            Log::info('File uploaded successfully: ' . $filePath);
+                        } catch (\Exception $e) {
+                            Log::error('File upload failed: ' . $e->getMessage());
+                            throw new \Exception('Fayl yuklashda xatolik: ' . $e->getMessage());
                         }
-
-                        // Store with a unique name based on timestamp and original filename
-                        $filename = time() . '_' . $file->getClientOriginalName();
-                        $filePath = $file->storeAs('schools', $filename, 'public');
-
-                        if (!$filePath) {
-                            throw new \Exception('Faylni saqlashda xatolik');
-                        }
-
-                        $data['maktab_rasmlari'] = $filePath;
-                        Log::info('File uploaded successfully: ' . $filePath);
-                    } catch (\Exception $e) {
-                        Log::error('File upload failed during school creation: ' . $e->getMessage());
-                        throw new \Exception('Fayl yuklashda xatolik: ' . $e->getMessage());
+                    } else {
+                        throw new \Exception('Faylni yuklashda muammo yuz berdi');
                     }
                 }
 
-                // Create the Added record
+                // Yangi 'Added' yozuvini yaratish
                 $added = Added::create($data);
                 Log::info('Added record created successfully with ID: ' . $added->id);
 
                 return redirect()->route('added')->with('success', 'Muvaffaqiyatli saqlandi!');
             });
         } catch (\Exception $e) {
-            // Clean up orphaned file if it was uploaded but record creation failed
+            // Agar faylni saqlashda xato bo'lsa, faylni o'chirish
             if (isset($filePath) && Storage::disk('public')->exists($filePath)) {
                 Storage::disk('public')->delete($filePath);
                 Log::info('Deleted orphaned file after failed school creation: ' . $filePath);
@@ -104,6 +106,7 @@ class AddedController extends Controller
             return back()->withInput()->withErrors(['error' => 'Ma\'lumotlarni saqlashda xatolik: ' . $e->getMessage()]);
         }
     }
+
     /**
      * Display the specified school.
      *

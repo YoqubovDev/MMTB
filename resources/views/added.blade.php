@@ -294,11 +294,13 @@
                         </label>
                     </div>
                 </div>
-                <div>
-                    <label for="maktab_rasmlari" class="block text-gray-700 font-semibold mb-2">Maktab rasmlari</label>
-                    <input type="file" id="maktab_rasmlari" name="maktab_rasmlari" accept="image/jpeg,image/png,image/jpg,image/gif" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300">
-                    <p class="text-gray-500 text-sm mt-1">JPEG, PNG, JPG yoki GIF formatida</p>
-                </div>
+
+                    <div>
+                        <label for="maktab_rasmlari" class="block text-gray-700 font-semibold mb-2">Maktab rasmlari</label>
+                        <input type="file" id="maktab_rasmlari" name="maktab_rasmlari" accept="image/jpeg,image/png,image/jpg,image/gif" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300">
+                        <p class="text-gray-500 text-sm mt-1">JPEG, PNG, JPG yoki GIF formatida</p>
+                    </div>
+
                 <div>
                     <label for="lokatsiya" class="block text-gray-700 font-semibold mb-2">Lokatsiya</label>
                     <input type="text" id="lokatsiya" name="lokatsiya" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: Google Maps silka" value="{{ old('lokatsiya') }}">
