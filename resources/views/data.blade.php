@@ -149,7 +149,7 @@
                 </div>
             </div>
             <div class="mt-8 flex justify-end">
-                <a href="{{ route('added') }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                <a href="{{ route('added', ['added' => $added->district_id]) }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
                     Orqaga
                 </a>
             </div>

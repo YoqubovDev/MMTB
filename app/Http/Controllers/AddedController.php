@@ -20,18 +20,22 @@ class AddedController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function school()
+    public function school(Request $request)
     {
         $districts = District::where('status', true)->get();
-        $tuman_id = $_GET['added'];
-        $addeds = Added::where('district_id', $tuman_id)->with('district')->get();
-//        dd($tuman_id);
+        $tuman_id = $request->query('added'); // Safely get the 'added' parameter
+
+        // Initialize $addeds as an empty collection if $tuman_id is not provided
+        $addeds = $tuman_id ? Added::where('district_id', $tuman_id)->with('district')->get() : collect();
 
         // Add detailed debug logging
-        \Log::info('Added method called');
-        \Log::info('Districts count: ' . $districts->count());
-        \Log::info('First district: ' . ($districts->first() ? $districts->first()->name : 'none'));
-        \Log::info('View data keys: ' . implode(', ', array_keys(compact('districts', 'addeds'))));
+        \Log::info('School method called', [
+            'tuman_id' => $tuman_id,
+            'districts_count' => $districts->count(),
+            'first_district' => $districts->first() ? $districts->first()->name : 'none',
+            'addeds_count' => $addeds->count(),
+            'view_data_keys' => implode(', ', array_keys(compact('districts', 'addeds')))
+        ]);
 
         return view('added', compact('districts', 'addeds'));
     }
@@ -128,7 +132,6 @@ class AddedController extends Controller
         $added->load('district');
         return view('added.show', compact('added'));
     }
-
     /**
      * Show the form for editing the specified school.
      *
