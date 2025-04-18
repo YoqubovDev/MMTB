@@ -30,7 +30,7 @@ class Kindergarten extends Model
         'binolar_maydoni',
         'istilidigan_maydon',
         'quvvati',
-        'oquvchi_soni',
+        'bolalar_soni',
         'koffsiyent',
         'oshxona_yoki_bufet_quvvati',
         'sport_zal_soni_va_maydoni',
@@ -77,7 +77,7 @@ class Kindergarten extends Model
             'binolar_maydoni' => 'nullable|numeric',
             'istilidigan_maydon' => 'nullable|numeric',
             'quvvati' => 'nullable|integer|min:0',
-            'oquvchi_soni' => 'nullable|integer|min:0',
+            'bolalar_soni' => 'nullable|integer|min:0',
             'koffsiyent' => 'nullable|numeric',
             'oshxona_yoki_bufet_quvvati' => 'nullable|string|max:255',
             'sport_zal_soni_va_maydoni' => 'nullable|string|max:255',
@@ -108,12 +108,15 @@ class Kindergarten extends Model
             'qurilgan_yili.min' => 'Qurilgan yili :min dan kichik bo\'lmasligi kerak',
             'qurilgan_yili.max' => 'Qurilgan yili :max dan katta bo\'lmasligi kerak',
             'district_id.exists' => 'Tanlangan tuman mavjud emas',
+            'bolalar_soni.integer' => 'Bolalar soni butun son bo\'lishi kerak',
+            'bolalar_soni.min' => 'Bolalar soni 0 dan kichik bo\'lmasligi kerak',
             'boqcha_rasmlari.file' => 'Yuklangan fayl haqiqiy fayl bo\'lishi kerak',
             'boqcha_rasmlari.image' => 'Yuklangan fayl rasm formatida bo\'lishi kerak',
             'boqcha_rasmlari.max' => 'Rasm hajmi 10MB dan oshmasligi kerak',
             'boqcha_rasmlari.mimes' => 'Rasm formati: jpeg, png, jpg yoki gif bo\'lishi kerak',
         ];
     }
+
     public function kindergartenRegion()
     {
         $districts = DB::table('districts')
@@ -128,4 +131,3 @@ class Kindergarten extends Model
         return view('districts.kindergartens', compact('districts', 'debugMessage', 'executionTime'));
     }
 }
-

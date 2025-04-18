@@ -64,69 +64,83 @@
 </nav>
 
 <!-- Main Content -->
-<section class="flex-grow py-32 relative bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+<section class="flex-grow flex items-center justify-center py-32 relative bg-gradient-to-br from-blue-50 via-white to-indigo-50">
     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')] bg-cover bg-center opacity-10"></div>
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div class="flex flex-col sm:flex-row justify-between items-center mb-12 gap-4">
-            <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in-up">
-                {{ ucfirst(request()->query('district', 'Tuman')) }} Boqchalari
-            </h2>
-            @auth
-                <button onclick="openModal('addKindergartenModal')" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300" aria-label="Yangi boqcha qo'shish">
-                    <i class="fas fa-plus mr-2"></i> Boqcha Qo'shish
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <h2 id="pageHeading" class="text-5xl font-extrabold text-gray-900 mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 animate-fade-in-up">
+            Toshkent shahri tumanlari
+        </h2>
+        <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-12">
+            <div class="relative w-full max-w-lg">
+                <input type="text" id="searchInput" placeholder="Maktab qidirish..." class="w-full px-6 py-4 rounded-full bg-white text-gray-900 border-2 border-blue-200 focus:border-blue-600 focus:outline-none shadow-lg transition-all duration-300">
+                <i class="fas fa-search absolute right-6 top-1/2 transform -translate-y-1/2 text-blue-600"></i>
+            </div>
+            <div class="flex flex-wrap justify-center gap-2 mt-4 md:mt-0">
+                <button id="exportExcel" class="px-4 py-3 rounded-full bg-gradient-to-r from-green-500 to-green-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center">
+                    <i class="fas fa-file-excel mr-2"></i> Excel
                 </button>
-            @endauth
-        </div>
-        <div class="flex justify-center mb-12">
-            <div class="relative w-full max-w-md">
-                <form method="GET" action="{{ url()->current() }}">
-                    <input type="hidden" name="district" value="{{ request()->query('district', '') }}">
-                    <input type="text" name="search" id="searchInput" placeholder="Boqcha qidirish..." class="w-full px-6 py-4 rounded-full bg-white text-gray-900 border-2 border-blue-200 focus:border-blue-600 focus:outline-none shadow-lg transition-all duration-300" value="{{ request()->query('search', '') }}" aria-label="Boqcha qidirish">
-                    <button type="submit" class="absolute right-6 top-1/2 transform -translate-y-1/2 text-blue-600" aria-label="Qidirish">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
+                <button id="exportCSV" class="px-4 py-3 rounded-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-medium shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center">
+                    <i class="fas fa-file-csv mr-2"></i> CSV
+                </button>
             </div>
         </div>
-        <!-- Kindergarten List -->
-        <div id="kindergartensList" class="space-y-6">
-            @forelse($kindergartens ?? [] as $kindergarten)
-                <div class="flex flex-col sm:flex-row items-center p-6 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 w-full" data-kindergarten-name="{{ $kindergarten->boqcha_raqami }}">
-                    <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mr-0 sm:mr-6 mb-4 sm:mb-0">
-                        <i class="fas fa-child text-white text-2xl"></i>
-                    </div>
-                    <div class="flex-1 text-center sm:text-left">
-                        <h4 class="text-xl font-semibold text-gray-900 mb-2">{{ $kindergarten->boqcha_raqami }}-boqcha</h4>
-                        <p class="text-gray-600">MFY: {{ $kindergarten->mfy ?? 'Ma\'lumot yo\'q' }}</p>
-                        <p class="text-gray-600">Qurilgan yili: {{ $kindergarten->qurilgan_yili ?? 'Ma\'lumot yo\'q' }}</p>
-                        <p class="text-gray-600">Tuman: {{ $kindergarten->district?->name ?? 'Ma\'lumot yo\'q' }}</p>
-                    </div>
-                    <div class="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
-                        <a href="{{ route('data', $kindergarten->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 text-center" aria-label="Boqcha ma'lumotlarini ko'rish">
-                            <i class="fas fa-eye"></i> Ko'rish
+
+        @if(isset($error))
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8 rounded shadow-md">
+                <p class="font-medium">{{ $error }}</p>
+                <p class="text-sm mt-2">Iltimos, sahifani yangilang yoki keyinroq qayta urinib ko'ring.</p>
+            </div>
+        @endif
+
+        @if(!isset($districts))
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-8 rounded shadow-md">
+                <p class="font-medium">Ma'lumotlarni yuklashda xatolik</p>
+                <p class="text-sm mt-2">Tumanlar ma'lumotlari topilmadi. Iltimos, administrator bilan bog'laning.</p>
+            </div>
+        @endif
+
+        <div id="districtsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            @if(isset($districts) && $districts instanceof \Illuminate\Support\Collection && $districts->count() > 0)
+                @foreach($districts as $district)
+                    @if(isset($district->id, $district->name))
+                        @php
+                            try {
+                                $districtUrl = route('kindergarten', ['kindergarten' => $district->id]);
+                            } catch (\Exception $e) {
+                                // Fallback URL if route generation fails
+                                $districtUrl = '/kindergarten/' . $district->id;
+                                if(app()->environment() !== 'production') {
+                                    \Log::warning("Route generation error: " . $e->getMessage());
+                                }
+                            }
+                        @endphp
+                        <a href="{{ $districtUrl }}" data-district-id="{{ $district->id }}" data-district-name="{{ $district->name }}" class="district-link">
+                            <div class="block">
+                                <div class="px-6 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-full font-semibold text-center shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                                    {{ $district->name }}
+                                    <span class="text-xs block mt-1 text-blue-200">{{ $district->kindergartens_count ?? 0 }} boqcha</span>
+                                </div>
+                            </div>
                         </a>
-                        @auth
-                            <a href="javascript:void(0)" onclick="openModal('editKindergartenModal-{{ $kindergarten->id }}')" class="bg-yellow-500 text-white px-4 py-2 rounded-full hover:bg-yellow-600 transition-all duration-300 text-center" aria-label="Boqchani tahrirlash">
-                                <i class="fas fa-edit"></i> Tahrirlash
-                            </a>
-                            <form method="POST" action="{{ route('kindergarten.destroy', $kindergarten->id) }}" onsubmit="return confirm('Rostdan o\'chirmoqchimisiz?');" class="inline-block">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-all duration-300" aria-label="Boqchani o'chirish">
-                                    <i class="fas fa-trash"></i> O'chirish
-                                </button>
-                            </form>
-                        @endauth
+                    @endif
+                @endforeach
+            @else
+                <div class="col-span-full text-center py-12">
+                    <div class="bg-blue-50 border-2 border-blue-100 rounded-xl p-8 inline-block shadow-lg">
+                        <i class="fas fa-map-marked-alt text-6xl text-blue-400 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Tumanlar mavjud emas</h3>
+                        <p class="text-gray-600">Hozircha hech qanday tuman ma'lumotlari topilmadi.</p>
+                        @if(app()->environment() !== 'production')
+                            <div class="mt-4 text-left p-3 bg-gray-100 rounded">
+                                <span class="text-xs text-gray-500">Texnik ma'lumot:</span>
+                                <code class="block mt-1 text-xs text-left">districts variable: {{ isset($districts) ? (is_object($districts) ? get_class($districts) : gettype($districts)) : 'not set' }}</code>
+                                <code class="block mt-1 text-xs text-left">districts count: {{ isset($districts) && is_object($districts) && method_exists($districts, 'count') ? $districts->count() : 0 }}</code>
+                                <code class="block mt-1 text-xs text-left">route check: {{ Route::has('added') ? 'Route exists' : 'Route missing' }}</code>
+                            </div>
+                        @endif
                     </div>
                 </div>
-            @empty
-                <div class="flex flex-col items-center p-6 bg-white rounded-3xl shadow-lg w-full">
-                    <div class="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-child text-gray-400 text-2xl"></i>
-                    </div>
-                    <p class="text-gray-600 text-lg">Boqchalar topilmadi</p>
-                </div>
-            @endforelse
+            @endif
         </div>
     </div>
 </section>

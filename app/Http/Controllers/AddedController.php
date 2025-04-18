@@ -23,9 +23,7 @@ class AddedController extends Controller
     public function school(Request $request)
     {
         $districts = District::where('status', true)->get();
-        $tuman_id = $request->query('added'); // Safely get the 'added' parameter
-
-        // Initialize $addeds as an empty collection if $tuman_id is not provided
+        $tuman_id = $request->query('added');
         $addeds = $tuman_id ? Added::where('district_id', $tuman_id)->with('district')->get() : collect();
 
         // Add detailed debug logging
@@ -47,7 +45,6 @@ class AddedController extends Controller
      */
     public function create(): View
     {
-        $this->authorize('create', Added::class);
         $districts = District::where('status', true)->get();
         return view('added.create', compact('districts'));
     }
@@ -60,8 +57,6 @@ class AddedController extends Controller
      */
     public function store(AddedRequest $request): RedirectResponse
     {
-        $this->authorize('create', Added::class);
-
         try {
             // Validation handled by AddedRequest
             $validated = $request->validated();
@@ -81,16 +76,13 @@ class AddedController extends Controller
                     // Faylni saqlash
                     if ($file->isValid()) {
                         try {
-                            // Faylni saqlash uchun katalogni tekshirish va yaratish
                             if (!Storage::disk('public')->exists('schools')) {
                                 Storage::disk('public')->makeDirectory('schools');
                             }
 
-                            // Faylni nomini aniqlash va saqlash
                             $filename = time() . '_' . $file->getClientOriginalName();
                             $filePath = $file->storeAs('schools', $filename, 'public');
 
-                            // Fayl saqlangandan so'ng, ma'lumotlarni saqlash
                             $data['maktab_rasmlari'] = $filePath;
                             Log::info('File uploaded successfully: ' . $filePath);
                         } catch (\Exception $e) {
@@ -102,14 +94,12 @@ class AddedController extends Controller
                     }
                 }
 
-                // Yangi 'Added' yozuvini yaratish
                 $added = Added::create($data);
                 Log::info('Added record created successfully with ID: ' . $added->id);
 
                 return redirect()->route('added')->with('success', 'Muvaffaqiyatli saqlandi!');
             });
         } catch (\Exception $e) {
-            // Agar faylni saqlashda xato bo'lsa, faylni o'chirish
             if (isset($filePath) && Storage::disk('public')->exists($filePath)) {
                 Storage::disk('public')->delete($filePath);
                 Log::info('Deleted orphaned file after failed school creation: ' . $filePath);
@@ -128,7 +118,6 @@ class AddedController extends Controller
      */
     public function show(Added $added): View
     {
-        $this->authorize('view', $added);
         $added->load('district');
         return view('added.show', compact('added'));
     }
@@ -140,7 +129,6 @@ class AddedController extends Controller
      */
     public function edit(Added $added): View
     {
-        $this->authorize('update', $added);
         $districts = District::where('status', true)->get();
         return view('added.edit', compact('added', 'districts'));
     }
@@ -233,7 +221,6 @@ class AddedController extends Controller
 
         try {
             return DB::transaction(function () use ($added) {
-                // Delete associated file if exists
                 if ($added->maktab_rasmlari && Storage::disk('public')->exists($added->maktab_rasmlari)) {
                     Storage::disk('public')->delete($added->maktab_rasmlari);
                     Log::info('File deleted with record: ' . $added->maktab_rasmlari);
@@ -243,7 +230,7 @@ class AddedController extends Controller
                 Log::info('Added record deleted successfully: ID ' . $added->id);
 
                 return redirect()->route('added')->with('success', 'Muvaffaqiyatli o\'chirildi!');
-            }, 5); // Set a higher priority for delete transactions
+            }, 5);
         } catch (\Exception $e) {
             Log::error('Error deleting Added record: ' . $e->getMessage());
             return back()->withErrors(['error' => 'Ma\'lumotlarni o\'chirishda xatolik: ' . $e->getMessage()]);

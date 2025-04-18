@@ -92,7 +92,7 @@
                         <p class="text-gray-600">Tuman: {{ $added->district->name ?? 'Ma\'lumot yo\'q' }}</p>
                     </div>
                     <div class="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
-                        <a href="{{ route('data', $added->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 text-center">
+                        <a href="{{ route('school_data', $added->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 text-center">
                             <i class="fas fa-eye"></i> Ko'rish
                         </a>
                         @auth

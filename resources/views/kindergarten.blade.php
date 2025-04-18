@@ -78,7 +78,7 @@
                 </form>
             </div>
         </div>
-        <!-- Schools List -->
+        <!-- Kindergartens List -->
         <div id="kindergartenList" class="space-y-6">
             @forelse($kindergartens as $kindergarten)
                 <div class="flex flex-col sm:flex-row items-center p-6 bg-white rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 w-full">
@@ -92,7 +92,7 @@
                         <p class="text-gray-600">Tuman: {{ $kindergarten->district->name ?? 'Ma\'lumot yo\'q' }}</p>
                     </div>
                     <div class="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
-                        <a href="{{ route('kinder', $kindergarten->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 text-center">
+                        <a href="{{ route('kinder_data', $kindergarten->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-all duration-300 text-center">
                             <i class="fas fa-eye"></i> Ko'rish
                         </a>
                         @auth

@@ -21,26 +21,23 @@ class HomeController extends Controller
         return view('main');
     }
 
-   public function kindergartenRegion()
-   {
-       return view('kindergarten-region');
-   }
-
-    public function school(string $schoolId)
+    public function kindergartenRegion()
     {
-        $added = Added::with('district')->findOrFail($schoolId);
-        return view('data', [
-            'added' => $added,
-        ]);
+        return view('kindergarten-region');
     }
+
     public function kinder(string $kindergartenId)
     {
         $kindergarten = Kindergarten::with('district')->findOrFail($kindergartenId);
-        return view('data', [
+        return view('kinder_data', [
             'kindergartenId' => $kindergarten,
         ]);
     }
-
-
-
+    public function school(string $addedId)
+    {
+        $added = Added::with('district')->findOrFail($addedId);
+        return view('school_data', [
+            'addedId' => $added,
+        ]);
+    }
 }

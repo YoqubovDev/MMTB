@@ -9,9 +9,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            DistrictSeeder::class, // Agar alohida DistrictSeeder bo‘lsa
+            DistrictSeeder::class,
             KindergartenSeeder::class,
-            SchoolSeeder::class,
         ]);
     }
 }

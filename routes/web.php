@@ -14,8 +14,8 @@ Route::get('/districts/{district}', [DistrictController::class, 'show'])->name('
 // Public routes
 Route::get('/school-region', [DistrictController::class, 'schoolRegion'])->name('school-region');
 Route::get('/kindergarten-region', [DistrictController::class, 'kindergartenRegion'])->name('kindergarten-region');
-Route::get('/school/data/{id}', [HomeController::class, 'school'])->name('data');
-Route::get('/kinder/data/{id}', [HomeController::class, 'kinder'])->name('kinder');;
+Route::get('/school/data/{id}', [HomeController::class, 'school'])->name('school_data');
+Route::get('/kinder/data/{id}', [HomeController::class, 'kinder'])->name('kinder_data');
 Route::get('/kindergarten', [KindergartenController::class, 'kindergarten'])->name('kindergarten');
 Route::get('/school', [AddedController::class, 'school'])->name('added');
 

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\KindergartenRequest;
-use App\Models\District;
 use App\Models\Kindergarten;
+use App\Models\District;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class KindergartenController extends Controller
@@ -16,14 +17,14 @@ class KindergartenController extends Controller
     public function kindergarten()
     {
         $districts = District::where('status', true)->get();
-        $kindergartens = Kindergarten::with('district')->get();
+        $district_id = $_GET['kindergarten'];
+        $kindergartens = Kindergarten::where('district_id',$district_id)->with('district')->get();
 
         // Add detailed debug logging
         \Log::info('Kindergarten method called');
         \Log::info('Districts count: ' . $districts->count());
         \Log::info('First district: ' . ($districts->first() ? $districts->first()->name : 'none'));
         \Log::info('View data keys: ' . implode(', ', array_keys(compact('districts', 'kindergartens'))));
-
         return view('kindergarten', compact('districts', 'kindergartens'));
     }
 
@@ -40,6 +41,20 @@ class KindergartenController extends Controller
         return response()->json($query->get());
     }
 
+    public function create(): View
+    {
+        $this->authorize('create', Kindergarten::class);
+        $districts = District::where('status', true)->get();
+        return view('kindergarten.create', compact('districts'));
+    }
+
+    /**
+     * Display the specified Boqcha.
+     *
+     * @param  \App\Models\Kindergarten  $kindergarten
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
     public function store(\App\Http\Requests\StoreKindergartenRequest $request)
     {
         $data = $request->validated();
@@ -50,8 +65,15 @@ class KindergartenController extends Controller
 
         Kindergarten::create($data);
 
-        return redirect()->back()->with('success', 'Boqcha muvaffaqiyatli qo‘shildi.');
+         return redirect()->back()->with('success', 'Boqcha muvaffaqiyatli qo‘shildi.');
     }
+
+    public function show(Kindergarten $kindergarten): View
+    {
+        $kindergarten->load('district');
+        return view('kindergarten.show', compact('kindergarten'));
+    }
+
 
     public function update(KindergartenRequest $request, Kindergarten $kindergarten): RedirectResponse
     {
