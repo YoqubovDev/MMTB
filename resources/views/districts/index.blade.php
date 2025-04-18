@@ -65,7 +65,7 @@
                 Har bir tumandagi ta'lim muassasalari haqida ma'lumot
             </p>
         </div>
-        
+
         <div class="mt-10 max-w-lg mx-auto">
             <div class="relative flex items-center">
                 <input id="searchInput" type="text" class="block w-full px-8 py-4 text-gray-900 bg-white border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-md"
@@ -121,7 +121,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Districts Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8" id="districtsGrid">
             @foreach($districts as $district)
@@ -158,14 +158,14 @@
                 </div>
             @endforeach
         </div>
-        
+
         <!-- No results message -->
         <div id="noResults" class="hidden text-center py-12">
             <i class="fas fa-search text-gray-300 text-5xl mb-4"></i>
             <p class="text-xl text-gray-500">Tuman topilmadi. Iltimos, boshqa nom bilan qidirib ko'ring.</p>
         </div>
     </div>
-</section>
+</div>
 
 <!-- Footer -->
 <footer class="bg-gradient-to-br from-blue-900 to-indigo-950 text-white py-10 mt-auto">

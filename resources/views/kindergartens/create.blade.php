@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTV - Yangi bog'cha qo'shish</title>
+    <title>MTV - Yangi boqcha qo'shish</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->
@@ -57,42 +57,26 @@
     <div class="max-w-4xl mx-auto">
         <div class="mb-8">
             <h2 class="text-3xl font-extrabold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
-                Yangi bog'cha qo'shish
+                Yangi boqcha qo'shish
             </h2>
             <p class="mt-2 text-gray-600">Barcha ma'lumotlarni to'g'ri kiriting</p>
         </div>
-        
-        @if ($errors->any())
-            <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow-md">
-                <div class="flex">
-                    <div class="flex-shrink-0">
-                        <i class="fas fa-exclamation-circle text-red-500 mt-1"></i>
-                    </div>
-                    <div class="ml-3">
-                        <p class="font-medium">Quyidagi xatoliklarni to'g'rilang:</p>
-                        <ul class="mt-2 list-disc list-inside text-sm">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        @endif
+
+        @include('components.flash-messages')
 
         <div class="bg-white rounded-2xl shadow-md overflow-hidden">
             <div class="p-8">
                 <form action="{{ route('kindergartens.store') }}" method="POST">
                     @csrf
-                    
+
                     <div class="space-y-6">
                         <!-- Name -->
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Bog'cha nomi <span class="text-red-500">*</span></label>
-                            <input type="text" name="name" id="name" value="{{ old('name') }}" required 
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Maktab nomi <span class="text-red-500">*</span></label>
+                            <input type="text" name="name" id="name" value="{{ old('name') }}" required
                                 class="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors">
                         </div>
-                        
+
                         <!-- District -->
                         <div>
                             <label for="district_id" class="block text-sm font-medium text-gray-700 mb-1">Tuman <span class="text-red-500">*</span></label>
@@ -106,57 +90,48 @@
                                 @endforeach
                             </select>
                         </div>
-                        
+
                         <!-- Address -->
                         <div>
                             <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Manzil <span class="text-red-500">*</span></label>
-                            <input type="text" name="address" id="address" value="{{ old('address') }}" required 
+                            <input type="text" name="address" id="address" value="{{ old('address') }}" required
                                 class="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors">
                         </div>
-                        
+
                         <!-- Grid for contact and email -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label for="contact_number" class="block text-sm font-medium text-gray-700 mb-1">Telefon raqami <span class="text-red-500">*</span></label>
-                                <input type="text" name="contact_number" id="contact_number" value="{{ old('contact_number') }}" required 
+                                <input type="text" name="contact_number" id="contact_number" value="{{ old('contact_number') }}" required
                                     class="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors"
                                     placeholder="+998 XX XXX XX XX">
                             </div>
-                            
+
                             <div>
                                 <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email <span class="text-red-500">*</span></label>
-                                <input type="email" name="email" id="email" value="{{ old('email') }}" required 
+                                <input type="email" name="email" id="email" value="{{ old('email') }}" required
                                     class="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors"
-                                    placeholder="bogcha@example.com">
+                                    placeholder="maktab@example.com">
                             </div>
                         </div>
-                        
-                        <!-- Director name -->
+
+                        <!-- Principal name -->
                         <div>
-                            <label for="director_name" class="block text-sm font-medium text-gray-700 mb-1">Direktor ismi <span class="text-red-500">*</span></label>
-                            <input type="text" name="director_name" id="director_name" value="{{ old('director_name') }}" required 
+                            <label for="principal_name" class="block text-sm font-medium text-gray-700 mb-1">Direktor ismi <span class="text-red-500">*</span></label>
+                            <input type="text" name="principal_name" id="principal_name" value="{{ old('principal_name') }}" required
                                 class="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors">
                         </div>
-                        
-                        <!-- Grid for capacity and age range -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="capacity" class="block text-sm font-medium text-gray-700 mb-1">Bolalar sig'imi <span class="text-red-500">*</span></label>
-                                <input type="number" name="capacity" id="capacity" value="{{ old('capacity') }}" required min="1"
-                                    class="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors">
-                            </div>
-                            
-                            <div>
-                                <label for="age_range" class="block text-sm font-medium text-gray-700 mb-1">Yosh chegarasi <span class="text-red-500">*</span></label>
-                                <input type="text" name="age_range" id="age_range" value="{{ old('age_range') }}" required
-                                    class="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors"
-                                    placeholder="3-7 yosh">
-                            </div>
+
+                        <!-- Capacity -->
+                        <div>
+                            <label for="capacity" class="block text-sm font-medium text-gray-700 mb-1">O'quvchilar sig'imi <span class="text-red-500">*</span></label>
+                            <input type="number" name="capacity" id="capacity" value="{{ old('capacity') }}" required min="1"
+                                class="w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-colors">
                         </div>
-                        
+
                         <!-- Hidden status field -->
                         <input type="hidden" name="status" value="1">
-                        
+
                         <!-- Submit & Cancel buttons -->
                         <div class="flex justify-end space-x-4 pt-4">
                             <a href="{{ route('kindergartens.index') }}" class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium border border-gray-300 hover:bg-gray-200 transition-colors duration-200">
@@ -186,5 +161,11 @@
                 <ul class="space-y-4">
                     <li><a href="{{ route('welcome') }}" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bosh sahifa</a></li>
                     <li><a href="{{ route('school-region') }}" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Maktablar</a></li>
-                    <li><a href="{{ route('kindergarten-region') }}" class="text-gray
+                    <li><a href="{{ route('kindergarten-region') }}" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bog'chalar</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-2xl font-semibold mb-6">Bog'lanish</h3>
+                <p class="text-gray-300 mb-4">Email: <a href="mailto:info@mtv.uz" class="hover:text-blue-300 transition">info@mtv.uz</a></p>
+                <p class="text-gray-300 mb-4">Telefon: <a href="tel:+998
 

@@ -72,7 +72,7 @@
                 </a>
             </div>
         </div>
-        
+
         <!-- Success message -->
         @if (session('success'))
             <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded shadow-md">
@@ -83,29 +83,7 @@
             </div>
         @endif
 
-        <!-- Age Range Card (Featured at the top for prominence) -->
-        <div class="bg-white rounded-2xl shadow-md overflow-hidden mb-8">
-            <div class="border-b border-gray-200">
-                <div class="px-6 py-4 bg-gradient-to-r from-pink-50 to-purple-50">
-                    <h3 class="text-lg font-semibold text-gray-800">
-                        <i class="fas fa-child text-pink-600 mr-2"></i> Qabul qilinadigan yosh chegarasi
-                    </h3>
-                </div>
-            </div>
-            <div class="p-6">
-                <div class="flex items-center justify-center">
-                    <div class="bg-pink-100 p-8 rounded-xl inline-flex items-center justify-center">
-                        <i class="fas fa-baby text-4xl text-pink-500 mr-4"></i>
-                        <div>
-                            <p class="text-sm font-medium text-gray-500">Yosh chegarasi</p>
-                            <p class="text-3xl font-bold text-gray-900">{{ $kindergarten->age_range }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Kindergarten details card -->
+        <!-- Added details card -->
         <div class="bg-white rounded-2xl shadow-md overflow-hidden mb-8">
             <div class="border-b border-gray-200">
                 <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50">
@@ -116,7 +94,7 @@
             </div>
             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <p class="text-sm font-medium text-gray-500 mb-1">Bog'cha nomi</p>
+                    <p class="text-sm font-medium text-gray-500 mb-1">Maktab nomi</p>
                     <p class="text-lg font-medium text-gray-900">{{ $kindergarten->name }}</p>
                 </div>
                 <div>
@@ -142,7 +120,7 @@
             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <p class="text-sm font-medium text-gray-500 mb-1">Direktor</p>
-                    <p class="text-lg font-medium text-gray-900">{{ $kindergarten->director_name }}</p>
+                    <p class="text-lg font-medium text-gray-900">{{ $kindergarten->principal_name }}</p>
                 </div>
                 <div>
                     <p class="text-sm font-medium text-gray-500 mb-1">Telefon raqami</p>
@@ -167,11 +145,11 @@
             <div class="p-6">
                 <div class="flex items-center">
                     <div class="bg-blue-100 p-4 rounded-xl">
-                        <i class="fas fa-baby-carriage text-3xl text-blue-600"></i>
+                        <i class="fas fa-user-graduate text-3xl text-blue-600"></i>
                     </div>
                     <div class="ml-4">
                         <p class="text-sm font-medium text-gray-500">Bolalar sig'imi</p>
-                        <p class="text-2xl font-bold text-gray-900">{{ $kindergarten->capacity }} <span class="text-base font-normal text-gray-500">bola</span></p>
+                        <p class="text-2xl font-bold text-gray-900">{{ $kindergarten->capacity }} <span class="text-base font-normal text-gray-500">Bolalar</span></p>
                     </div>
                 </div>
             </div>
@@ -182,10 +160,10 @@
             <div class="p-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-800">Bog'chani o'chirish</h3>
-                        <p class="text-sm text-gray-600 mt-1">Bu amal bog'chani tizimdan o'chiradi. Bu amalni qaytarib bo'lmaydi.</p>
+                        <h3 class="text-lg font-semibold text-gray-800">Maktabni o'chirish</h3>
+                        <p class="text-sm text-gray-600 mt-1">Bu amal maktabni tizimdan o'chiradi. Bu amalni qaytarib bo'lmaydi.</p>
                     </div>
-                    <form method="POST" action="{{ route('kindergartens.destroy', $kindergarten) }}" onsubmit="return confirm('Bog\'chani o\'chirishni tasdiqlaysizmi?');">
+                    <form method="POST" action="{{ route('kindergartens.destroy', $kindergarten) }}" onsubmit="return confirm('Maktabni o\'chirishni tasdiqlaysizmi?');">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="px-6 py-3 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors duration-200 flex items-center">
@@ -207,5 +185,16 @@
                 <p class="text-gray-300 leading-relaxed">Bolalarimizning kelajagi uchun eng yaxshi ta'lim muhitini yaratamiz.</p>
             </div>
             <div>
-                <h3 class="text-2xl font-semibold mb-6">T
+                <h3 class="text-2xl font-semibold mb-6">Tez havolalar</h3>
+                <ul class="space-y-4">
+                    <li><a href="{{ route('welcome') }}" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bosh sahifa</a></li>
+                    <li><a href="{{ route('school-region') }}" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Maktablar</a></li>
+                    <li><a href="{{ route('kindergarten-region') }}" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bog'chalar</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-2xl font-semibold mb-6">Bog'lanish</h3>
+                <p class="text-gray-300 mb-4">Email: <a href="mailto:info@mtv.uz" class="hover:text-blue-300 transition">info@mtv.uz</a></p>
+                <p class="text-gray-300 mb-4">Telefon: <a href="tel:+998711234567" class="hover:text-blue-300 transition">+998 71 123 45 67</a></p>
+                <p class="text-gray-300">Manzil: Toshkent, Chilanzar, 45-uy</p>
 
