@@ -23,7 +23,7 @@ class KindergartenFactory extends Factory
             'binolar_maydoni' => $this->faker->randomFloat(2, 300, 3000),
             'istilidigan_maydon' => $this->faker->randomFloat(2, 200, 2000),
             'quvvati' => $this->faker->numberBetween(50, 300),
-            'oquvchi_soni' => $this->faker->numberBetween(20, 300),
+            'bolalar_soni' => $this->faker->numberBetween(20, 300),
             'koffsiyent' => $this->faker->randomFloat(2, 0.5, 2),
             'oshxona_yoki_bufet_quvvati' => $this->faker->randomElement(['oshxona', 'bufet']),
             'sport_zal_soni_va_maydoni' => '1 ta / 150 m²',

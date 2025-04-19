@@ -22,7 +22,7 @@ class CreateKindergartensTable extends Migration
             $table->decimal('binolar_maydoni', 10, 2)->nullable();
             $table->decimal('istilidigan_maydon', 10, 2)->nullable();
             $table->integer('quvvati')->nullable();
-            $table->integer('oquvchi_soni')->nullable();
+            $table->integer('bolalar_soni')->nullable();
             $table->decimal('koffsiyent', 8, 2)->nullable();
             $table->string('oshxona_yoki_bufet_quvvati')->nullable();
             $table->string('sport_zal_soni_va_maydoni')->nullable();
