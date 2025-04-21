@@ -144,7 +144,7 @@
                 </div>
                 <div>
                     <label for="district_id" class="block text-gray-700 font-semibold mb-2">Tuman</label>
-                    <select id="district_id" name="district_id" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300">
+                    <select id="district_id" name="district_id" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" required>
                         <option value="">Tumanni tanlang</option>
                         @if(isset($districts))
                             @foreach($districts as $district)

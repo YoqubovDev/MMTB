@@ -65,7 +65,7 @@ class Kindergarten extends Model
     public static function validationRules(): array
     {
         return [
-            'district_id' => 'nullable|exists:districts,id',
+            'district_id' => 'required|exists:districts,id',
             'mfy' => 'required|string|max:255',
             'qurilgan_yili' => 'required|integer|min:1800|max:' . date('Y'),
             'songi_tamir_yili' => 'nullable|integer|min:1800|max:' . date('Y'),
@@ -102,6 +102,7 @@ class Kindergarten extends Model
     public static function validationMessages(): array
     {
         return [
+            'district_id.required' => 'Tuman tanlanishi shart',
             'mfy.required' => 'MFY maydoni to\'ldirilishi shart',
             'qurilgan_yili.required' => 'Qurilgan yili to\'ldirilishi shart',
             'qurilgan_yili.integer' => 'Qurilgan yili butun son bo\'lishi kerak',
