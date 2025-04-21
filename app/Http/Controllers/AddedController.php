@@ -26,7 +26,6 @@ class AddedController extends Controller
         $tuman_id = $request->query('added');
         $addeds = $tuman_id ? Added::where('district_id', $tuman_id)->with('district')->get() : collect();
 
-        // Add detailed debug logging
         \Log::info('School method called', [
             'tuman_id' => $tuman_id,
             'districts_count' => $districts->count(),
@@ -58,22 +57,21 @@ class AddedController extends Controller
     public function store(AddedRequest $request): RedirectResponse
     {
         try {
-            // Validation handled by AddedRequest
             $validated = $request->validated();
+            \Log::info('Validated data:', $validated);
             $data = $validated;
             $filePath = null;
 
             return DB::transaction(function () use ($request, $data, &$filePath) {
-                // Handle file upload with error handling
+                \Log::info('Starting transaction for store');
                 if ($request->hasFile('maktab_rasmlari')) {
                     $file = $request->file('maktab_rasmlari');
+                    \Log::info('File detected:', ['name' => $file->getClientOriginalName()]);
 
-                    // Faylni validatsiya qilish
                     $request->validate([
-                        'maktab_rasmlari' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                        'maktab_rasmlari' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
                     ]);
 
-                    // Faylni saqlash
                     if ($file->isValid()) {
                         try {
                             if (!Storage::disk('public')->exists('schools')) {
@@ -82,33 +80,37 @@ class AddedController extends Controller
 
                             $filename = time() . '_' . $file->getClientOriginalName();
                             $filePath = $file->storeAs('schools', $filename, 'public');
+                            \Log::info('File stored:', ['path' => $filePath]);
 
                             $data['maktab_rasmlari'] = $filePath;
-                            Log::info('File uploaded successfully: ' . $filePath);
                         } catch (\Exception $e) {
-                            Log::error('File upload failed: ' . $e->getMessage());
-                            throw new \Exception('Fayl yuklashda xatolik: ' . $e->getMessage());
+                            \Log::error('File upload failed: ' . $e->getMessage());
+                            throw $e;
                         }
                     } else {
+                        \Log::error('Invalid file uploaded');
                         throw new \Exception('Faylni yuklashda muammo yuz berdi');
                     }
                 }
 
+                \Log::info('Creating Added record:', $data);
                 $added = Added::create($data);
-                Log::info('Added record created successfully with ID: ' . $added->id);
+                \Log::info('Added record created:', ['id' => $added->id]);
 
-                return redirect()->route('added')->with('success', 'Muvaffaqiyatli saqlandi!');
+                return redirect()->route('added', ['added' => $data['district_id']])
+                    ->with('success', 'Muvaffaqiyatli saqlandi!');
             });
         } catch (\Exception $e) {
             if (isset($filePath) && Storage::disk('public')->exists($filePath)) {
                 Storage::disk('public')->delete($filePath);
-                Log::info('Deleted orphaned file after failed school creation: ' . $filePath);
+                \Log::info('Deleted orphaned file: ' . $filePath);
             }
 
-            Log::error('Error creating Added record: ' . $e->getMessage());
+            \Log::error('Store failed: ' . $e->getMessage(), ['stack' => $e->getTraceAsString()]);
             return back()->withInput()->withErrors(['error' => 'Ma\'lumotlarni saqlashda xatolik: ' . $e->getMessage()]);
         }
     }
+
 
     /**
      * Display the specified school.
@@ -145,29 +147,24 @@ class AddedController extends Controller
         $this->authorize('update', $added);
 
         try {
-            // Validation handled by AddedRequest
             $validated = $request->validated();
             $data = $validated;
             $oldFilePath = $added->maktab_rasmlari;
             $newFilePath = null;
 
             return DB::transaction(function () use ($request, $added, $data, $oldFilePath, &$newFilePath) {
-                // Handle file upload for update
                 if ($request->hasFile('maktab_rasmlari')) {
                     $file = $request->file('maktab_rasmlari');
 
-                    // Verify file is valid
                     if (!$file->isValid()) {
                         throw new \Exception('Fayl buzilgan yoki noto\'g\'ri yuklangan');
                     }
 
                     try {
-                        // Create storage/app/public/schools directory if it doesn't exist
                         if (!Storage::disk('public')->exists('schools')) {
                             Storage::disk('public')->makeDirectory('schools');
                         }
 
-                        // Store with a unique name based on timestamp and original filename
                         $filename = time() . '_' . $file->getClientOriginalName();
                         $newFilePath = $file->storeAs('schools', $filename, 'public');
 
@@ -178,7 +175,6 @@ class AddedController extends Controller
                         $data['maktab_rasmlari'] = $newFilePath;
                         Log::info('New file stored for school ID ' . $added->id . ': ' . $newFilePath);
 
-                        // Delete previous file if exists
                         if ($oldFilePath && Storage::disk('public')->exists($oldFilePath)) {
                             Storage::disk('public')->delete($oldFilePath);
                             Log::info('Previous file deleted for school ID ' . $added->id . ': ' . $oldFilePath);
@@ -188,7 +184,6 @@ class AddedController extends Controller
                         throw new \Exception('Fayl yangilashda xatolik: ' . $e->getMessage());
                     }
                 } else {
-                    // Don't overwrite existing file if no new file is uploaded
                     unset($data['maktab_rasmlari']);
                 }
 
@@ -198,7 +193,6 @@ class AddedController extends Controller
                 return redirect()->route('added')->with('success', 'Muvaffaqiyatli yangilandi!');
             });
         } catch (\Exception $e) {
-            // Clean up new file if it was uploaded but record update failed
             if (isset($newFilePath) && Storage::disk('public')->exists($newFilePath)) {
                 Storage::disk('public')->delete($newFilePath);
                 Log::info('Deleted new file after failed school update: ' . $newFilePath);
@@ -217,7 +211,6 @@ class AddedController extends Controller
      */
     public function destroy(Added $added): RedirectResponse
     {
-        $this->authorize('delete', $added);
 
         try {
             return DB::transaction(function () use ($added) {
