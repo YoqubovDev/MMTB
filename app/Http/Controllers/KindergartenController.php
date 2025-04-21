@@ -17,7 +17,7 @@ class KindergartenController extends Controller
     public function kindergarten()
     {
         $districts = District::where('status', true)->get();
-        $district_id = $_GET['kindergarten'];
+        $district_id = $_GET['kindergarten'] ?? $districts[0]['id'];
         $kindergartens = Kindergarten::where('district_id',$district_id)->with('district')->get();
 
         // Add detailed debug logging

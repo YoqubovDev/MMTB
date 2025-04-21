@@ -89,7 +89,6 @@
             Bog'cha Ma'lumotlari
         </h2>
         <div class="bg-white p-8 rounded-3xl shadow-lg">
-            @if($kindergarten)
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-4">Umumiy Ma'lumotlar</h3>
@@ -155,9 +154,8 @@
                 <div class="mt-8 flex justify-end">
                     <a href="{{ route('kindergartens.index', ['district_id' => $kindergarten->district_id]) }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300">Orqaga</a>
                 </div>
-            @else
+
                 <p class="text-gray-600 text-center">Bog'cha ma'lumotlari topilmadi</p>
-            @endif
         </div>
     </div>
 </section>
