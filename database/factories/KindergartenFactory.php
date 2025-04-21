@@ -16,7 +16,7 @@ class KindergartenFactory extends Factory
             'qurilgan_yili' => $this->faker->year(),
             'district_id' => $this->faker->numberBetween(1, 12),
             'songi_tamir_yili' => $this->faker->optional()->year(),
-            'sektor_raqami' => $this->faker->numberBetween(1, 4),
+            'boqcha_raqami' => $this->faker->numberBetween(1, 4),
             'yer_maydoni' => $this->faker->randomFloat(2, 500, 5000),
             'xudud_oralganligi' => $this->faker->boolean(),
             'binolar_soni' => $this->faker->numberBetween(1, 5),

@@ -22,7 +22,6 @@ class Added extends Model
         'maktab_raqami',
         'qurilgan_yili',
         'songi_tamir_yili',
-        'sektor_raqami',
         'yer_maydoni',
         'xudud_oralganligi',
         'binolar_soni',

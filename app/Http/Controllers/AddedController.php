@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Added;
 use App\Models\District;
 use App\Http\Requests\AddedRequest;
-use Illuminate\Http\Request;
+    use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -15,133 +15,128 @@ use Illuminate\Support\Facades\Auth;
 
 class AddedController extends Controller
 {
-    /**
-     * Display a listing of schools.
-     *
-     * @return \Illuminate\View\View
-     */
+
     public function school(Request $request)
     {
         $districts = District::where('status', true)->get();
-        $tuman_id = $request->query('added');
-        $addeds = $tuman_id ? Added::where('district_id', $tuman_id)->with('district')->get() : collect();
-
-        \Log::info('School method called', [
-            'tuman_id' => $tuman_id,
-            'districts_count' => $districts->count(),
-            'first_district' => $districts->first() ? $districts->first()->name : 'none',
-            'addeds_count' => $addeds->count(),
-            'view_data_keys' => implode(', ', array_keys(compact('districts', 'addeds')))
-        ]);
+        $district_id = $_GET['added'] ?? $districts[0]['id'] ?? null;
+        $addeds = $district_id ? Added::where('district_id', $district_id)->with('district')->get() : collect();
 
         return view('added', compact('districts', 'addeds'));
     }
 
-    /**
-     * Show the form for creating a new school.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create(): View
+    public function search(Request $request)
     {
-        $districts = District::where('status', true)->get();
-        return view('added.create', compact('districts'));
+        $search = $request->query('search', '');
+        $district = $request->query('district', '');
+
+        $query = Added::query()
+            ->when($search, fn($q) => $q->where('boqcha_raqami', 'like', "%{$search}%"))
+            ->when($district, fn($q) => $q->whereHas('district', fn($q) => $q->where('name', $district)))
+            ->with('district');
+
+        return response()->json($query->get());
     }
 
-    /**
-     * Store a newly created school in storage.
-     *
-     * @param  \App\Http\Requests\AddedRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store(AddedRequest $request): RedirectResponse
+    public function create()
+    {
+        $districts = District::where('status', true)->get();
+        return view('schools.create', compact('districts'));
+    }
+
+
+    public function store(Request $request)
     {
         try {
-            $validated = $request->validated();
-            \Log::info('Validated data:', $validated);
-            $data = $validated;
-            $filePath = null;
+            Log::info('school store method called');
+            Log::info('Request data: ' . json_encode($request->all()));
 
-            return DB::transaction(function () use ($request, $data, &$filePath) {
-                \Log::info('Starting transaction for store');
-                if ($request->hasFile('maktab_rasmlari')) {
-                    $file = $request->file('maktab_rasmlari');
-                    \Log::info('File detected:', ['name' => $file->getClientOriginalName()]);
 
-                    $request->validate([
-                        'maktab_rasmlari' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                    ]);
+            $validated = $request->validate([
+                'district_id' => 'nullable|exists:districts,id',
+                'mfy' => 'required|string|max:255',
+                'qurilgan_yili' => 'required|integer|min:1800|max:' . date('Y'),
+            ]);
 
-                    if ($file->isValid()) {
-                        try {
-                            if (!Storage::disk('public')->exists('schools')) {
-                                Storage::disk('public')->makeDirectory('schools');
-                            }
+            Log::info('Validation passed');
 
-                            $filename = time() . '_' . $file->getClientOriginalName();
-                            $filePath = $file->storeAs('schools', $filename, 'public');
-                            \Log::info('File stored:', ['path' => $filePath]);
+            // Create the record with minimal required fields
+            $school = new Added();
+            $school->district_id = $request->district_id;
+            $school->mfy = $request->mfy;
+            $school->qurilgan_yili = $request->qurilgan_yili;
 
-                            $data['maktab_rasmlari'] = $filePath;
-                        } catch (\Exception $e) {
-                            \Log::error('File upload failed: ' . $e->getMessage());
-                            throw $e;
-                        }
-                    } else {
-                        \Log::error('Invalid file uploaded');
-                        throw new \Exception('Faylni yuklashda muammo yuz berdi');
-                    }
+            // Set other fields if provided
+            if ($request->has('songi_tamir_yili')) $school->songi_tamir_yili = $request->songi_tamir_yili;
+            if ($request->has('maktab_raqami')) $school->maktab_raqami = $request->maktab_raqami;
+            if ($request->has('yer_maydoni')) $school->yer_maydoni = $request->yer_maydoni;
+            if ($request->has('xudud_oralganligi')) $school->xudud_oralganligi = $request->xudud_oralganligi;
+            if ($request->has('binolar_soni')) $school->binolar_soni = $request->binolar_soni;
+            if ($request->has('binolar_qavatligi')) $school->binolar_qavatligi = $request->binolar_qavatligi;
+            if ($request->has('binolar_maydoni')) $school->binolar_maydoni = $request->binolar_maydoni;
+            if ($request->has('istilidigan_maydon')) $school->istilidigan_maydon = $request->istilidigan_maydon;
+            if ($request->has('quvvati')) $school->quvvati = $request->quvvati;
+            if ($request->has('oquvchilar_soni')) $school->bolalar_soni = $request->bolalar_soni;
+            if ($request->has('koffsiyent')) $school->koffsiyent = $request->koffsiyent;
+            if ($request->has('oshxona_yoki_bufet_quvvati')) $school->oshxona_yoki_bufet_quvvati = $request->oshxona_yoki_bufet_quvvati;
+            if ($request->has('sport_zal_soni_va_maydoni')) $school->sport_zal_soni_va_maydoni = $request->sport_zal_soni_va_maydoni;
+            if ($request->has('faollar_zali_va_quvvati')) $school->faollar_zali_va_quvvati = $request->faollar_zali_va_quvvati;
+            if ($request->has('xolati')) $school->xolati = $request->xolati;
+            if ($request->has('tom_xolati_yuzda')) $school->tom_xolati_yuzda = $request->tom_xolati_yuzda;
+            if ($request->has('deraza_rom_xolati_yuzda')) $school->deraza_rom_xolati_yuzda = $request->deraza_rom_xolati_yuzda;
+            if ($request->has('istish_turi')) $school->istish_turi = $request->istish_turi;
+            if ($request->has('qozonlar_soni')) $school->qozonlar_soni = $request->qozonlar_soni;
+            if ($request->has('qozonlar_xolati_yuzda')) $school->qozonlar_xolati_yuzda = $request->qozonlar_xolati_yuzda;
+            if ($request->has('apoklar_xolati_yuzda')) $school->apoklar_xolati_yuzda = $request->apoklar_xolati_yuzda;
+            if ($request->has('gaz_istemoli')) $school->gaz_istemoli = $request->gaz_istemoli;
+            if ($request->has('elektr_istemoli')) $school->elektr_istemoli = $request->elektr_istemoli;
+            if ($request->has('issiqlik_istemoli')) $school->issiqlik_istemoli = $request->issiqlik_istemoli;
+            if ($request->has('quyosh_paneli')) $school->quyosh_paneli = $request->quyosh_paneli;
+            if ($request->has('geokollektor')) $school->geokollektor = $request->geokollektor;
+            if ($request->has('lokatsiya')) $school->lokatsiya = $request->lokatsiya;
+
+            // Handle file upload
+            if ($request->hasFile('maktab_rasmlari')) {
+                $file = $request->file('maktab_rasmlari');
+                if ($file->isValid()) {
+                    $path = $file->store('school_images', 'public');
+                    $school->maktab_rasmlari = $path;
+                    Log::info('File uploaded to: ' . $path);
                 }
-
-                \Log::info('Creating Added record:', $data);
-                $added = Added::create($data);
-                \Log::info('Added record created:', ['id' => $added->id]);
-
-                return redirect()->route('added', ['added' => $data['district_id']])
-                    ->with('success', 'Muvaffaqiyatli saqlandi!');
-            });
-        } catch (\Exception $e) {
-            if (isset($filePath) && Storage::disk('public')->exists($filePath)) {
-                Storage::disk('public')->delete($filePath);
-                \Log::info('Deleted orphaned file: ' . $filePath);
             }
 
-            \Log::error('Store failed: ' . $e->getMessage(), ['stack' => $e->getTraceAsString()]);
-            return back()->withInput()->withErrors(['error' => 'Ma\'lumotlarni saqlashda xatolik: ' . $e->getMessage()]);
+            // Save the kindergarten
+            $saved = $school->save();
+            Log::info('School saved: ' . ($saved ? 'Yes' : 'No'));
+
+            if ($saved) {
+                return redirect()->back()->with('success', "Boqcha muvaffaqiyatli qo'shildi.");
+            } else {
+                Log::error('Failed to save kindergarten');
+                return redirect()->back()->with('error', "Boqcha qo'shishda xatolik yuz berdi.");
+            }
+
+        } catch (\Exception $e) {
+            Log::error('Exception in kindergarten store: ' . $e->getMessage());
+            Log::error($e->getTraceAsString());
+            return redirect()->back()->with('error', 'Xatolik: ' . $e->getMessage());
         }
     }
 
 
-    /**
-     * Display the specified school.
-     *
-     * @param  \App\Models\Added  $added
-     * @return \Illuminate\View\View
-     */
-    public function show(Added $added): View
+    public function show(Added $added)
     {
         $added->load('district');
-        return view('added.show', compact('added'));
+        return view('schools.show', compact('added'));
     }
-    /**
-     * Show the form for editing the specified school.
-     *
-     * @param  \App\Models\Added  $added
-     * @return \Illuminate\View\View
-     */
+
     public function edit(Added $added): View
     {
         $districts = District::where('status', true)->get();
-        return view('added.edit', compact('added', 'districts'));
+        return view('schools.edit', compact('added', 'districts'));
     }
 
-    /**
-     * Update the specified school in storage.
-     *
-     * @param  \App\Http\Requests\AddedRequest  $request
-     * @param  \App\Models\Added  $added
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function update(AddedRequest $request, Added $added): RedirectResponse
     {
         $this->authorize('update', $added);

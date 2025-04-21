@@ -51,9 +51,9 @@
 
     <!-- Sektor raqami -->
     <div>
-        <label for="{{ $prefix }}sektor_raqami" class="block text-gray-700 font-semibold mb-2">Sektor raqami</label>
-        <input type="number" id="{{ $prefix }}sektor_raqami" name="sektor_raqami" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('sektor_raqami', $kindergarten->sektor_raqami ?? '') }}">
-        @error('sektor_raqami')
+        <label for="{{ $prefix }}boqcha_raqami" class="block text-gray-700 font-semibold mb-2">Sektor raqami</label>
+        <input type="number" id="{{ $prefix }}boqcha_raqami" name="boqcha_raqami" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('boqcha_raqami', $kindergarten->boqcha_raqami ?? '') }}">
+        @error('boqcha_raqami')
         <p class="text-red-600 text-sm mt-1" role="alert">{{ $message }}</p>
         @enderror
     </div>

@@ -22,7 +22,7 @@ class Kindergarten extends Model
         'mfy',
         'qurilgan_yili',
         'songi_tamir_yili',
-        'sektor_raqami',
+        'boqcha_raqami',
         'yer_maydoni',
         'xudud_oralganligi',
         'binolar_soni',
@@ -69,7 +69,7 @@ class Kindergarten extends Model
             'mfy' => 'required|string|max:255',
             'qurilgan_yili' => 'required|integer|min:1800|max:' . date('Y'),
             'songi_tamir_yili' => 'nullable|integer|min:1800|max:' . date('Y'),
-            'sektor_raqami' => 'nullable|integer',
+            'boqcha_raqami' => 'nullable|integer',
             'yer_maydoni' => 'nullable|numeric',
             'xudud_oralganligi' => 'nullable|boolean',
             'binolar_soni' => 'nullable|integer|min:0',
@@ -103,6 +103,7 @@ class Kindergarten extends Model
     {
         return [
             'district_id.required' => 'Tuman tanlanishi shart',
+            'boqcha_raqami.integer' => 'Boqcha raqami butun son bo\'lishi kerak va takrorlanmasligi kerak',
             'mfy.required' => 'MFY maydoni to\'ldirilishi shart',
             'qurilgan_yili.required' => 'Qurilgan yili to\'ldirilishi shart',
             'qurilgan_yili.integer' => 'Qurilgan yili butun son bo\'lishi kerak',

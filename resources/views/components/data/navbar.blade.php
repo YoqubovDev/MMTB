@@ -50,14 +50,14 @@ window.addEventListener('scroll', () => {
 document.addEventListener('DOMContentLoaded', function() {
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
-    
+
     if (menuBtn && mobileMenu) {
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
             mobileMenu.classList.toggle('animate-slide-in');
         });
     }
-    
+
     // Chiqish tugmasi (Desktop)
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
@@ -65,11 +65,11 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             if (confirm('Chiqishni xohlaysizmi?')) {
                 alert('Tizimdan chiqildi.');
-                window.location.href = 'login.html';
+                window.location.href = '/';
             }
         });
     }
-    
+
     // Chiqish tugmasi (Mobile)
     const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
     if (mobileLogoutBtn) {
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             if (confirm('Chiqishni xohlaysizmi?')) {
                 alert('Tizimdan chiqildi.');
-                window.location.href = 'login.html';
+                window.location.href = '/';
             }
         });
     }

@@ -62,7 +62,7 @@ class KindergartenController extends Controller
 
             // Set other fields if provided
             if ($request->has('songi_tamir_yili')) $kindergarten->songi_tamir_yili = $request->songi_tamir_yili;
-            if ($request->has('sektor_raqami')) $kindergarten->sektor_raqami = $request->sektor_raqami;
+            if ($request->has('boqcha_raqami')) $kindergarten->boqcha_raqami = $request->boqcha_raqami;
             if ($request->has('yer_maydoni')) $kindergarten->yer_maydoni = $request->yer_maydoni;
             if ($request->has('xudud_oralganligi')) $kindergarten->xudud_oralganligi = $request->xudud_oralganligi;
             if ($request->has('binolar_soni')) $kindergarten->binolar_soni = $request->binolar_soni;

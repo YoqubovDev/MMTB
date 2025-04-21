@@ -168,8 +168,8 @@
                     <input type="number" id="songi_tamir_yili" name="songi_tamir_yili" min="1800" max="{{ date('Y') }}" value="{{ old('songi_tamir_yili') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 2020">
                 </div>
                 <div>
-                    <label for="sektor_raqami" class="block text-gray-700 font-semibold mb-2">Sektor raqami</label>
-                    <input type="number" id="sektor_raqami" name="sektor_raqami" min="0" value="{{ old('sektor_raqami') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 3">
+                    <label for="boqcha_raqami" class="block text-gray-700 font-semibold mb-2">Sektor raqami</label>
+                    <input type="number" id="boqcha_raqami" name="boqcha_raqami" min="0" value="{{ old('boqcha_raqami') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 3">
                 </div>
                 <div>
                     <label for="yer_maydoni" class="block text-gray-700 font-semibold mb-2">Yer maydoni</label>
@@ -341,8 +341,8 @@
                         <input type="number" id="edit_songi_tamir_yili_{{ $kindergarten->id }}" name="songi_tamir_yili" min="1800" max="{{ date('Y') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('songi_tamir_yili', $kindergarten->songi_tamir_yili ?? '') }}">
                     </div>
                     <div>
-                        <label for="edit_sektor_raqami_{{ $kindergarten->id }}" class="block text-gray-700 font-semibold mb-2">Sektor raqami</label>
-                        <input type="number" id="edit_sektor_raqami_{{ $kindergarten->id }}" name="sektor_raqami" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('sektor_raqami', $kindergarten->sektor_raqami ?? '') }}">
+                        <label for="edit_boqcha_raqami_{{ $kindergarten->id }}" class="block text-gray-700 font-semibold mb-2">Sektor raqami</label>
+                        <input type="number" id="edit_boqcha_raqami_{{ $kindergarten->id }}" name="boqcha_raqami" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('boqcha_raqami', $kindergarten->boqcha_raqami ?? '') }}">
                     </div>
                     <div>
                         <label for="edit_yer_maydoni_{{ $kindergarten->id }}" class="block text-gray-700 font-semibold mb-2">Yer maydoni</label>
@@ -513,7 +513,7 @@
         e.preventDefault();
         if (confirm('Chiqishni xohlaysizmi?')) {
             alert('Tizimdan chiqildi.');
-            window.location.href = 'login';
+            window.location.href = '/dashboard';
         }
     });
 
@@ -522,7 +522,7 @@
         e.preventDefault();
         if (confirm('Chiqishni xohlaysizmi?')) {
             alert('Tizimdan chiqildi.');
-            window.location.href = 'login.html';
+            window.location.href = '/dashboard';
         }
     });
 

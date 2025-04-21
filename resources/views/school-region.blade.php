@@ -27,7 +27,7 @@
                 <a href="#" class="relative text-lg font-semibold text-gray-100 hover:text-blue-300 transition-all duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-300 after:transition-all after:duration-300 hover:after:w-full">Bog‘lanish</a>
             </div>
             <div class="hidden md:flex items-center gap-4">
-                <a href="#" id="logoutBtn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+                <a href="/dashboard" id="logoutBtn" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
                     Chiqish
                 </a>
             </div>
@@ -197,7 +197,7 @@
         e.preventDefault();
         if (confirm('Chiqishni xohlaysizmi?')) {
             alert('Tizimdan chiqildi.');
-            window.location.href = 'login.html';
+            window.location.href = '/dashboard';
         }
     });
 
@@ -206,7 +206,7 @@
         e.preventDefault();
         if (confirm('Chiqishni xohlaysizmi?')) {
             alert('Tizimdan chiqildi.');
-            window.location.href = 'login.html';
+            window.location.href = '/dashboard';
         }
     });
 

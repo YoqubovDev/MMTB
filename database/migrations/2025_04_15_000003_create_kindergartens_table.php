@@ -14,7 +14,7 @@ class CreateKindergartensTable extends Migration
             $table->string('mfy');
             $table->integer('qurilgan_yili');
             $table->integer('songi_tamir_yili')->nullable();
-            $table->integer('sektor_raqami')->nullable();
+            $table->integer('boqcha_raqami')->nullable()->unique();
             $table->decimal('yer_maydoni', 10, 2)->nullable();
             $table->boolean('xudud_oralganligi')->nullable();
             $table->integer('binolar_soni')->nullable();
