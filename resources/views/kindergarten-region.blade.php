@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MTV - {{ ucfirst(request()->query('district', 'Tuman')) }} Boqchalari</title>
+    <title>MTV - {{ ucfirst(request()->query('district', 'Tuman')) }} Bog'chalari</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -155,7 +155,7 @@
 @forelse($kindergartens ?? [] as $kindergarten)
     <div id="editKindergartenModal-{{ $kindergarten->id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" role="dialog" aria-labelledby="editKindergartenModalTitle-{{ $kindergarten->id }}" aria-modal="true">
         <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full mx-4 sm:mx-auto shadow-2xl animate-fade-in-up overflow-y-auto max-h-[80vh]">
-            <h3 id="editKindergartenModalTitle-{{ $kindergarten->id }}" class="text-2xl font-bold text-gray-900 mb-6">Boqchani Tahrirlash</h3>
+            <h3 id="editKindergartenModalTitle-{{ $kindergarten->id }}" class="text-2xl font-bold text-gray-900 mb-6">Bog'chani Tahrirlash</h3>
             <form method="POST" action="{{ route('kindergarten.update', $kindergarten->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
