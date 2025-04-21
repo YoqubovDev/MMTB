@@ -120,7 +120,7 @@ class DistrictSeeder extends Seeder
                             'oquvchi_soni' => rand(200, 1000),
                             'qurilgan_yili' => rand(1950, 2020),
                             'songi_tamir_yili' => rand(2010, 2025),
-                            'sektor_raqami' => rand(1, 4),
+                            'maktab_raqami' => rand(1, 9),
                             'yer_maydoni' => rand(5000, 15000) / 100,
                             'xudud_oralganligi' => rand(0, 1),
                             'binolar_soni' => rand(1, 5),

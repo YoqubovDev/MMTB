@@ -92,7 +92,7 @@
                     <p class="text-gray-600 mb-2"><strong>Manzil (MFY):</strong> {{ $school->mfy ?? 'Ma\'lumot yo\'q' }}</p>
                     <p class="text-gray-600 mb-2"><strong>Qurilgan yili:</strong> {{ $school->qurilgan_yili ?? 'Ma\'lumot yo\'q' }}</p>
                     <p class="text-gray-600 mb-2"><strong>So‘ngi tamirlangan yili:</strong> {{ $school->songi_tamir_yili ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Sektor raqami:</strong> {{ $school->sektor_raqami ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Maktab raqami:</strong> {{ $school->maktab_raqami ?? 'Ma\'lumot yo\'q' }}</p>
                     <p class="text-gray-600 mb-2"><strong>Yer maydoni:</strong> {{ $school->yer_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
                     <p class="text-gray-600 mb-2"><strong>Xudud o'ralganligi:</strong> {{ $school->xudud_oralganligi ? 'Ha' : 'Yo\'q' }}</p>
                     <p class="text-gray-600 mb-2"><strong>Binolar soni:</strong> {{ $school->binolar_soni ?? 'Ma\'lumot yo\'q' }}</p>

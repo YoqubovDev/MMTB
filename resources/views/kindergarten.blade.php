@@ -168,7 +168,7 @@
                     <input type="number" id="songi_tamir_yili" name="songi_tamir_yili" min="1800" max="{{ date('Y') }}" value="{{ old('songi_tamir_yili') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 2020">
                 </div>
                 <div>
-                    <label for="boqcha_raqami" class="block text-gray-700 font-semibold mb-2">Sektor raqami</label>
+                    <label for="boqcha_raqami" class="block text-gray-700 font-semibold mb-2">Bog'cha raqami</label>
                     <input type="number" id="boqcha_raqami" name="boqcha_raqami" min="0" value="{{ old('boqcha_raqami') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 3">
                 </div>
                 <div>
@@ -318,15 +318,15 @@
 @forelse($kindergartens as $kindergarten)
     <div id="editKindergartenModal-{{ $kindergarten->id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
         <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-3xl w-full mx-4 sm:mx-auto shadow-2xl animate-fade-in-up overflow-y-auto max-h-[80vh]">
-            <h3 class="text-2xl font-bold text-gray-900 mb-6">Kindergartenni Tahrirlash</h3>
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">Bog'chani Tahrirlash</h3>
             <form method="POST" action="{{ route('kindergarten.update', $kindergarten->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="district" value="{{ htmlspecialchars($_GET['district'] ?? '') }}">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label for="edit_kindergarten_raqami_{{ $kindergarten->id }}" class="block text-gray-700 font-semibold mb-2">Kindergarten raqami</label>
-                        <input type="text" id="edit_kindergarten_raqami_{{ $kindergarten->id }}" name="kindergarten_raqami" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('kindergarten_raqami', $kindergarten->kindergarten_raqami) }}" required>
+                        <label for="edit_boqcha_raqami_{{ $kindergarten->id }}" class="block text-gray-700 font-semibold mb-2">Bog'cha raqami</label>
+                        <input type="text" id="edit_boqcha_raqami_{{ $kindergarten->id }}" name="kindergarten_raqami" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('boqcha_raqami', $kindergarten->boqcha_raqami) }}" required>
                     </div>
                     <div>
                         <label for="edit_mfy_{{ $kindergarten->id }}" class="block text-gray-700 font-semibold mb-2">Manzil (MFY)</label>
@@ -341,7 +341,7 @@
                         <input type="number" id="edit_songi_tamir_yili_{{ $kindergarten->id }}" name="songi_tamir_yili" min="1800" max="{{ date('Y') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('songi_tamir_yili', $kindergarten->songi_tamir_yili ?? '') }}">
                     </div>
                     <div>
-                        <label for="edit_boqcha_raqami_{{ $kindergarten->id }}" class="block text-gray-700 font-semibold mb-2">Sektor raqami</label>
+                        <label for="edit_boqcha_raqami_{{ $kindergarten->id }}" class="block text-gray-700 font-semibold mb-2">Bog'chani raqami</label>
                         <input type="number" id="edit_boqcha_raqami_{{ $kindergarten->id }}" name="boqcha_raqami" min="0" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" value="{{ old('boqcha_raqami', $kindergarten->boqcha_raqami ?? '') }}">
                     </div>
                     <div>

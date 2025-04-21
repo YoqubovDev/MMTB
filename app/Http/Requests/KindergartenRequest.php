@@ -63,7 +63,7 @@ class KindergartenRequest extends FormRequest
             'songi_tamir_yili.max' => 'So\'ngi ta\'mirlangan yili hozirgi yildan keyingi bo\'lmasligi kerak',
 
             // Numeric field validations
-            'sektor_raqami.integer' => 'Sektor raqami butun son bo\'lishi kerak',
+            'boqcha_raqami.integer' => 'Sektor raqami butun son bo\'lishi kerak',
             'yer_maydoni.numeric' => 'Yer maydoni son bo\'lishi kerak',
             'binolar_soni.integer' => 'Binolar soni butun son bo\'lishi kerak',
             'binolar_soni.min' => 'Binolar soni manfiy bo\'lmasligi kerak',

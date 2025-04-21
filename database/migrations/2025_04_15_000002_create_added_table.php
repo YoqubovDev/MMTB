@@ -13,7 +13,6 @@ class CreateAddedTable extends Migration
             $table->string('mfy')->nullable();
             $table->year('qurilgan_yili')->nullable();
             $table->year('songi_tamir_yili')->nullable();
-            $table->integer('sektor_raqami')->nullable();
             $table->float('yer_maydoni')->nullable();
             $table->boolean('xudud_oralganligi')->nullable();
             $table->integer('binolar_soni')->nullable();

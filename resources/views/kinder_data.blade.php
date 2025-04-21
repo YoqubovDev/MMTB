@@ -96,7 +96,7 @@
                         <p class="text-gray-600 mb-2"><strong>Manzil (MFY):</strong> {{ $kindergarten->mfy ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Qurilgan yili:</strong> {{ $kindergarten->qurilgan_yili ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>So'ngi tamirlangan yili:</strong> {{ $kindergarten->songi_tamir_yili ?? 'Ma\'lumot yo\'q' }}</p>
-                        <p class="text-gray-600 mb-2"><strong>Sektor raqami:</strong> {{ $kindergarten->sektor_raqami ?? 'Ma\'lumot yo\'q' }}</p>
+                        <p class="text-gray-600 mb-2"><strong>Bog'cha raqami:</strong> {{ $kindergarten->boqcha_raqami ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Yer maydoni:</strong> {{ $kindergarten->yer_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Xudud o'ralganligi:</strong> {{ isset($kindergarten->xudud_oralganligi) && $kindergarten->xudud_oralganligi ? 'Ha' : 'Yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Binolar soni:</strong> {{ $kindergarten->binolar_soni ?? 'Ma\'lumot yo\'q' }}</p>

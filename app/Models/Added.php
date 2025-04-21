@@ -69,7 +69,6 @@ class Added extends Model
             'maktab_raqami' => 'nullable|integer',
             'qurilgan_yili' => 'required|integer|min:1800|max:' . date('Y'),
             'songi_tamir_yili' => 'nullable|integer|min:1800|max:' . date('Y'),
-            'sektor_raqami' => 'nullable|integer',
             'yer_maydoni' => 'nullable|numeric',
             'xudud_oralganligi' => 'nullable|boolean',
             'binolar_soni' => 'nullable|integer|min:0',

@@ -155,10 +155,10 @@
                         @endif
                     </select>
                 </div>
-                <div>
-                    <label for="maktab_raqami" class="block text-gray-700 font-semibold mb-2">Maktab raqami</label>
-                    <input type="number" id="maktab_raqami" name="maktab_raqami" min="0" value="{{ old('maktab_raqami') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 3">
-                </div>
+{{--                <div>--}}
+{{--                    <label for="maktab_raqami" class="block text-gray-700 font-semibold mb-2">Maktab raqami</label>--}}
+{{--                    <input type="number" id="maktab_raqami" name="maktab_raqami" min="0" value="{{ old('maktab_raqami') }}" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="Masalan: 3">--}}
+{{--                </div>--}}
                 <div>
                     <label for="mfy" class="block text-gray-700 font-semibold mb-2">Manzil (MFY)</label>
                     <input type="text" id="mfy" name="mfy" class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 focus:border-blue-600 focus:outline-none transition-all duration-300" placeholder="O‘zim toldirman" value="{{ old('mfy') }}">
