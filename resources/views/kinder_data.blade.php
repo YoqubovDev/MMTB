@@ -70,7 +70,7 @@
         <a href="/" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bosh sahifa</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Yangiliklar</a>
         <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Hujjatlar</a>
-        <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bog‘lanish</a>
+        <a href="#" class="block py-3 text-lg font-semibold hover:text-blue-300 transition">Bog'lanish</a>
         @auth
             <form id="mobile-logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                 @csrf
@@ -89,21 +89,22 @@
             Bog'cha Ma'lumotlari
         </h2>
         <div class="bg-white p-8 rounded-3xl shadow-lg">
+            @if(isset($kindergarten))
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-4">Umumiy Ma'lumotlar</h3>
                         <p class="text-gray-600 mb-2"><strong>Manzil (MFY):</strong> {{ $kindergarten->mfy ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Qurilgan yili:</strong> {{ $kindergarten->qurilgan_yili ?? 'Ma\'lumot yo\'q' }}</p>
-                        <p class="text-gray-600 mb-2"><strong>So‘ngi tamirlangan yili:</strong> {{ $kindergarten->songi_tamir_yili ?? 'Ma\'lumot yo\'q' }}</p>
+                        <p class="text-gray-600 mb-2"><strong>So'ngi tamirlangan yili:</strong> {{ $kindergarten->songi_tamir_yili ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Sektor raqami:</strong> {{ $kindergarten->sektor_raqami ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Yer maydoni:</strong> {{ $kindergarten->yer_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
-                        <p class="text-gray-600 mb-2"><strong>Xudud o'ralganligi:</strong> {{ $kindergarten->xudud_oralganligi ? 'Ha' : 'Yo\'q' }}</p>
+                        <p class="text-gray-600 mb-2"><strong>Xudud o'ralganligi:</strong> {{ isset($kindergarten->xudud_oralganligi) && $kindergarten->xudud_oralganligi ? 'Ha' : 'Yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Binolar soni:</strong> {{ $kindergarten->binolar_soni ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Binolar qavatligi:</strong> {{ $kindergarten->binolar_qavatligi ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Binolar maydoni:</strong> {{ $kindergarten->binolar_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Istilidigan maydon:</strong> {{ $kindergarten->istilidigan_maydon ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Quvvati:</strong> {{ $kindergarten->quvvati ?? 'Ma\'lumot yo\'q' }}</p>
-                        <p class="text-gray-600 mb-2"><strong>Bola soni:</strong> {{ $kindergarten->oquvchi_soni ?? 'Ma\'lumot yo\'q' }}</p>
+                        <p class="text-gray-600 mb-2"><strong>Bola soni:</strong> {{ $kindergarten->bolalar_soni ?? 'Ma\'lumot yo\'q' }}</p>
                         <p class="text-gray-600 mb-2"><strong>Koefitsiyent:</strong> {{ $kindergarten->koffsiyent ?? 'Ma\'lumot yo\'q' }}</p>
                     </div>
                     <div>
@@ -121,18 +122,18 @@
                     </div>
                     <div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-4">Energiya Iste'moli</h3>
-                        <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha gaz iste’moli:</strong> {{ $kindergarten->gaz_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
-                        <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha elektr iste’moli:</strong> {{ $kindergarten->elektr_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
-                        <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha issiqlik iste’moli:</strong> {{ $kindergarten->issiqlik_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
-                        <p class="text-gray-600 mb-2"><strong>Quyosh paneli:</strong> {{ $kindergarten->quyosh_paneli ? 'Ha' : 'Yo\'q' }}</p>
-                        <p class="text-gray-600 mb-2"><strong>Geokollektor:</strong> {{ $kindergarten->geokollektor ? 'Ha' : 'Yo\'q' }}</p>
+                        <p class="text-gray-600 mb-2"><strong>1 yillik o'rtacha gaz iste'moli:</strong> {{ $kindergarten->gaz_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
+                        <p class="text-gray-600 mb-2"><strong>1 yillik o'rtacha elektr iste'moli:</strong> {{ $kindergarten->elektr_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
+                        <p class="text-gray-600 mb-2"><strong>1 yillik o'rtacha issiqlik iste'moli:</strong> {{ $kindergarten->issiqlik_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
+                        <p class="text-gray-600 mb-2"><strong>Quyosh paneli:</strong> {{ isset($kindergarten->quyosh_paneli) && $kindergarten->quyosh_paneli ? 'Ha' : 'Yo\'q' }}</p>
+                        <p class="text-gray-600 mb-2"><strong>Geokollektor:</strong> {{ isset($kindergarten->geokollektor) && $kindergarten->geokollektor ? 'Ha' : 'Yo\'q' }}</p>
                     </div>
                     <div>
                         <h3 class="text-xl font-semibold text-gray-900 mb-4">Lokatsiya va Rasmlar</h3>
                         <p class="text-gray-600 mb-2">
                             <strong>Lokatsiya:</strong>
-                            @if($kindergarten->lokatsiya)
-                                <a href="{{ $kindergarten->lokatsiya }}" target="_blank" class="text-gray-600 hover:text-blue-600 hover:underline transition">Ko‘rish</a>
+                            @if(isset($kindergarten->lokatsiya) && $kindergarten->lokatsiya)
+                                <a href="{{ $kindergarten->lokatsiya }}" target="_blank" class="text-gray-600 hover:text-blue-600 hover:underline transition">Ko'rish</a>
                             @else
                                 Ma'lumot yo'q
                             @endif
@@ -140,7 +141,9 @@
                         <div class="mt-4">
                             <label class="block text-gray-700 font-semibold mb-2">Bog'cha Rasmlari:</label>
                             <div class="image-grid">
-                                @if($kindergarten->rasmlar && is_array($kindergarten->rasmlar))
+                                @if(isset($kindergarten->boqcha_rasmlari) && $kindergarten->boqcha_rasmlari)
+                                    <img loading="lazy" class="w-full h-32 object-cover rounded-lg transition-transform duration-300 hover:scale-105" src="{{ Storage::url($kindergarten->boqcha_rasmlari) }}" alt="Bog'cha Rasmi">
+                                @elseif(isset($kindergarten->rasmlar) && is_array($kindergarten->rasmlar) && count($kindergarten->rasmlar) > 0)
                                     @foreach($kindergarten->rasmlar as $rasm)
                                         <img loading="lazy" class="w-full h-32 object-cover rounded-lg transition-transform duration-300 hover:scale-105" src="{{ Storage::url($rasm) }}" alt="Bog'cha Rasmi">
                                     @endforeach
@@ -152,10 +155,11 @@
                     </div>
                 </div>
                 <div class="mt-8 flex justify-end">
-                    <a href="{{ route('kindergartens.index', ['district_id' => $kindergarten->district_id]) }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300">Orqaga</a>
+                    <a href="{{ route('kindergarten', ['kindergarten' => $kindergarten->district_id ?? '']) }}" class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300">Orqaga</a>
                 </div>
-
+            @else
                 <p class="text-gray-600 text-center">Bog'cha ma'lumotlari topilmadi</p>
+            @endif
         </div>
     </div>
 </section>
@@ -166,7 +170,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-16">
             <div>
                 <h3 class="text-3xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-600">Maktabgacha Ta'lim</h3>
-                <p class="text-gray-300 leading-relaxed">Bolalarimizning kelajagi uchun eng yaxshi ta’lim muhitini yaratamiz.</p>
+                <p class="text-gray-300 leading-relaxed">Bolalarimizning kelajagi uchun eng yaxshi ta'lim muhitini yaratamiz.</p>
             </div>
             <div>
                 <h3 class="text-2xl font-semibold mb-6">Tez havolalar</h3>
@@ -174,11 +178,11 @@
                     <li><a href="/" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bosh sahifa</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Yangiliklar</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Hujjatlar</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bog‘lanish</a></li>
+                    <li><a href="#" class="text-gray-300 hover:text-blue-300 hover:translate-x-2 transition-all duration-300">Bog'lanish</a></li>
                 </ul>
             </div>
             <div>
-                <h3 class="text-2xl font-semibold mb-6">Bog‘lanish</h3>
+                <h3 class="text-2xl font-semibold mb-6">Bog'lanish</h3>
                 <p class="text-gray-300 mb-4">Email: <a href="mailto:info@mtv.uz" class="hover:text-blue-300 transition">info@mtv.uz</a></p>
                 <p class="text-gray-300 mb-4">Telefon: <a href="tel:+998711234567" class="hover:text-blue-300 transition">+998 71 123 45 67</a></p>
                 <p class="text-gray-300">Manzil: Toshkent, Chilanzar, 45-uy</p>

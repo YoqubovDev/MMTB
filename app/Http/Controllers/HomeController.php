@@ -30,7 +30,7 @@ class HomeController extends Controller
     {
         $kindergarten = Kindergarten::with('district')->findOrFail($kindergartenId);
         return view('kinder_data', [
-            'kindergartenId' => $kindergarten,
+            'kindergarten' => $kindergarten,
         ]);
     }
     public function school(string $addedId)
