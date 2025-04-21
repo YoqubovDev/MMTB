@@ -99,7 +99,7 @@
                             <th scope="col" class="px-6 py-4 text-right text-sm font-semibold text-gray-700">Amallar</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200" id="schoolsTable">
+                    <tbody class="bg-white divide-y divide-gray-200" id="kindergartensTable">
                         @forelse($kindergartens as $kindergarten)
                             <tr class="hover:bg-gray-50 transition-colors duration-200">
                                 <td class="px-6 py-4 whitespace-nowrap text-blue-600 font-medium">

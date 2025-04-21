@@ -37,7 +37,7 @@ class HomeController extends Controller
     {
         $added = Added::with('district')->findOrFail($addedId);
         return view('school_data', [
-            'addedId' => $added,
+            'school' => $added,
         ]);
     }
 }

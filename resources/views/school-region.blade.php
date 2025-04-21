@@ -380,7 +380,6 @@
                 csrfToken.value = '{{ csrf_token() }}';
                 form.appendChild(csrfToken);
 
-                // Add districts data as JSON
                 const districtsData = document.createElement('input');
                 districtsData.type = 'hidden';
                 districtsData.name = 'districts_data';

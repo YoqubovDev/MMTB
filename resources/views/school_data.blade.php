@@ -89,47 +89,47 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-4">Umumiy Ma'lumotlar</h3>
-                    <p class="text-gray-600 mb-2"><strong>Manzil (MFY):</strong> {{ $added->mfy ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Qurilgan yili:</strong> {{ $added->qurilgan_yili ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>So‘ngi tamirlangan yili:</strong> {{ $added->songi_tamir_yili ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Sektor raqami:</strong> {{ $added->sektor_raqami ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Yer maydoni:</strong> {{ $added->yer_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Xudud o'ralganligi:</strong> {{ $added->xudud_oralganligi ? 'Ha' : 'Yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Binolar soni:</strong> {{ $added->binolar_soni ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Binolar qavatligi:</strong> {{ $added->binolar_qavatligi ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Binolar maydoni:</strong> {{ $added->binolar_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Istilidigan maydon:</strong> {{ $added->istilidigan_maydon ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Quvvati:</strong> {{ $added->quvvati ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>O'quvchi soni:</strong> {{ $added->oquvchi_soni ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Koffsiyent:</strong> {{ $added->koffsiyent ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Manzil (MFY):</strong> {{ $school->mfy ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Qurilgan yili:</strong> {{ $school->qurilgan_yili ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>So‘ngi tamirlangan yili:</strong> {{ $school->songi_tamir_yili ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Sektor raqami:</strong> {{ $school->sektor_raqami ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Yer maydoni:</strong> {{ $school->yer_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Xudud o'ralganligi:</strong> {{ $school->xudud_oralganligi ? 'Ha' : 'Yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Binolar soni:</strong> {{ $school->binolar_soni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Binolar qavatligi:</strong> {{ $school->binolar_qavatligi ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Binolar maydoni:</strong> {{ $school->binolar_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Istilidigan maydon:</strong> {{ $school->istilidigan_maydon ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Quvvati:</strong> {{ $school->quvvati ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>O'quvchi soni:</strong> {{ $school->oquvchi_soni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Koffsiyent:</strong> {{ $school->koffsiyent ?? 'Ma\'lumot yo\'q' }}</p>
                 </div>
                 <div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-4">Infratuzilma</h3>
-                    <p class="text-gray-600 mb-2"><strong>Oshxona yoki bufet quvvati:</strong> {{ $added->oshxona_yoki_bufet_quvvati ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Sport zal soni va maydoni:</strong> {{ $added->sport_zal_soni_va_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Faollar zali va quvvati:</strong> {{ $added->faollar_zali_va_quvvati ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Xolati:</strong> {{ $added->xolati ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Tom xolati % da:</strong> {{ $added->tom_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Deraza rom xolati % da:</strong> {{ $added->deraza_rom_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Istish turi:</strong> {{ $added->istish_turi ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Qozonlar soni:</strong> {{ $added->qozonlar_soni ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Qozonlar xolati % da:</strong> {{ $added->qozonlar_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Apoklar xolati % da:</strong> {{ $added->apoklar_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Oshxona yoki bufet quvvati:</strong> {{ $school->oshxona_yoki_bufet_quvvati ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Sport zal soni va maydoni:</strong> {{ $school->sport_zal_soni_va_maydoni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Faollar zali va quvvati:</strong> {{ $school->faollar_zali_va_quvvati ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Xolati:</strong> {{ $school->xolati ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Tom xolati % da:</strong> {{ $school->tom_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Deraza rom xolati % da:</strong> {{ $school->deraza_rom_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Istish turi:</strong> {{ $school->istish_turi ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Qozonlar soni:</strong> {{ $school->qozonlar_soni ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Qozonlar xolati % da:</strong> {{ $school->qozonlar_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Apoklar xolati % da:</strong> {{ $school->apoklar_xolati_yuzda ?? 'Ma\'lumot yo\'q' }}</p>
                 </div>
                 <div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-4">Energiya Iste'moli</h3>
-                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha gaz iste’moli:</strong> {{ $added->gaz_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha elektr iste’moli:</strong> {{ $added->elektr_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha issiqlik iste’moli:</strong> {{ $added->issiqlik_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Quyosh paneli:</strong> {{ $added->quyosh_paneli ? 'Ha' : 'Yo\'q' }}</p>
-                    <p class="text-gray-600 mb-2"><strong>Geokollektor:</strong> {{ $added->geokollektor ? 'Ha' : 'Yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha gaz iste’moli:</strong> {{ $school->gaz_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha elektr iste’moli:</strong> {{ $school->elektr_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>1 yillik o‘rtacha issiqlik iste’moli:</strong> {{ $school->issiqlik_istemoli ?? 'Ma\'lumot yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Quyosh paneli:</strong> {{ $school->quyosh_paneli ? 'Ha' : 'Yo\'q' }}</p>
+                    <p class="text-gray-600 mb-2"><strong>Geokollektor:</strong> {{ $school->geokollektor ? 'Ha' : 'Yo\'q' }}</p>
                 </div>
                 <div>
                     <h3 class="text-xl font-semibold text-gray-900 mb-4">Lokatsiya va Rasmlar</h3>
                     <p class="text-gray-600 mb-2">
                         <strong>Lokatsiya:</strong>
-                        @if($added->lokatsiya)
-                            <a href="{{ $added->lokatsiya }}" target="_blank" class="location-link text-gray-600 hover:underline">
+                        @if($school->lokatsiya)
+                            <a href="{{ $school->lokatsiya }}" target="_blank" class="location-link text-gray-600 hover:underline">
                                 Ko‘rish
                             </a>
                         @else
@@ -139,8 +139,8 @@
                     <div class="mt-4">
                         <label class="block text-gray-700 font-semibold mb-2">Maktab Rasmlari:</label>
                         <div class="image-grid">
-                            @if($added->maktab_rasmlari)
-                                <img class="preview-img w-full h-32 object-cover" src="{{ Storage::url($added->maktab_rasmlari) }}" alt="Maktab Rasmi">
+                            @if($school->maktab_rasmlari)
+                                <img class="preview-img w-full h-32 object-cover" src="{{ Storage::url($school->maktab_rasmlari) }}" alt="Maktab Rasmi">
                             @else
                                 <p class="text-gray-600">Rasm yo'q</p>
                             @endif
