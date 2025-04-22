@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\District;
-use App\Models\Added;
+use App\Models\School;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -111,7 +111,7 @@ class DistrictSeeder extends Seeder
                     $schoolsPerDistrict = rand(3, 8); // Create between 3-8 schools per district
 
                     for ($i = 1; $i <= $schoolsPerDistrict; $i++) {
-                        Added::create([
+                        School::create([
                             'district_id' => $district->id,
                             'mfy' => "School #{$i} - {$district->name}",
                             'lokatsiya' => "{$district->name} District, Street {$i}",

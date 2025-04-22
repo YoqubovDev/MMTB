@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Added;
+use App\Models\School;
 use App\Models\District;
 use App\Http\Requests\AddedRequest;
     use Illuminate\Http\Request;
@@ -13,14 +13,14 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 
-class AddedController extends Controller
+class SchoolController extends Controller
 {
 
     public function school(Request $request)
     {
         $districts = District::where('status', true)->get();
         $district_id = $_GET['added'] ?? $districts[0]['id'] ?? null;
-        $addeds = $district_id ? Added::where('district_id', $district_id)->with('district')->get() : collect();
+        $addeds = $district_id ? School::where('district_id', $district_id)->with('district')->get() : collect();
 
         return view('added', compact('districts', 'addeds'));
     }
@@ -30,7 +30,7 @@ class AddedController extends Controller
         $search = $request->query('search', '');
         $district = $request->query('district', '');
 
-        $query = Added::query()
+        $query = School::query()
             ->when($search, fn($q) => $q->where('boqcha_raqami', 'like', "%{$search}%"))
             ->when($district, fn($q) => $q->whereHas('district', fn($q) => $q->where('name', $district)))
             ->with('district');
@@ -61,7 +61,7 @@ class AddedController extends Controller
             Log::info('Validation passed');
 
             // Create the record with minimal required fields
-            $school = new Added();
+            $school = new School();
             $school->district_id = $request->district_id;
             $school->mfy = $request->mfy;
             $school->qurilgan_yili = $request->qurilgan_yili;
@@ -124,20 +124,20 @@ class AddedController extends Controller
     }
 
 
-    public function show(Added $added)
+    public function show(School $added)
     {
         $added->load('district');
         return view('schools.show', compact('added'));
     }
 
-    public function edit(Added $added): View
+    public function edit(School $added): View
     {
         $districts = District::where('status', true)->get();
         return view('schools.edit', compact('added', 'districts'));
     }
 
 
-    public function update(AddedRequest $request, Added $added): RedirectResponse
+    public function update(AddedRequest $request, School $added): RedirectResponse
     {
         $this->authorize('update', $added);
 
@@ -183,7 +183,7 @@ class AddedController extends Controller
                 }
 
                 $added->update($data);
-                Log::info('Added record updated successfully: ID ' . $added->id);
+                Log::info('School record updated successfully: ID ' . $added->id);
 
                 return redirect()->route('added')->with('success', 'Muvaffaqiyatli yangilandi!');
             });
@@ -193,7 +193,7 @@ class AddedController extends Controller
                 Log::info('Deleted new file after failed school update: ' . $newFilePath);
             }
 
-            Log::error('Error updating Added record for ID ' . $added->id . ': ' . $e->getMessage());
+            Log::error('Error updating School record for ID ' . $added->id . ': ' . $e->getMessage());
             return back()->withInput()->withErrors(['error' => 'Ma\'lumotlarni yangilashda xatolik: ' . $e->getMessage()]);
         }
     }
@@ -201,10 +201,10 @@ class AddedController extends Controller
     /**
      * Remove the specified school from storage.
      *
-     * @param  \App\Models\Added  $added
+     * @param  \App\Models\School  $added
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Added $added): RedirectResponse
+    public function destroy(School $added): RedirectResponse
     {
 
         try {
@@ -215,12 +215,12 @@ class AddedController extends Controller
                 }
 
                 $added->delete();
-                Log::info('Added record deleted successfully: ID ' . $added->id);
+                Log::info('School record deleted successfully: ID ' . $added->id);
 
                 return redirect()->route('added')->with('success', 'Muvaffaqiyatli o\'chirildi!');
             }, 5);
         } catch (\Exception $e) {
-            Log::error('Error deleting Added record: ' . $e->getMessage());
+            Log::error('Error deleting School record: ' . $e->getMessage());
             return back()->withErrors(['error' => 'Ma\'lumotlarni o\'chirishda xatolik: ' . $e->getMessage()]);
         }
     }

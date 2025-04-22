@@ -83,7 +83,7 @@
             </div>
         @endif
 
-        <!-- Added details card -->
+        <!-- School details card -->
         <div class="bg-white rounded-2xl shadow-md overflow-hidden mb-8">
             <div class="border-b border-gray-200">
                 <div class="px-6 py-4 bg-gradient-to-r from-blue-50 to-indigo-50">

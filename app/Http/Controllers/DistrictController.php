@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Added;
+use App\Models\School;
 use App\Models\District;
 use App\Models\Kindergarten;
 use Illuminate\Http\Request;
@@ -34,9 +34,9 @@ class DistrictController extends Controller
 
             $statistics = Cache::remember('districts.statistics', 3600, function () {
                 return [
-                    'totalSchools' => Added::where('status', true)->count(),
+                    'totalSchools' => School::where('status', true)->count(),
                     'totalKindergartens' => Kindergarten::where('status', true)->count(),
-                    'schoolsCapacity' => Added::where('status', true)->sum('capacity'),
+                    'schoolsCapacity' => School::where('status', true)->sum('capacity'),
                     'kindergartensCapacity' => Kindergarten::where('status', true)->sum('capacity'),
                 ];
             });

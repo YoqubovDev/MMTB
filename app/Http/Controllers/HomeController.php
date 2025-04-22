@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kindergarten;
 use Illuminate\Http\Request;
 use App\Models\District;
-use App\Models\Added;
+use App\Models\School;
 
 class HomeController extends Controller
 {
@@ -35,7 +35,7 @@ class HomeController extends Controller
     }
     public function school(string $addedId)
     {
-        $added = Added::with('district')->findOrFail($addedId);
+        $added = School::with('district')->findOrFail($addedId);
         return view('school_data', [
             'school' => $added,
         ]);

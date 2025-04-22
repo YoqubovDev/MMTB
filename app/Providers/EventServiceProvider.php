@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Added;
+use App\Models\School;
 use App\Models\Kindergarten;
 use App\Observers\SchoolObserver;
 use App\Observers\KindergartenObserver;
@@ -30,7 +30,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Register observers
-        Added::observe(SchoolObserver::class);
+        School::observe(SchoolObserver::class);
         Kindergarten::observe(KindergartenObserver::class);
     }
 

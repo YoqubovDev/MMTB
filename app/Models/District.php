@@ -26,7 +26,7 @@ class District extends Model
      */
     public function schools(): HasMany
     {
-        return $this->hasMany(Added::class);
+        return $this->hasMany(School::class);
     }
 
     /**

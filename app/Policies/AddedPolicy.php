@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\Added;
+use App\Models\School;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class AddedPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Added  $added
+     * @param  \App\Models\School  $added
      * @return bool
      */
-    public function view(User $user, Added $added): bool
+    public function view(User $user, School $added): bool
     {
         return true; // All authenticated users can view details
     }
@@ -48,10 +48,10 @@ class AddedPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Added  $added
+     * @param  \App\Models\School  $added
      * @return bool
      */
-    public function update(User $user, Added $added): bool
+    public function update(User $user, School $added): bool
     {
         return true; // All authenticated users can update
     }
@@ -60,10 +60,10 @@ class AddedPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Added  $added
+     * @param  \App\Models\School  $added
      * @return bool
      */
-    public function delete(User $user, Added $added): bool
+    public function delete(User $user, School $added): bool
     {
         return true; // All authenticated users can delete
     }

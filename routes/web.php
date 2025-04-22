@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AddedController;
+use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KindergartenController;
 use App\Http\Controllers\ProfileController;
@@ -17,12 +17,12 @@ Route::get('/kindergarten-region', [DistrictController::class, 'kindergartenRegi
 Route::get('/school/data/{id}', [HomeController::class, 'school'])->name('school_data');
 Route::get('/kinder/data/{id}', [HomeController::class, 'kinder'])->name('kinder_data');
 Route::get('/kindergarten', [KindergartenController::class, 'kindergarten'])->name('kindergarten');
-Route::get('/school', [AddedController::class, 'school'])->name('added');
+Route::get('/school', [SchoolController::class, 'school'])->name('added');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/main', [HomeController::class, 'main'])->name('main');
     Route::resource('kindergarten', KindergartenController::class)->except('index', 'show');
-    Route::resource('added', AddedController::class);
+    Route::resource('added', SchoolController::class);
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 });
 

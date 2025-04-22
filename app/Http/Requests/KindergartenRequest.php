@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Added;
+use App\Models\School;
 use Illuminate\Foundation\Http\FormRequest;
 
 class KindergartenRequest extends FormRequest
@@ -25,7 +25,7 @@ class KindergartenRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = Added::validationRules();
+        $rules = School::validationRules();
 
         // Add district_id validation
         $rules['district_id'] = 'nullable|exists:districts,id';
