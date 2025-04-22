@@ -15,7 +15,7 @@ class School extends Model
      *
      * @var array<int, string>
      */
-    protected $table = 'added';
+    protected $table = 'schools';
     protected $fillable = [
         'district_id',
         'mfy',

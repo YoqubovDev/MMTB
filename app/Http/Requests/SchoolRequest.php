@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\School;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddedRequest extends FormRequest
+class SchoolRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

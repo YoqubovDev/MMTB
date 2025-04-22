@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('added', function (Blueprint $table) {
+        Schema::table('schools', function (Blueprint $table) {
             $table->foreignId('district_id')->nullable()->after('id')->constrained('districts')->onDelete('set null');
             $table->index('district_id');
         });
@@ -22,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('added', function (Blueprint $table) {
+        Schema::table('schools', function (Blueprint $table) {
             $table->dropForeign(['district_id']);
             $table->dropIndex(['district_id']);
             $table->dropColumn('district_id');

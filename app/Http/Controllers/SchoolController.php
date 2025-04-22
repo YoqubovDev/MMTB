@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\School;
 use App\Models\District;
-use App\Http\Requests\AddedRequest;
+use App\Http\Requests\SchoolRequest;
     use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -22,7 +22,7 @@ class SchoolController extends Controller
         $district_id = $_GET['added'] ?? $districts[0]['id'] ?? null;
         $addeds = $district_id ? School::where('district_id', $district_id)->with('district')->get() : collect();
 
-        return view('added', compact('districts', 'addeds'));
+        return view('school', compact('districts', 'addeds'));
     }
 
     public function search(Request $request)
@@ -137,7 +137,7 @@ class SchoolController extends Controller
     }
 
 
-    public function update(AddedRequest $request, School $added): RedirectResponse
+    public function update(SchoolRequest $request, School $added): RedirectResponse
     {
         $this->authorize('update', $added);
 

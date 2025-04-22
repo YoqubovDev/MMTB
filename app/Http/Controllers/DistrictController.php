@@ -216,25 +216,25 @@ class DistrictController extends Controller
                 Log::info('schoolRegion method completed in ' . round(($endTime - $startTime) * 1000, 2) . 'ms');
             }
 
-            // Explicitly define the view data array with null checks
+
             $viewData = [
                 // Ensure districts is always a collection, even if empty
                 'districts' => $districts ?? collect(),
                 'executionTime' => round(($endTime - $startTime) * 1000, 2)
             ];
 
-            // Only add debug information in non-production environments
+
             if ($isDebug && !empty($debugOutput)) {
                 $viewData['debugMessage'] = $debugOutput;
             }
 
-            // Log the data being passed to the view
+
             if ($isDebug) {
                 Log::info('Passing to view with keys: ' . implode(', ', array_keys($viewData)));
                 Log::info('Districts count being passed: ' . ($viewData['districts']->count() ?? 0));
             }
 
-            // Pass data to view
+
             return view('school-region', $viewData);
         } catch (\Exception $e) {
             $endTime = microtime(true);
@@ -243,7 +243,6 @@ class DistrictController extends Controller
                 Log::error('Error in schoolRegion: ' . $e->getMessage());
                 Log::error('Stack trace: ' . $e->getTraceAsString());
 
-                // Include debug information with the error
                 $debugData[] = "ERROR: " . $e->getMessage();
                 $debugData[] = "File: " . $e->getFile() . ":" . $e->getLine();
                 $debugData[] = "Memory usage: " . round((memory_get_usage() - $memoryBefore) / 1024 / 1024, 2) . "MB";
@@ -251,12 +250,12 @@ class DistrictController extends Controller
 
                 $debugOutput = implode("\n", $debugData);
             } else {
-                // In production, don't include detailed debug info
+
                 $debugOutput = '';
             }
-            // Prepare view data with error information
+
             $viewData = [
-                // Always ensure districts is a collection, even when empty
+
                 'districts' => collect(),
                 'error' => 'Error: ' . $e->getMessage()
             ];
@@ -285,7 +284,7 @@ class DistrictController extends Controller
                 $debugData[] = "PHP Version: " . PHP_VERSION;
                 $debugData[] = "Laravel Version: " . app()->version();
 
-                // Check if key routes are properly registered
+
                 $debugData[] = "Route 'added' exists: " . (Route::has('added') ? 'Yes' : 'No');
                 $debugData[] = "Route 'kindergarten-region' exists: " . (Route::has('kindergarten-region') ? 'Yes' : 'No');
             }
@@ -293,29 +292,29 @@ class DistrictController extends Controller
             // Database connection check
             if ($isDebug) {
                 try {
-                    // Check database connection
+
                     $isConnected = DB::connection()->getPdo() ? true : false;
                     $debugData[] = "Database connection: " . ($isConnected ? "Successful" : "Failed");
                     $debugData[] = "Database name: " . DB::connection()->getDatabaseName();
 
-                    // Check if districts table exists
+
                     $tableExists = Schema::hasTable('districts');
                     $debugData[] = "Districts table exists: " . ($tableExists ? "Yes" : "No");
 
                     if ($tableExists) {
-                        // Get table columns
+
                         $columns = Schema::getColumnListing('districts');
                         $debugData[] = "Table columns: " . implode(", ", $columns);
 
-                        // Count total records
+
                         $totalRecords = DB::table('districts')->count();
                         $debugData[] = "Total records in districts table: " . $totalRecords;
 
-                        // Count active records
+
                         $activeRecords = DB::table('districts')->where('status', true)->count();
                         $debugData[] = "Active records (status=true): " . $activeRecords;
 
-                        // Sample record if any exists
+
                         if ($totalRecords > 0) {
                             $sampleRecord = DB::table('districts')->first();
                             $debugData[] = "Sample record: " . json_encode($sampleRecord);
@@ -327,7 +326,7 @@ class DistrictController extends Controller
                 }
             }
 
-            // Simple districts query with kindergartens count
+
             $queryStartTime = microtime(true);
             $districts = District::where('status', true)
                 ->withCount('kindergartens')
@@ -351,7 +350,7 @@ class DistrictController extends Controller
                 } else {
                     $debugData[] = "No districts found";
 
-                    // Check if there are any districts at all (ignoring status)
+
                     $allDistrictsCount = District::count();
                     $debugData[] = "Total districts in table (ignoring status): " . $allDistrictsCount;
                     if ($allDistrictsCount > 0) {
@@ -359,7 +358,7 @@ class DistrictController extends Controller
                     }
                 }
 
-                // Check for potential route generation issues
+
                 if ($districts->isNotEmpty()) {
                     try {
                         $firstDistrict = $districts->first();
@@ -370,7 +369,7 @@ class DistrictController extends Controller
                     }
                 }
 
-                // Memory usage
+
                 $memoryAfter = memory_get_usage();
                 $debugData[] = "Memory before: " . round($memoryBefore / 1024 / 1024, 2) . "MB";
                 $debugData[] = "Memory after: " . round($memoryAfter / 1024 / 1024, 2) . "MB";
@@ -387,14 +386,12 @@ class DistrictController extends Controller
                 Log::info('kindergartenRegion method completed in ' . round(($endTime - $startTime) * 1000, 2) . 'ms');
             }
 
-            // Explicitly define the view data array with null checks
             $viewData = [
                 // Ensure districts is always a collection, even if empty
                 'districts' => $districts ?? collect(),
                 'executionTime' => round(($endTime - $startTime) * 1000, 2)
             ];
 
-            // Only add debug information in non-production environments
             if ($isDebug && !empty($debugOutput)) {
                 $viewData['debugMessage'] = $debugOutput;
             }

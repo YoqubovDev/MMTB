@@ -3,11 +3,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAddedTable extends Migration
+class CreateSchoolsTable extends Migration
 {
     public function up(): void
     {
-        Schema::create('added', function (Blueprint $table) {
+        Schema::create('schools', function (Blueprint $table) {
             $table->id();
             $table->integer('maktab_raqami')->nullable();
             $table->string('mfy')->nullable();
@@ -45,7 +45,7 @@ class CreateAddedTable extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('added');
+        Schema::dropIfExists('schools');
     }
 }
 
